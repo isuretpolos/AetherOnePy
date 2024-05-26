@@ -10,7 +10,7 @@ __pycache__/
 .Python
 build/
 develop-eggs/
-dist/
+# dist/ oh yes we use this as our distribution for the UI
 downloads/
 eggs/
 .eggs/
