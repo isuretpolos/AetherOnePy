@@ -1,6 +1,8 @@
 # AetherOnePy
 work in progress ...
 
+AetherOnePy is a Web-based Desktop Application, which means the application runs on your computer but uses a web browser as its interface. You can run it on a Raspberry Pi or a PC (Windows, Linux or Mac).
+
 ## Install
 1) Install Python, from https://python.org/downloads/, Version 3.12.x
 2) Install Git, from https://git-scm.com, latest version is fine
