@@ -1,8 +1,32 @@
 # AetherOnyPy Main Application
 # Copyright Isuret Polos 2024
+import subprocess
+import sys
+import webbrowser
+import time
+import requests
+import multiprocessing
+
+required_packages = [
+    'Flask',
+    'flask-cors',
+    'waitress'
+]
+
+def install_package(package):
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
+
+def check_and_install_packages():
+    for package in required_packages:
+        try:
+            __import__(package)
+        except ImportError:
+            install_package(package)
+
 from waitress import serve
 from flask import Flask, jsonify, request, send_from_directory
 from flask_cors import CORS
+
 app = Flask(__name__)
 CORS(app)
 
@@ -63,5 +87,27 @@ def delete_book(id):
     books = [book for book in books if book['id'] != id]
     return jsonify({"message": "Book deleted successfully"})
 
-if __name__ == '__main__':
+
+
+def start_server():
     serve(app, host='0.0.0.0', port=80)
+
+def wait_for_server():
+    url = "http://localhost"
+    while True:
+        try:
+            response = requests.get(url)
+            if response.status_code == 200:
+                break
+        except requests.ConnectionError:
+            pass
+        time.sleep(1)
+
+if __name__ == '__main__':
+    check_and_install_packages()
+    server_process = multiprocessing.Process(target=start_server)
+    server_process.start()
+    print("Starting webBrowser ...")
+    wait_for_server()
+    webbrowser.open("http://localhost")
+    server_process.join() #keep it alive
