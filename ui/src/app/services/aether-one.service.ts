@@ -15,4 +15,5 @@ export class AetherOneService {
   ping():Observable<any> {
     return this.http.get(`${this.baseUrl}ping`, {responseType: 'text'});
   }
+
 }
