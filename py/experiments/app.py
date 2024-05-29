@@ -15,11 +15,11 @@ books = [
 # --------------------------------
 @app.route('/')
 def index():
-    return send_from_directory('../ui/dist/ui/', 'index.html')
+    return send_from_directory('../../ui/dist/ui/', 'index.html')
 
 @app.route('/<path:path>')
 def static_files(path):
-    return send_from_directory('../ui/dist/ui/', path)
+    return send_from_directory('../../ui/dist/ui/', path)
 # --------------------------------
 
 # API of AetherOnePy

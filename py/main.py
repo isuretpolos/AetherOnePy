@@ -34,12 +34,14 @@ def ping():
 def start_server(port):
     serve(app, host='0.0.0.0', port=port)
 
-def wait_for_server(port):
+def wait_for_server_and_open(port):
     url = f"http://localhost:{port}"
     while True:
         try:
             response = requests.get(url)
             if response.status_code == 200:
+                print(f"If your browser does not open automatically, click here http://localhost:{port}")
+                webbrowser.open(f"http://localhost:{port}")
                 break
         except requests.ConnectionError:
             pass
@@ -57,6 +59,5 @@ if __name__ == '__main__':
     print("Starting AetherOnePy server ...")
     server_process = multiprocessing.Process(target=start_server, args=(port,))
     server_process.start()
-    wait_for_server(port)
-    webbrowser.open(f"http://localhost:{port}")
+    wait_for_server_and_open(port)
     server_process.join() #keep it alive
