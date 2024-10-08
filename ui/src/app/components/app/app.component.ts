@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from "@angular/router";
 import {NavigationService} from "../../services/navigation.service";
 import {Case} from "../../domains/Case";
 import {AetherOneService} from "../../services/aether-one.service";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-root',
@@ -14,8 +15,10 @@ export class AppComponent implements OnInit {
 
   serverOnline:boolean = false;
   links: Link[] = [];
-  case:Case = new Case()
+  case:Case|undefined = new Case()
   theme:string = "dark"
+  searchText = new FormControl('');
+  mobileMode:boolean = false
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -24,6 +27,16 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    if (this.isMobileDevice()) {
+      console.log('mobile device')
+      this.mobileMode = true
+      this.navigate('MOBILE')
+    } else {
+      console.log('desktop or laptop device')
+      this.mobileMode = false
+    }
+
     this.ping()
     this.initLinks()
     this.navigationService.navigate.subscribe( (url:string) => {
@@ -31,6 +44,9 @@ export class AppComponent implements OnInit {
     });
     // @ts-ignore
     this.theme = localStorage.getItem('theme')
+    this.aetherOne.case$.subscribe(value => {
+      this.case = value
+    })
   }
 
   navigate(navigationPath: string) {
@@ -54,22 +70,26 @@ export class AppComponent implements OnInit {
   }
 
   private initLinks() {
-    this.addLink("HOME", true, "#d3d3d3");
-    this.addLink("CASES", false, "#a1a1a1");
-    this.addLink("ANALYSIS", false, "#a1a1a1");
-    this.addLink("MAP", false, "#a1a1a1");
-    this.addLink("WEAVER", false, "#a1a1a1");
-    this.addLink("BROADCAST", false, "#a1a1a1");
+    this.addLink("MANUAL", false, "#a1a1a1");
     this.addLink("SETTINGS", false, "#ffd19d");
   }
 
   private addLink(name: string, active: boolean, color: string) {
-    let link = new Link();
+    let link:Link = new Link();
     link.name = name;
     link.active = active;
     link.color = color;
     this.links.push(link)
   }
+
+  isMobileDevice(): boolean {
+    // @ts-ignore
+    const userAgent = navigator.userAgent || navigator.vendor || window['opera'];
+    const mobileRegex = /android|webos|iphone|ipad|ipod|blackberry|iemobile|opera mini/i;
+
+    return mobileRegex.test(userAgent);
+  }
+
 
   switchTheme() {
     if (document.documentElement.getAttribute('data-bs-theme') == 'dark') {
@@ -82,6 +102,10 @@ export class AppComponent implements OnInit {
       localStorage.setItem('theme', 'dark')
       this.theme = "dark"
     }
+  }
+
+  search() {
+
   }
 
   private ping() {

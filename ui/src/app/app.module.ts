@@ -5,15 +5,23 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './components/app/app.component';
 import {HashLocationStrategy, LocationStrategy} from "@angular/common";
 import { HomeComponent } from './components/home/home.component';
+import { DocumentationComponent } from './components/documentation/documentation.component';
+import { SettingsComponent } from './components/settings/settings.component';
+import {ReactiveFormsModule} from "@angular/forms";
+import { MobileComponent } from './components/mobile/mobile.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent
+    HomeComponent,
+    DocumentationComponent,
+    SettingsComponent,
+    MobileComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]

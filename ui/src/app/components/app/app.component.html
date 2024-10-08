@@ -1,8 +1,8 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary">
+<nav class="navbar navbar-expand-lg bg-body-tertiary" *ngIf="!mobileMode">
   <div class="container-fluid">
     <a class="navbar-brand" href="#"
        [class.serverOnline]="serverOnline"
-       [class.serverOffline]="!serverOnline">AetherOne<b>Py</b></a> - <b style="margin-right: 1rem">{{case.name}}</b> <span class="serverOfflineInfo" *ngIf="!serverOnline">is offline</span>
+       [class.serverOffline]="!serverOnline">AetherOne<b>Py</b></a> - <b style="margin-right: 1rem">{{case?.name}}</b> <span class="serverOfflineInfo" *ngIf="!serverOnline">is offline</span>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
@@ -15,7 +15,7 @@
         </li>
       </ul>
       <form class="d-flex" role="search" *ngIf="serverOnline">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+        <input #weaverText [formControl]="searchText" (ngModelChange)="search()" type="text" class="form-control me-2" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
       <button class="btn btn-sm" [class.btn-dark]="theme == 'light'" [class.btn-light]="theme == 'dark'" style="margin-left: 3rem; padding: 0.1rem" (click)="switchTheme()">{{theme}} Mode</button>

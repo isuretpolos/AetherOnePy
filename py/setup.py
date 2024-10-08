@@ -4,7 +4,9 @@ import sys
 required_packages = [
     'Flask',
     'flask-cors',
-    'waitress'
+    'waitress',
+    'qrcode[pil]',
+    'PIL'
 ]
 
 def install_package(package):

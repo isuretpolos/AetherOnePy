@@ -6,12 +6,17 @@ import time
 import requests
 import multiprocessing
 import argparse
+import qrcode
+import io
+import socket
 
 from waitress import serve
-from flask import Flask, jsonify, request, send_from_directory
+from flask import Flask, jsonify, request, send_from_directory, send_file
 from flask_cors import CORS
+from PIL import Image, ImageDraw, ImageFont
 
 app = Flask(__name__)
+port = 80
 CORS(app)
 
 # Angular UI, serving static files
@@ -30,6 +35,49 @@ def static_files(path):
 @app.route('/ping', methods=['GET'])
 def ping():
     return "pong"
+
+@app.route('/qrcode', methods=['GET'])
+def get_qrcode():
+    data = f"http://{get_local_ip()}:{port}"
+    print(data)
+
+    qr = qrcode.QRCode(
+        version=1,
+        error_correction=qrcode.constants.ERROR_CORRECT_L,
+        box_size=10,
+        border=4,
+    )
+    qr.add_data(data)
+    qr.make(fit=True)
+
+    img = qr.make_image(fill="black", back_color="white")
+    draw = ImageDraw.Draw(img)
+
+    # Add text to the image
+    text = "AetherOnePy"
+    font = ImageFont.truetype("arial.ttf", 16)
+    text_width = font.getbbox(text)[2]
+    text_height = font.getbbox(text)[3]
+    text_position = ((img.size[0] - text_width) // 2, img.size[1] - text_height - 10)
+    draw.text(text_position, text, fill='black', font=font)
+
+    img_byte_arr = io.BytesIO()
+    img.save(img_byte_arr, format='PNG')
+    img_byte_arr.seek(0)
+
+    return send_file(img_byte_arr, mimetype='image/png')
+
+def get_local_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        # doesn't even have to be reachable
+        s.connect(('10.254.254.254', 1))
+        local_ip = s.getsockname()[0]
+    except Exception:
+        local_ip = '127.0.0.1'
+    finally:
+        s.close()
+    return local_ip
 
 def start_server(port):
     serve(app, host='0.0.0.0', port=port)

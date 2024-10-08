@@ -1,0 +1,64 @@
+<h1>Documentation</h1>
+<h2>How Digital Radionics Works</h2>
+<hr>
+<p>This is the typical workflow of the AetherOnePy:</p>
+<div style="text-align: left" class="badge text-bg-primary">
+  <h1>Case(s)</h1>
+  <p>A target, which could be a person, an animal, a place, an abstract energy field or something you want to analyze and energetically balance.</p>
+  <p>You begin with typing the name of your case object / subject and then maybe enter more details, a small description, some notes, etc.</p>
+
+  <div class="mb-3">
+    <label for="name" class="form-label">Name</label>
+    <input id="name" class="form-control form-control-sm" type="text" aria-label=".form-control-sm example" value="John, the cat">
+  </div>
+  <div class="mb-3">
+    <label for="description" class="form-label">Description</label>
+    <textarea class="form-control form-control-sm" id="description" rows="3">This poor cat loose too much weight very fast...</textarea>
+  </div>
+
+
+  <div class="text-bg-info rounded position-relative">
+    <h2>Session(s)</h2> <button type="button" class="btn-close position-absolute top-0 end-0" aria-label="Close"></button>
+    <p>A session is when you sit down and analyze, broadcast and make notes.</p>
+    <div style="margin: 0.8rem" class="text-bg-warning">
+      <h3>Analysis</h3>
+      <p>For an analysis you select a list of so called "rates" (or just names of energetic signatures) and perform the analysis.</p>
+      <table class="table table-sm">
+        <thead>
+        <tr>
+          <th>POS</th>
+          <th>EV</th>
+          <th>RATE / SIGNATURE</th>
+          <th>GV</th>
+          <th>ACTIONS</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td>1</td>
+          <td>1001</td>
+          <td>Arsenicum album</td>
+          <td>455</td>
+          <td><button style="padding: 0.05rem; font-size: 0.6rem" class="btn btn-sm btn-success" title="broadcast Arsenicum album">BROADCAST</button></td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>965</td>
+          <td>Nux vomica</td>
+          <td>1200</td>
+          <td><button style="padding: 0.05rem; font-size: 0.6rem" class="btn btn-sm btn-success" title="broadcast Nux vomica">BROADCAST</button></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="text-bg-info rounded"><h2>Session</h2></div>
+  <div class="text-bg-info rounded"><h2>Session</h2></div>
+  <div class="text-bg-info rounded"><h2>Session</h2></div>
+</div>
+<hr>
+<h1>Mobile Tools</h1>
+<p>You can use your smartphone or other mobile devices in order to extend the functionality of AetherOnePy. Scan the QR for getting the URL of your local server.</p>
+<div style="text-align: center">
+  <img [src]="qrCodeUrl" alt="QR Code">
+</div>

@@ -36,3 +36,9 @@ python main.py
 
 # Ideas
 - ReactFlow evaluate
+- Element Periodic Table as main analysis and then Schuessle Salts, Minerals, Bacteria, Plants, Fungi, Animals and Imponderabilia, in a specific order, with links to the materia medica (textbooks), with additional description of rows and columns and kingdoms, miasma and so on, which also helps to learn homeopathy
+- relate the clinical symptoms (Clarke Materia Medica) to the remedy and display it in a way the user immediately recognize the pattern (without having deeper knowledge of homeopathy)
+
+# Resources
+- https://github.com/Bowserinator/Periodic-Table-JSON/blob/master/PeriodicTableJSON.json
+- https://modelviewer.dev/
