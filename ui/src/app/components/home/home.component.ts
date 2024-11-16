@@ -1,6 +1,6 @@
-import {Component, OnInit} from '@angular/core';
-import {Case} from "../../domains/Case";
-import {FormControl} from "@angular/forms";
+import {Component, OnInit} from '@angular/core'
+import {Case} from "../../domains/Case"
+import {FormControl} from "@angular/forms"
 
 @Component({
   selector: 'app-home',
@@ -9,7 +9,11 @@ import {FormControl} from "@angular/forms";
 })
 export class HomeComponent implements OnInit {
 
-  case:Case|undefined;
+  case: Case | undefined;
+  name = new FormControl('', { nonNullable: true });
+  email = new FormControl('', { nonNullable: true });
+  color = new FormControl('', { nonNullable: true });
+  description= new FormControl('', { nonNullable: true });
 
   constructor() {
   }
@@ -17,5 +21,12 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
   }
 
-
+  saveNewCase() {
+    this.case = new Case()
+    this.case.name = this.name?.value
+    this.case.description = this.description?.value
+    this.case.email = this.email?.value
+    this.case.color = this.color?.value
+    console.log(this.case)
+  }
 }

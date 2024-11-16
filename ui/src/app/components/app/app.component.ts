@@ -70,14 +70,15 @@ export class AppComponent implements OnInit {
   }
 
   private initLinks() {
-    this.addLink("MANUAL", false, "#a1a1a1");
-    this.addLink("SETTINGS", false, "#ffd19d");
+    this.addLink("MANUAL", false, "#133185", "#fff");
+    this.addLink("SETTINGS", false, "#ff9520", "#000");
   }
 
-  private addLink(name: string, active: boolean, color: string) {
+  private addLink(name: string, active: boolean, backgroundColor:string, color: string) {
     let link:Link = new Link();
     link.name = name;
     link.active = active;
+    link.backgroundColor = backgroundColor;
     link.color = color;
     this.links.push(link)
   }

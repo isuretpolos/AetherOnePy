@@ -1,7 +1,46 @@
 <div *ngIf="!case">
   <h1>DASHBOARD</h1>
   <p>No case selected</p>
-  <button class="btn btn-sm btn-primary caseButton">NEW</button>
+  <button type="button" class="btn btn-sm btn-primary caseButton" data-bs-toggle="modal" data-bs-target="#caseModal">NEW</button>
   <hr>
+</div>
 
+<!-- Modal CASE -->
+<div class="modal fade " id="caseModal" tabindex="-1" aria-labelledby="caseModalLabel" aria-hidden="true">
+  <div class="modal-dialog ">
+    <div class="modal-content shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="caseModalLabel">NEW CASE <span *ngIf="name?.value" style="font-weight: bolder">{{ name.value }}</span></h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <label for="caseColorInput" class="form-label">Color</label>
+        <input type="color" class="form-control form-control-color" id="caseColorInput" value="#ffffff" title="Choose the color of the case" [formControl]="color">
+        <div class="mb-3 row">
+          <label for="inputName" class="col-sm-2 col-form-label">Name</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm" id="inputName" [formControl]="name">
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="email" class="col-sm-2 col-form-label">Email</label>
+          <div class="col-sm-10">
+            <input type="text" class="form-control form-control-sm" id="email" [formControl]="email">
+            <label for="email" class="text-secondary">(optional, for sending the report of analysis and broadcast)</label>
+          </div>
+        </div>
+        <div class="mb-3 row">
+          <label for="description" class="col-sm-3 col-form-label">Description</label>
+          <div class="col-sm-12">
+            <textarea type="text" class="form-control form-control-sm" id="description" [formControl]="description"></textarea>
+          </div>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" (click)="saveNewCase()">Save new case</button>
+      </div>
+    </div>
+  </div>
 </div>

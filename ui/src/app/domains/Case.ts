@@ -3,8 +3,10 @@ import {Analysis, RateObject} from "./Analysis";
 export class Case {
   name:string = ""
   mapDesign:MapDesign = new MapDesign()
+  email:string = ""
+  color:string = "" // hex value
   description: string = ""
-  created:string = ""
+  created:Date = new Date()
   lastChange:Date = new Date()
   sessionList:Session[] = []
   topTenList:RateObjectWrapper[] = []

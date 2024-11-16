@@ -9,8 +9,8 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="serverOnline">
-        <li class="nav-item" *ngFor="let link of links" style="background-color: {{link.color}}; margin-left:0.1rem;margin-bottom:0.1rem">
-          <a class="nav-link active navigationButton" aria-current="page" href="#{{link.name}}" (click)="navigate(link.name)"
+        <li class="nav-item" *ngFor="let link of links" style="background-color: {{link.backgroundColor}}; margin-left:0.1rem;margin-bottom:0.1rem">
+          <a class="nav-link active navigationButton" aria-current="page" href="#{{link.name}}" style="color:{{link.color}}!important;" (click)="navigate(link.name)"
              [class.activeLink]="link.active" [class.inactiveLink]="!link.active">{{link.name}}</a>
         </li>
       </ul>
