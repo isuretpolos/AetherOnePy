@@ -1,6 +1,7 @@
 # AetherOnyPy Main Application
 # Copyright Isuret Polos 2024
 # Support me on https://www.patreon.com/aetherone
+import os
 import webbrowser
 import time
 import requests
@@ -9,11 +10,14 @@ import argparse
 import qrcode
 import io
 import socket
+import re
+import json
 
 from waitress import serve
-from flask import Flask, jsonify, request, send_from_directory, send_file
+from flask import Flask, jsonify, request, send_from_directory, send_file,Response
 from flask_cors import CORS
 from PIL import Image, ImageDraw, ImageFont
+from pprint import pprint
 
 app = Flask(__name__)
 port = 80
@@ -67,6 +71,20 @@ def get_qrcode():
 
     return send_file(img_byte_arr, mimetype='image/png')
 
+@app.route('/case', methods=['GET','POST','PUT','DELETE'])
+def case():
+    if request.method == 'POST':
+        case = request.json
+        pprint(case)
+        if not os.path.exists("data"):
+            os.mkdir("data")
+        fileName = f"data/{sanitize_filename(case["name"])}.json"
+        with open(fileName, "w", encoding='utf-8') as json_file:
+            json.dump(case, json_file, ensure_ascii=False, indent=4)
+        response_data = json.dumps(case, ensure_ascii=False)
+        return Response(response_data, content_type='application/json; charset=utf-8')
+    return "OK"
+
 def get_local_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
@@ -94,6 +112,24 @@ def wait_for_server_and_open(port):
         except requests.ConnectionError:
             pass
         time.sleep(1)
+
+def sanitize_filename(filename: str) -> str:
+    """
+    Sanitize a given filename to make it safe for saving as a file.
+    Removes or replaces characters that are not allowed in filenames.
+    """
+    # Define a set of safe characters (alphanumeric, dash, underscore, dot)
+    safe_characters = re.compile(r'[^a-zA-Z0-9_\-\.]')
+
+    # Replace any unsafe characters with an underscore
+    sanitized = safe_characters.sub('_', filename)
+
+    # Ensure the filename does not start or end with a dot
+    sanitized = sanitized.strip('.')
+
+    # Truncate the filename to a reasonable length (e.g., 255 characters)
+    return sanitized[:255]
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(

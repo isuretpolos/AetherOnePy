@@ -18,5 +18,7 @@ export class AetherOneService {
     return this.http.get(`${this.baseUrl}ping`, {responseType: 'text'})
   }
 
-
+  saveNewCase(newCase:Case):Observable<Case> {
+    return this.http.post<Case>(`${this.baseUrl}case`, newCase);
+}
 }

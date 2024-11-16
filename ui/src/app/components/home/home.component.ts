@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core'
 import {Case} from "../../domains/Case"
 import {FormControl} from "@angular/forms"
+import {AetherOneService} from "../../services/aether-one.service";
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,7 @@ export class HomeComponent implements OnInit {
   color = new FormControl('', { nonNullable: true });
   description= new FormControl('', { nonNullable: true });
 
-  constructor() {
+  constructor(private aopyService:AetherOneService) {
   }
 
   ngOnInit(): void {
@@ -28,5 +29,6 @@ export class HomeComponent implements OnInit {
     this.case.email = this.email?.value
     this.case.color = this.color?.value
     console.log(this.case)
+    this.aopyService.saveNewCase(this.case).subscribe(c => this.case = c)
   }
 }
