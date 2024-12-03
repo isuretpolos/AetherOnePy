@@ -6,7 +6,8 @@ required_packages = [
     'flask-cors',
     'waitress',
     'qrcode[pil]',
-    'PIL'
+    'PIL',
+    'python-dateutil'
 ]
 
 def install_package(package):

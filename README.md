@@ -30,6 +30,21 @@ git pull
 python setup.py
 python main.py
 ```
+# Raspberry Pi
+Some notes for users installing the application on the Raspberry Pi.
+
+- Raspberry Pi 5 needs extra cable for the Camera. For example the older ones has a broader cable, the new a slim one. Search for a camera cable extension.
+
+Helpful commands
+```shell
+sudo apt update
+sudo apt upgrade
+sudo apt install vim
+# now you can edit the hidden file .bashrc and set the alias
+vim .bashrc
+# now enable the alias for ll (like DIR in Windows)
+alias ll='ls -la'
+```
 
 # History
 - 2024-05-28 automatic dependency install

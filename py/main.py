@@ -12,16 +12,23 @@ import io
 import socket
 import re
 import json
+import sys
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from waitress import serve
 from flask import Flask, jsonify, request, send_from_directory, send_file,Response
 from flask_cors import CORS
 from PIL import Image, ImageDraw, ImageFont
 from pprint import pprint
+from dateutil import parser
+
+from services.databaseService import get_case_dao, Case
 
 app = Flask(__name__)
 port = 80
 CORS(app)
+caseDAO = get_case_dao('data/cases.db')
 
 # Angular UI, serving static files
 # --------------------------------
@@ -71,19 +78,49 @@ def get_qrcode():
 
     return send_file(img_byte_arr, mimetype='image/png')
 
-@app.route('/case', methods=['GET','POST','PUT','DELETE'])
+# @app.route('/case', methods=['GET','POST','PUT','DELETE'])
+# def case():
+#     if request.method == 'POST':
+#         case = request.json
+#         pprint(case)
+#         if not os.path.exists("data"):
+#             os.mkdir("data")
+#         fileName = f"data/{sanitize_filename(case["name"])}.json"
+#         with open(fileName, "w", encoding='utf-8') as json_file:
+#             json.dump(case, json_file, ensure_ascii=False, indent=4)
+#         response_data = json.dumps(case, ensure_ascii=False)
+#         return Response(response_data, content_type='application/json; charset=utf-8')
+#     return "OK"
+
+@app.route('/case', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def case():
     if request.method == 'POST':
-        case = request.json
-        pprint(case)
-        if not os.path.exists("data"):
-            os.mkdir("data")
-        fileName = f"data/{sanitize_filename(case["name"])}.json"
-        with open(fileName, "w", encoding='utf-8') as json_file:
-            json.dump(case, json_file, ensure_ascii=False, indent=4)
-        response_data = json.dumps(case, ensure_ascii=False)
+        case_data = request.json
+        pprint(case_data)
+
+        # Convert received JSON data into a Case object
+        print("\n\n")
+        print(case_data["created"])
+        new_case = Case(
+            name=case_data["name"],
+            map_design=case_data["mapDesign"],
+            email=case_data["email"],
+            color=case_data["color"],
+            description=case_data["description"],
+            created=parser.isoparse(case_data["created"]),
+            last_change=parser.isoparse(case_data["lastChange"]),
+            session_list=case_data["sessionList"],
+            top_ten_list=case_data["topTenList"]
+        )
+
+        # Insert the Case object into the database using caseDAO
+        caseDAO.insert_case(new_case)
+
+        response_data = json.dumps(case_data, ensure_ascii=False)
         return Response(response_data, content_type='application/json; charset=utf-8')
+
     return "OK"
+
 
 def get_local_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -132,16 +169,26 @@ def sanitize_filename(filename: str) -> str:
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(
+    argParser = argparse.ArgumentParser(
         prog='AetherOnePy',
         description='Open Source Digital Radionics',
-        epilog='Support me on Patreon https://www.patreon.com/aetherone')
-    parser.add_argument('-p', '--port', default='80')
-    parser.print_help()
-    args = vars(parser.parse_args())
+        epilog='Support me on Patreon https://www.patreon.com/aetherone'
+    )
+    argParser.add_argument('-p', '--port', default='80')
+    argParser.print_help()
+    args = vars(argParser.parse_args())
     port = args['port']
+
     print("Starting AetherOnePy server ...")
-    server_process = multiprocessing.Process(target=start_server, args=(port,))
-    server_process.start()
-    wait_for_server_and_open(port)
-    server_process.join() #keep it alive
+
+    try:
+        server_process = multiprocessing.Process(target=start_server, args=(port,))
+        server_process.start()
+        wait_for_server_and_open(port)
+        server_process.join()  # keep it alive
+    except KeyboardInterrupt:
+        print("\nStopping AetherOnePy server ...")
+        server_process.terminate()  # Ensure server stops properly
+        server_process.join()
+        caseDAO.close()
+        sys.exit(0)
