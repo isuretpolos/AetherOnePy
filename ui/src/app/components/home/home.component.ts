@@ -11,6 +11,7 @@ import {AetherOneService} from "../../services/aether-one.service";
 export class HomeComponent implements OnInit {
 
   case: Case | undefined;
+  cases: Case[] = []
   name = new FormControl('', { nonNullable: true });
   email = new FormControl('', { nonNullable: true });
   color = new FormControl('', { nonNullable: true });
@@ -20,6 +21,7 @@ export class HomeComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.aopyService.loadAllCases().subscribe( allCases => this.cases = allCases)
   }
 
   saveNewCase() {

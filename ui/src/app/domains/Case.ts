@@ -1,26 +1,25 @@
 import {Analysis, RateObject} from "./Analysis";
 
 export class Case {
+  id:number = 0
   name:string = ""
-  mapDesign:MapDesign = new MapDesign()
   email:string = ""
   color:string = "" // hex value
   description: string = ""
   created:Date = new Date()
   lastChange:Date = new Date()
-  sessionList:Session[] = []
-  topTenList:RateObjectWrapper[] = []
 }
 
 export class Session {
+  id:number = 0
+  caseID:number = 0
   intenion:string = ""
   description:string = ""
   created:Date = new Date()
-  analysisResult:Analysis = new Analysis()
-  broadCasted:BroadCastData = new BroadCastData()
 }
 
 export class BroadCastData {
+  sessionID:number = 0
   clear:boolean = false
   intention:string = ""
   signature:string = ""
@@ -39,14 +38,17 @@ export class RateObjectWrapper {
 }
 
 export class MapDesign {
+  id:number = 0
+  caseID:number = 0
   uuid:string = ""
   coordinatesX:number = 0
   coordinatesY:number = 0
   zoom:number = 10
-  featureList:Feature[] = []
 }
 
 export class Feature {
+  id:number = 0
+  mapID:number = 0
   territoryName:string = ""
   simpleFeatureData:string = ""
   simpleFeatureType:string = ""

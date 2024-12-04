@@ -15,6 +15,7 @@ import json
 import sys
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+os.environ['FLASK_ENV'] = 'development'
 
 from waitress import serve
 from flask import Flask, jsonify, request, send_from_directory, send_file,Response
@@ -28,7 +29,9 @@ from services.databaseService import get_case_dao, Case
 app = Flask(__name__)
 port = 80
 CORS(app)
-caseDAO = get_case_dao('data/cases.db')
+if not os.path.isdir("../data"):
+    os.makedirs("../data")
+caseDAO = get_case_dao('../data/cases.db')
 
 # Angular UI, serving static files
 # --------------------------------
@@ -103,20 +106,23 @@ def case():
         print(case_data["created"])
         new_case = Case(
             name=case_data["name"],
-            map_design=case_data["mapDesign"],
             email=case_data["email"],
             color=case_data["color"],
             description=case_data["description"],
             created=parser.isoparse(case_data["created"]),
-            last_change=parser.isoparse(case_data["lastChange"]),
-            session_list=case_data["sessionList"],
-            top_ten_list=case_data["topTenList"]
+            last_change=parser.isoparse(case_data["lastChange"])
         )
 
         # Insert the Case object into the database using caseDAO
         caseDAO.insert_case(new_case)
 
         response_data = json.dumps(case_data, ensure_ascii=False)
+        return Response(response_data, content_type='application/json; charset=utf-8')
+
+    if request.method == 'GET':
+        allCases = caseDAO.get_all_cases()
+        print(allCases)
+        response_data = json.dumps(allCases, ensure_ascii=False)
         return Response(response_data, content_type='application/json; charset=utf-8')
 
     return "OK"

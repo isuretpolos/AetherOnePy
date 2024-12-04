@@ -9,16 +9,21 @@ import {Case} from "../domains/Case";
 })
 export class AetherOneService {
 
-  baseUrl:string = environment.baseUrl
-  case$ = new BehaviorSubject<Case|undefined>(undefined);
+  baseUrl: string = environment.baseUrl
+  case$ = new BehaviorSubject<Case | undefined>(undefined);
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) {
+  }
 
-  ping():Observable<any> {
+  ping(): Observable<any> {
     return this.http.get(`${this.baseUrl}ping`, {responseType: 'text'})
   }
 
-  saveNewCase(newCase:Case):Observable<Case> {
+  saveNewCase(newCase: Case): Observable<Case> {
     return this.http.post<Case>(`${this.baseUrl}case`, newCase);
-}
+  }
+
+  loadAllCases():Observable<Case[]> {
+    return this.http.get<Case[]>(`${this.baseUrl}case`)
+  }
 }

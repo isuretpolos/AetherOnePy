@@ -6,7 +6,7 @@ current_time_ms = int(time.time() * 1000)
 random.seed(current_time_ms)
 
 # Load data from CSV file
-filename = "../../data/remoteViewingCategories.csv"
+filename = "../../databases/remoteViewingCategories.csv"
 categories = []
 targets = []
 
