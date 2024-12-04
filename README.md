@@ -1,5 +1,5 @@
 # AetherOnePy
-work in progress ...
+![](py\docs\aetherOnePyBox.jpg)
 
 AetherOnePy is a Web-based Desktop Application, which means the application runs on your computer but uses a web browser as its interface. You can run it on a Raspberry Pi or a PC (Windows, Linux or Mac).
 
@@ -47,12 +47,14 @@ alias ll='ls -la'
 ```
 
 # History
+- 2024-12-04 SQLlite Database Design
 - 2024-05-28 automatic dependency install
 
 # Ideas
 - ReactFlow evaluate
 - Element Periodic Table as main analysis and then Schuessle Salts, Minerals, Bacteria, Plants, Fungi, Animals and Imponderabilia, in a specific order, with links to the materia medica (textbooks), with additional description of rows and columns and kingdoms, miasma and so on, which also helps to learn homeopathy
 - relate the clinical symptoms (Clarke Materia Medica) to the remedy and display it in a way the user immediately recognize the pattern (without having deeper knowledge of homeopathy)
+- Open API for connecting different devices (radionics protocol)
 
 # Resources
 - https://github.com/Bowserinator/Periodic-Table-JSON/blob/master/PeriodicTableJSON.json
