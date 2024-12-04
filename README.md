@@ -1,5 +1,5 @@
 # AetherOnePy
-![](py\docs\aetherOnePyBox.jpg)
+![RadionicsBox AetherOnyPy](https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/docs/aetherOnePyBox.jpg)
 
 AetherOnePy is a Web-based Desktop Application, which means the application runs on your computer but uses a web browser as its interface. You can run it on a Raspberry Pi or a PC (Windows, Linux or Mac).
 
