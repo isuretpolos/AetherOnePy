@@ -81,20 +81,6 @@ def get_qrcode():
 
     return send_file(img_byte_arr, mimetype='image/png')
 
-# @app.route('/case', methods=['GET','POST','PUT','DELETE'])
-# def case():
-#     if request.method == 'POST':
-#         case = request.json
-#         pprint(case)
-#         if not os.path.exists("data"):
-#             os.mkdir("data")
-#         fileName = f"data/{sanitize_filename(case["name"])}.json"
-#         with open(fileName, "w", encoding='utf-8') as json_file:
-#             json.dump(case, json_file, ensure_ascii=False, indent=4)
-#         response_data = json.dumps(case, ensure_ascii=False)
-#         return Response(response_data, content_type='application/json; charset=utf-8')
-#     return "OK"
-
 @app.route('/case', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def case():
     if request.method == 'POST':
@@ -102,8 +88,6 @@ def case():
         pprint(case_data)
 
         # Convert received JSON data into a Case object
-        print("\n\n")
-        print(case_data["created"])
         new_case = Case(
             name=case_data["name"],
             email=case_data["email"],
@@ -120,8 +104,9 @@ def case():
         return Response(response_data, content_type='application/json; charset=utf-8')
 
     if request.method == 'GET':
-        allCases = caseDAO.get_all_cases()
-        print(allCases)
+        allCases = []
+        for caseObj in caseDAO.list_cases():
+            allCases.append(caseObj.to_dict())
         response_data = json.dumps(allCases, ensure_ascii=False)
         return Response(response_data, content_type='application/json; charset=utf-8')
 

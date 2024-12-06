@@ -12,7 +12,8 @@ from domains.aetherOneDomains import Case, Session, MapDesign, Feature, Analysis
 class CaseDAO:
     def __init__(self, db_filename):
         self.conn = sqlite3.connect(db_filename, isolation_level=None, timeout=10, check_same_thread=False)
-        self.conn.execute('PRAGMA journal_mode=WAL;')
+        self.conn.execute('PRAGMA journal_mode = WAL;')
+        self.conn.execute('PRAGMA foreign_keys = ON;')
         self.create_table()
 
     def close(self):
@@ -26,8 +27,8 @@ class CaseDAO:
             email TEXT,
             color TEXT,
             description TEXT,
-            created TEXT,
-            last_change TEXT
+            created DATETIME,
+            last_change DATETIME
         )
         '''
         session_query = '''
@@ -35,11 +36,9 @@ class CaseDAO:
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             intention TEXT,
             description TEXT,
-            created TEXT,
-            analysis_result TEXT,
-            broad_casted TEXT,
+            created DATETIME,
             case_id INTEGER,
-            FOREIGN KEY (case_id) REFERENCES cases (id)
+            FOREIGN KEY (case_id) REFERENCES cases (id) ON DELETE CASCADE
         )
         '''
         broadcast_query = '''
@@ -53,7 +52,7 @@ class CaseDAO:
             entering_with_general_vitality INTEGER,
             leaving_with_general_vitality INTEGER,
             session_id INTEGER,
-            FOREIGN KEY (session_id) REFERENCES sessions (id)
+            FOREIGN KEY (session_id) REFERENCES sessions (id) ON DELETE CASCADE
         )
         '''
         ## Here we need a sophisticated rate database
@@ -63,7 +62,7 @@ class CaseDAO:
             note TEXT,
             session_id INTEGER,
             created DATETIME,
-            FOREIGN KEY (session_id) REFERENCES sessions (id)
+            FOREIGN KEY (session_id) REFERENCES sessions (id) ON DELETE CASCADE
         )
         '''
         rate_object_query = '''
@@ -109,35 +108,27 @@ class CaseDAO:
     def insert_case(self, case: Case):
         query = '''
         INSERT INTO cases (name, email, color, description, created, last_change)
-        VALUES (?, ?, ?, ?, ?, ?)
+        VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))
         '''
-        self.conn.execute(query, (case.name, case.email, case.color, case.description,
-                                  case.created.isoformat(), case.last_change.isoformat()))
+        self.conn.execute(query, (case.name, case.email, case.color, case.description))
         self.conn.commit()
 
     def get_case(self, case_id: int) -> Case | None:
         row = self.conn.execute('SELECT * FROM cases WHERE id = ?', (case_id,)).fetchone()
         if row:
-            return Case(row[1], row[2], row[3], row[4],
+            caseObj = Case(row[1], row[2], row[3], row[4],
                         datetime.fromisoformat(row[5]), datetime.fromisoformat(row[6]))
+            caseObj.id = row[0]
+            return caseObj
         return None
 
-    def get_all_cases(self) -> []:
-        caseList = self.conn.execute('SELECT * FROM cases').fetchall()
-        cases = []
-        for row in caseList:
-            cases.append(Case(row[1], row[2], row[3], row[4],
-                              datetime.fromisoformat(row[5]), datetime.fromisoformat(row[6])))
-        return cases
-
-    def update_case(self, case_id: int, case: Case):
+    def update_case(self, case: Case):
         query = '''
         UPDATE cases
-        SET name = ?, email = ?, color = ?, description = ?, created = ?, last_change = ?
+        SET name = ?, email = ?, color = ?, description = ?, last_change = datetime('now')
         WHERE id = ?
         '''
-        self.conn.execute(query, (case.name, case.email, case.color, case.description,
-                                  case.created.isoformat(), case.last_change.isoformat(), case_id))
+        self.conn.execute(query, (case.name, case.email, case.color, case.description, case.id))
         self.conn.commit()
 
     def delete_case(self, case_id: int):
@@ -159,9 +150,9 @@ class CaseDAO:
     def insert_session(self, session: Session, case_id: int):
         query = '''
         INSERT INTO sessions (intention, description, created, case_id)
-        VALUES (?, ?, ?, ?)
+        VALUES (?, ?, datetime('now'), ?)
         '''
-        self.conn.execute(query, (session.intention, session.description, session.created.isoformat(), case_id))
+        self.conn.execute(query, (session.intention, session.description, case_id))
         self.conn.commit()
 
     def get_session(self, session_id: int) -> Session:
@@ -169,18 +160,8 @@ class CaseDAO:
         cursor = self.conn.execute(query, (session_id,))
         row = cursor.fetchone()
         if row:
-            return Session(row[1], row[2], datetime.fromisoformat(row[3]), json.loads(row[4]), json.loads(row[5]))
+            return Session(row[1], row[2], row[4])
         return None
-
-    def update_session(self, session_id: int, session: Session):
-        query = '''
-        UPDATE sessions
-        SET intention = ?, description = ?, created = ?, analysis_result = ?, broad_casted = ?
-        WHERE id = ?
-        '''
-        self.conn.execute(query, (session.intention, session.description, session.created.isoformat(),
-                                  session.analysis_result, session.broad_casted, session_id))
-        self.conn.commit()
 
     def delete_session(self, session_id: int):
         query = 'DELETE FROM sessions WHERE id = ?'
@@ -192,7 +173,7 @@ class CaseDAO:
         cursor = self.conn.execute(query, (case_id,))
         sessions = []
         for row in cursor:
-            sessionObj = Session(row[1], row[2], datetime.fromisoformat(row[3]), case_id)
+            sessionObj = Session(row[1], row[2], case_id)
             sessionObj.id = row[0]
             sessions.append(sessionObj)
         return sessions
@@ -200,7 +181,7 @@ class CaseDAO:
     def insert_analysis(self, analysis: Analysis, session_id: int):
         query = '''
         INSERT INTO analysis (note, session_id, created)
-        VALUES (?, ?, DATETIME('now'))
+        VALUES (?, ?, datetime('now'))
         '''
         self.conn.execute(query, (analysis.note, session_id))
         self.conn.commit()
@@ -228,15 +209,16 @@ class CaseDAO:
         self.conn.execute(query, (analysis_id,))
         self.conn.commit()
 
-    def list_analysis(self, session_id: int) -> List[Session]:
-        query = 'SELECT * FROM sessions WHERE case_id = ?'
+    def list_analysis(self, session_id: int) -> List[Analysis]:
+        query = 'SELECT * FROM analysis WHERE session_id = ?'
         cursor = self.conn.execute(query, (session_id,))
-        sessions = []
+        analysisList = []
         for row in cursor:
-            sessionObj = Session(row[1], row[2], datetime.fromisoformat(row[3]), session_id)
-            sessionObj.id = row[0]
-            sessions.append(sessionObj)
-        return sessions
+            analysis = Analysis(row[1], row[3])
+            analysis.id = row[0]
+            analysis.sessionID = session_id
+            analysisList.append(analysis)
+        return analysisList
 
     def insert_map_design(self, map_design: MapDesign):
         query = '''

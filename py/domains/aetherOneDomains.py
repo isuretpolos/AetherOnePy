@@ -20,14 +20,34 @@ class Case:
         self.created = created
         self.last_change = last_change
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'email': self.email,
+            'color': self.color,
+            'description': self.description,
+            'created': self.created.isoformat(),
+            'last_change': self.last_change.isoformat()
+        }
+
 
 class Session:
-    def __init__(self, intention: str, description: str, created: datetime, caseID: int):
+    def __init__(self, intention: str, description: str, caseID: int):
         self.id = 0
         self.intention = intention
         self.description = description
-        self.created = created
+        self.created = datetime.now()
         self.caseID = caseID
+
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'intention': self.intention,
+            'description': self.description,
+            'created': self.created.isoformat(),
+            'caseID': self.caseID
+        }
 
 
 class Analysis:
@@ -37,6 +57,13 @@ class Analysis:
         self.sessionID = 0
         self.created = created
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'note': self.note,
+            'sessionID': self.sessionID,
+            'created': self.created.isoformat()
+        }
 
 # A catalog describes a set of rates, for example homeopathy, or rates from specific authors
 class Catalog:
@@ -47,6 +74,15 @@ class Catalog:
         self.author = author
         self.importdate = importdate
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'name': self.name,
+            'description': self.description,
+            'author': self.author,
+            'importdate': self.importdate.isoformat()
+        }
+
 
 # A rate is a carrier for intention, a link towards a morphic field
 class Rate:
@@ -55,6 +91,14 @@ class Rate:
         self.signature = signature
         self.description = description  # Markdown
         self.catalogID = catalogID
+
+    def to_dict(self):
+            return {
+                'id': self.id,
+                'signature': self.signature,
+                'description': self.description,
+                'catalogID': self.catalogID
+            }
 
 
 class BroadCastData:

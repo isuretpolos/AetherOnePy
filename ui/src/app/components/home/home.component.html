@@ -5,6 +5,10 @@
   <hr>
 </div>
 
+<div>
+  <button class="btn btn-primary caseButton" *ngFor="let caseObj of cases" style="background-color: {{caseObj.color}}!important" (click)="selectCase(caseObj)">{{caseObj.name}}</button>
+</div>
+
 <!-- Modal CASE -->
 <div class="modal fade " id="caseModal" tabindex="-1" aria-labelledby="caseModalLabel" aria-hidden="true">
   <div class="modal-dialog ">
@@ -39,7 +43,7 @@
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" (click)="saveNewCase()">Save new case</button>
+        <button type="button" class="btn btn-primary" (click)="saveNewCase()" data-bs-toggle="modal" data-bs-target="#caseModal">Save new case</button>
       </div>
     </div>
   </div>
