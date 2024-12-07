@@ -65,9 +65,10 @@ class Analysis:
             'created': self.created.isoformat()
         }
 
+
 # A catalog describes a set of rates, for example homeopathy, or rates from specific authors
 class Catalog:
-    def __init__(self, name: str, description: str, author: str, importdate: datetime):
+    def __init__(self, name: str, description: str, author: str, importdate: datetime = datetime.now()):
         self.id = 0
         self.name = name
         self.description = description
@@ -93,12 +94,12 @@ class Rate:
         self.catalogID = catalogID
 
     def to_dict(self):
-            return {
-                'id': self.id,
-                'signature': self.signature,
-                'description': self.description,
-                'catalogID': self.catalogID
-            }
+        return {
+            'id': self.id,
+            'signature': self.signature,
+            'description': self.description,
+            'catalogID': self.catalogID
+        }
 
 
 class BroadCastData:

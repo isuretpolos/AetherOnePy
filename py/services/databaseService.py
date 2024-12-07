@@ -6,7 +6,7 @@ from datetime import datetime
 import json
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from domains.aetherOneDomains import Case, Session, MapDesign, Feature, Analysis
+from domains.aetherOneDomains import Case, Session, MapDesign, Feature, Analysis, Catalog
 
 
 class CaseDAO:
@@ -20,6 +20,15 @@ class CaseDAO:
         self.conn.close()
 
     def create_table(self):
+        catalog_query = '''
+        CREATE TABLE IF NOT EXISTS catalog (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT,
+            description TEXT,
+            author TEXT,
+            importdate DATETIME
+        )
+        '''
         case_query = '''
         CREATE TABLE IF NOT EXISTS cases (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -96,6 +105,7 @@ class CaseDAO:
             last_update TEXT
         )
         '''
+        self.conn.execute(catalog_query)
         self.conn.execute(case_query)
         self.conn.execute(session_query)
         self.conn.execute(broadcast_query)
@@ -104,6 +114,37 @@ class CaseDAO:
         self.conn.execute(map_design_query)
         self.conn.execute(feature_query)
         self.conn.commit()
+
+    def insert_catalog(self, catalog: Catalog):
+        query = '''
+        INSERT INTO catalog (name, description, author, importdate)
+        VALUES (?, ?, ?, datetime('now'))
+        '''
+        self.conn.execute(query, (catalog.name, catalog.description, catalog.author))
+        self.conn.commit()
+
+    def get_catalog(self, catalog_id: int) -> Catalog | None:
+        row = self.conn.execute('SELECT * FROM catalog WHERE id = ?', (catalog_id,)).fetchone()
+        if row:
+            catalog = Catalog(row[1], row[2], row[3], datetime.fromisoformat(row[4]))
+            catalog.id = row[0]
+            return catalog
+        return None
+
+    def delete_catalog(self, catalog_id: int):
+        query = 'DELETE FROM catalog WHERE id = ?'
+        self.conn.execute(query, (catalog_id,))
+        self.conn.commit()
+
+    def list_catalogs(self) -> List[Catalog]:
+        query = 'SELECT * FROM catalog'
+        cursor = self.conn.execute(query)
+        catalogs = []
+        for row in cursor:
+            catalog = Catalog(row[1], row[2], row[3], datetime.fromisoformat(row[4]))
+            catalog.id = row[0]
+            catalogs.append(catalog)
+        return catalogs
 
     def insert_case(self, case: Case):
         query = '''
@@ -117,7 +158,7 @@ class CaseDAO:
         row = self.conn.execute('SELECT * FROM cases WHERE id = ?', (case_id,)).fetchone()
         if row:
             caseObj = Case(row[1], row[2], row[3], row[4],
-                        datetime.fromisoformat(row[5]), datetime.fromisoformat(row[6]))
+                           datetime.fromisoformat(row[5]), datetime.fromisoformat(row[6]))
             caseObj.id = row[0]
             return caseObj
         return None
@@ -161,6 +202,7 @@ class CaseDAO:
         row = cursor.fetchone()
         if row:
             sessionObj = Session(row[1], row[2], row[4])
+            sessionObj.created = row[3]
             sessionObj.id = row[0]
             return sessionObj
         return None
@@ -188,12 +230,15 @@ class CaseDAO:
         self.conn.execute(query, (analysis.note, session_id))
         self.conn.commit()
 
-    def get_analysis(self, session_id: int) -> Session:
+    def get_analysis(self, session_id: int) -> Analysis:
         query = 'SELECT * FROM analysis WHERE id = ?'
         cursor = self.conn.execute(query, (session_id,))
         row = cursor.fetchone()
         if row:
-            return Session(row[1], row[2], datetime.fromisoformat(row[3]), json.loads(row[4]), json.loads(row[5]))
+            analysis = Analysis(row[1], datetime.fromisoformat(row[3]))
+            analysis.id = row[0]
+            analysis.sessionID = row[2]
+            return analysis
         return None
 
     def update_analysis(self, analysis: Analysis):
