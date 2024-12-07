@@ -22,24 +22,35 @@ if __name__ == '__main__':
             print(f"CASE ID {caseObj.id} | NAME {caseObj.name} | COLOR {caseObj.color} | DESCRIPTION '{caseObj.description}' | CREATED {caseObj.created}")
 
             # add a session to each case
-            dao.insert_session(Session('balance energy', 'description', caseObj.id), caseObj.id)
+            dao.insert_session(Session('balance energy 1', 'description', caseObj.id), caseObj.id)
+            dao.insert_session(Session('balance energy 2', 'description', caseObj.id), caseObj.id)
 
             # list sessions of the case
             listSessions = dao.list_sessions(caseObj.id)
-            assert len(listSessions) == 1
+            assert len(listSessions) == 2
 
             for sessionObj in listSessions:
-                print(f"  SESSION ID {sessionObj.id} | INTENTION {sessionObj.intention} | DESCRIPTION '{sessionObj.description}'")
+                print(f"  SESSION ID {sessionObj.id} | INTENTION {sessionObj.intention} | DESCRIPTION '{sessionObj.description} | CREATED {sessionObj.created}'")
                 # Add an analysis
-                dao.insert_analysis(Analysis('test analysis'), sessionObj.id)
+                dao.insert_analysis(Analysis('test analysis 1'), sessionObj.id)
+                dao.insert_analysis(Analysis('test analysis 2'), sessionObj.id)
                 listAnalysis = dao.list_analysis(sessionObj.id)
-                assert len(listAnalysis) == 1
+                assert len(listAnalysis) == 2
 
                 for analysis in listAnalysis:
                     print(f"  ANALYSIS ID {analysis.id} | NOTE {analysis.note} | CREATED '{analysis.created}'")
+                    analysis.note = f"{analysis.note} UPDATED"
+                    dao.update_analysis()
 
                 sessionObj = dao.get_session(sessionObj.id)
                 assert sessionObj is not None
+                dao.delete_session(sessionObj.id)
+                sessionObj = dao.get_session(sessionObj.id)
+                assert sessionObj is None
+
+
+            listSessions = dao.list_sessions(caseObj.id)
+            assert len(listSessions) == 0
 
             caseObj.name = f"{caseObj.name} UPDATED"
             dao.update_case(caseObj)
@@ -54,7 +65,6 @@ if __name__ == '__main__':
             assert caseObj is None
 
         listCases = dao.list_cases()
-        print(len(listCases))
         assert len(listCases) == 0
 
     finally:

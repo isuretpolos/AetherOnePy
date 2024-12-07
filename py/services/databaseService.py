@@ -160,7 +160,9 @@ class CaseDAO:
         cursor = self.conn.execute(query, (session_id,))
         row = cursor.fetchone()
         if row:
-            return Session(row[1], row[2], row[4])
+            sessionObj = Session(row[1], row[2], row[4])
+            sessionObj.id = row[0]
+            return sessionObj
         return None
 
     def delete_session(self, session_id: int):
@@ -194,14 +196,13 @@ class CaseDAO:
             return Session(row[1], row[2], datetime.fromisoformat(row[3]), json.loads(row[4]), json.loads(row[5]))
         return None
 
-    def update_analysis(self, session_id: int, session: Session):
+    def update_analysis(self, analysis: Analysis):
         query = '''
         UPDATE analysis
-        SET intention = ?, description = ?, created = ?, analysis_result = ?, broad_casted = ?
+        SET note = ?
         WHERE id = ?
         '''
-        self.conn.execute(query, (session.intention, session.description, session.created.isoformat(),
-                                  session.analysis_result, session.broad_casted, session_id))
+        self.conn.execute(query, (analysis.note, analysis.id))
         self.conn.commit()
 
     def delete_analysis(self, analysis_id: int):
