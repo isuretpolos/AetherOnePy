@@ -6,7 +6,7 @@ from datetime import datetime
 import json
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from domains.aetherOneDomains import Case, Session, MapDesign, Feature, Analysis, Catalog
+from domains.aetherOneDomains import Case, Session, MapDesign, Feature, Analysis, Catalog, Rate
 
 
 class CaseDAO:
@@ -27,6 +27,14 @@ class CaseDAO:
             description TEXT,
             author TEXT,
             importdate DATETIME
+        )
+        '''
+        rate_query = '''
+        CREATE TABLE IF NOT EXISTS rate (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            signature TEXT,
+            description TEXT,
+            catalog_id INTEGER NOT NULL
         )
         '''
         case_query = '''
@@ -106,6 +114,7 @@ class CaseDAO:
         )
         '''
         self.conn.execute(catalog_query)
+        self.conn.execute(rate_query)
         self.conn.execute(case_query)
         self.conn.execute(session_query)
         self.conn.execute(broadcast_query)
@@ -137,14 +146,38 @@ class CaseDAO:
         self.conn.commit()
 
     def list_catalogs(self) -> List[Catalog]:
-        query = 'SELECT * FROM catalog'
-        cursor = self.conn.execute(query)
+        cursor = self.conn.execute('SELECT * FROM catalog')
         catalogs = []
         for row in cursor:
             catalog = Catalog(row[1], row[2], row[3], datetime.fromisoformat(row[4]))
             catalog.id = row[0]
             catalogs.append(catalog)
         return catalogs
+
+    def insert_rate(self, rate: Rate):
+        query = '''
+        INSERT INTO rate (signature, description, catalog_id)
+        VALUES (?, ?, ?)
+        '''
+        self.conn.execute(query, (rate.signature, rate.description, rate.catalogID))
+        self.conn.commit()
+
+    def get_rate(self, rate_id: int) -> Rate | None:
+        row = self.conn.execute('SELECT * FROM rate WHERE id = ?', (rate_id,)).fetchone()
+        if row:
+            rate = Rate(row[1], row[2], row[3])
+            rate.id = row[0]
+            return rate
+        return None
+
+    def list_rates_from_catalog(self, catalog_id: int) -> List[Rate]:
+        cursor = self.conn.execute('SELECT * FROM rate WHERE catalog_id = ?', (catalog_id,))
+        rates = []
+        for row in cursor:
+            rate = Rate(row[1], row[2], row[3])
+            rate.id = row[0]
+            rates.append(rate)
+        return rates
 
     def insert_case(self, case: Case):
         query = '''

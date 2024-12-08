@@ -3,7 +3,7 @@ import os, sys
 from datetime import datetime
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from domains.aetherOneDomains import Case, Session, Analysis, Catalog
+from domains.aetherOneDomains import Case, Session, Analysis, Catalog, Rate
 from services.databaseService import get_case_dao
 
 if __name__ == '__main__':
@@ -14,7 +14,7 @@ if __name__ == '__main__':
         listCatalogs = dao.list_catalogs()
         assert len(listCatalogs) == 0
         dao.insert_catalog(Catalog('Morphic Fields','List of special energies', 'Isuret Polos'))
-        dao.insert_catalog(Catalog('A Dictionary of Practical Materia Medica','List of special energies', 'John Henry Clarke'))
+        dao.insert_catalog(Catalog('A Dictionary of Practical Materia Medica','List of homeopathic remedies', 'John Henry Clarke'))
         listCatalogs = dao.list_catalogs()
         assert len(listCatalogs) == 2
         assert listCatalogs[0].id == 1
@@ -25,6 +25,21 @@ if __name__ == '__main__':
         dao.delete_catalog(catalogMorphic.id)
         catalogMorphic = dao.get_catalog(1)
         assert catalogMorphic is None
+        catalogClarke = dao.get_catalog(2)
+        assert catalogClarke is not None
+        print(catalogClarke.to_dict())
+        dao.insert_rate(Rate('Arnica','bruises, doesn''t want to be touched', catalogClarke.id))
+        dao.insert_rate(Rate('Sulfur','lazy and always theorizing', catalogClarke.id))
+        dao.insert_rate(Rate('Zincum','repetitive tasks, works too much', catalogClarke.id))
+        rateArnica = dao.get_rate(1)
+        assert rateArnica is not None
+        print(rateArnica.to_dict())
+        rates = dao.list_rates_from_catalog(catalogClarke.id)
+        assert len(rates) == 3
+
+        for rate in rates:
+            print(rate.to_dict())
+
 
         listCases = dao.list_cases()
         assert len(listCases) == 0
