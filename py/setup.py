@@ -2,6 +2,7 @@ import subprocess
 import sys
 
 required_packages = [
+    'requests',
     'Flask',
     'flask-cors',
     'waitress',
