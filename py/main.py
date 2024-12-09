@@ -25,6 +25,7 @@ from pprint import pprint
 from dateutil import parser
 
 from services.databaseService import get_case_dao, Case
+from services.updateRadionicsRates import update_or_clone_repo
 
 app = Flask(__name__)
 port = 80
@@ -160,6 +161,9 @@ def sanitize_filename(filename: str) -> str:
 
 
 if __name__ == '__main__':
+
+    update_or_clone_repo(os.path.join("../data", "radionics-rates"), "https://github.com/isuretpolos/radionics-rates.git")
+
     argParser = argparse.ArgumentParser(
         prog='AetherOnePy',
         description='Open Source Digital Radionics',

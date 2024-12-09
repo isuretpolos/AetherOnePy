@@ -7,7 +7,8 @@ required_packages = [
     'waitress',
     'qrcode[pil]',
     'PIL',
-    'python-dateutil'
+    'python-dateutil',
+    'gitpython'
 ]
 
 def install_package(package):
