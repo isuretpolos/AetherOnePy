@@ -23,6 +23,12 @@ Just run the main.py if you already runned the setup.py.
 python main.py
 ```
 
+Some systems don't allow a port below 1024, like for example Windows WSL subsystem (ubuntu). In this case use a different port:
+
+```shell
+python main.py --port 7000
+```
+
 ## Update
 For updating you call **git pull** followed by **setup.py** which will download new dependencies.
 ```shell
