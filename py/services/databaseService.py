@@ -170,6 +170,11 @@ class CaseDAO:
             return rate
         return None
 
+    def delete_rate(self, rate_id: int):
+        query = 'DELETE FROM rate WHERE id = ?'
+        self.conn.execute(query, (rate_id,))
+        self.conn.commit()
+
     def list_rates_from_catalog(self, catalog_id: int) -> List[Rate]:
         cursor = self.conn.execute('SELECT * FROM rate WHERE catalog_id = ?', (catalog_id,))
         rates = []

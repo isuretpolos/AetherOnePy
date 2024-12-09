@@ -39,7 +39,10 @@ if __name__ == '__main__':
 
         for rate in rates:
             print(rate.to_dict())
+            dao.delete_rate(rate.id)
 
+        rates = dao.list_rates_from_catalog(catalogClarke.id)
+        assert len(rates) == 0
 
         listCases = dao.list_cases()
         assert len(listCases) == 0
