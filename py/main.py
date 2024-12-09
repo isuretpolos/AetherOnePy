@@ -135,8 +135,8 @@ def wait_for_server_and_open(port):
         try:
             response = requests.get(url)
             if response.status_code == 200:
-                print(f"If your browser does not open automatically, click here http://localhost:{port}")
-                webbrowser.open(f"http://localhost:{port}")
+                print(f"Click here http://localhost:{port} or open the URL in your favorite browser")
+                # webbrowser.open(f"http://localhost:{port}")
                 break
         except requests.ConnectionError:
             pass

@@ -40,11 +40,21 @@ python main.py
 Some notes for users installing the application on the Raspberry Pi.
 
 - Raspberry Pi 5 needs extra cable for the Camera. For example the older ones has a broader cable, the new a slim one. Search for a camera cable extension.
+- Installation is a little bit more complex than on a Windows PC, but I will write a script taking care of the installation process
 
 Helpful commands
 ```shell
 sudo apt update
 sudo apt upgrade
+# install pip for package management for python libraries
+sudo apt-get install python3-pip
+# install a python virtual environment (required by restrictions inside RaspyOS
+python -m venv aetherone
+cd aetherone
+git clone https://github.com/isuretpolos/AetherOnePy.git
+cd AetherOnePy
+cd py
+
 sudo apt install vim
 # now you can edit the hidden file .bashrc and set the alias
 vim .bashrc
