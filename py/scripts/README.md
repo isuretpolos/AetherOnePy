@@ -1,0 +1,1 @@
+This folder contains scripts for installing AetherOnePy on your computer, PC or Raspberry Pi.

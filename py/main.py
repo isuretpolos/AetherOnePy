@@ -2,7 +2,7 @@
 # Copyright Isuret Polos 2024
 # Support me on https://www.patreon.com/aetherone
 import os
-import webbrowser
+# import webbrowser
 import time
 import requests
 import multiprocessing
@@ -32,7 +32,7 @@ port = 80
 CORS(app)
 if not os.path.isdir("../data"):
     os.makedirs("../data")
-caseDAO = get_case_dao('../data/cases.db')
+aetherOneDB = get_case_dao('../data/aetherone.db')
 
 # Angular UI, serving static files
 # --------------------------------
@@ -98,15 +98,15 @@ def case():
             last_change=parser.isoparse(case_data["lastChange"])
         )
 
-        # Insert the Case object into the database using caseDAO
-        caseDAO.insert_case(new_case)
+        # Insert the Case object into the database using aetherOneDB
+        aetherOneDB.insert_case(new_case)
 
         response_data = json.dumps(case_data, ensure_ascii=False)
         return Response(response_data, content_type='application/json; charset=utf-8')
 
     if request.method == 'GET':
         allCases = []
-        for caseObj in caseDAO.list_cases():
+        for caseObj in aetherOneDB.list_cases():
             allCases.append(caseObj.to_dict())
         response_data = json.dumps(allCases, ensure_ascii=False)
         return Response(response_data, content_type='application/json; charset=utf-8')
@@ -185,5 +185,5 @@ if __name__ == '__main__':
         print("\nStopping AetherOnePy server ...")
         server_process.terminate()  # Ensure server stops properly
         server_process.join()
-        caseDAO.close()
+        aetherOneDB.close()
         sys.exit(0)
