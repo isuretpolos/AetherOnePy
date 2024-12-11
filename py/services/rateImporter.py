@@ -1,11 +1,13 @@
-import os, sys
+import os
+import sys
 import json
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from domains.aetherOneDomains import Case, Session, Analysis, Catalog, Rate
-from services.databaseService import get_case_dao, Case
+from domains.aetherOneDomains import Catalog, Rate
+from services.databaseService import get_case_dao
 
-aetherOneDB = get_case_dao('../data/aetherone.db')
+aetherOneDB = get_case_dao('../../data/aetherone.db')
+
 class RateImporter:
     def generate_folder_file_json(self, rootFolder):
         result = {"folders": {}}
@@ -18,48 +20,58 @@ class RateImporter:
 
         return json.dumps(result, indent=2)
 
-    def import_file(self, root_folder, file_name):
-        # Search for the file in subfolders
-        file_path = None
+    def find_file_path(self, root_folder, file_name):
+        """Search for the file in subfolders and return its full path."""
         for dirpath, dirnames, filenames in os.walk(root_folder):
             if file_name in filenames:
-                file_path = os.path.join(dirpath, file_name)
-                break
+                return os.path.join(dirpath, file_name)
+        return None
 
+    def import_file(self, root_folder, file_name):
+        file_path = self.find_file_path(root_folder, file_name)
         if not file_path:
             print(f"File '{file_name}' not found in '{root_folder}'.")
             return
 
-        # Insert the catalog and process the file
+        # Read and process the file
         with open(file_path, 'r', encoding='utf-8') as file:
             lines = file.readlines()
 
         catalog_name = os.path.splitext(file_name)[0]
-        import_date = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        try:
+            # Insert the catalog
+            catalog = aetherOneDB.get_catalog_by_name(catalog_name)
+            if catalog is None:
+                aetherOneDB.insert_catalog(Catalog(catalog_name, 'radionics-rates', '-'))
+                catalog = aetherOneDB.get_catalog_by_name(catalog_name)
+            else:
+                print(f"Warning: catalog '{catalog_name}' already exists.")
+                return
 
-        # Insert catalog
-        with self.conn:
-            cursor = self.conn.cursor()
-            cursor.execute("""
-                INSERT INTO catalog (name, description, author, importdate)
-                VALUES (?, ?, ?, ?)
-            """, (catalog_name, None, None, import_date))
-            catalog_id = cursor.lastrowid
+            if not catalog:
+                print(f"Error: Unable to retrieve catalog '{catalog_name}' after insertion.")
+                return
 
-            # Insert rates for each non-empty line
-            for line in lines:
+            # Insert rates
+            for idx, line in enumerate(lines):
                 line = line.strip()
                 if line:  # Ignore empty lines
-                    signature, *description = line.split(' ', 1)
-                    description = description[0] if description else None
-                    cursor.execute("""
-                        INSERT INTO rate (signature, description, catalog_id)
-                        VALUES (?, ?, ?)
-                    """, (signature, description, catalog_id))
+                    try:
+                        signature, *description = line.split('\t', 1)
+                        description = description[0] if description else None
+                        aetherOneDB.insert_rate(Rate(signature, description, catalog.id))
+                    except ValueError as e:
+                        print(f"Error processing line {idx + 1}: '{line}' - {e}")
 
-        print(f"File '{file_name}' imported successfully.")
+            print(f"File '{file_name}' imported successfully.")
+        except Exception as e:
+            print(f"Error importing file '{file_name}': {e}")
 
 if __name__ == '__main__':
     rateImporter = RateImporter()
+    # Generate and print folder structure JSON
     json_result = rateImporter.generate_folder_file_json('../../data/radionics-rates')
     print(json_result)
+
+    # Import a specific file
+    rateImporter.import_file('../../data/radionics-rates', 'HOMEOPATHY_Clarke_With_MateriaMedicaUrls.txt')

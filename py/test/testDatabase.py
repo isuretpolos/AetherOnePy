@@ -22,6 +22,10 @@ if __name__ == '__main__':
         catalogMorphic = dao.get_catalog(1)
         assert catalogMorphic is not None
         print(catalogMorphic.to_dict())
+
+        catalogMorphic = dao.get_catalog_by_name('Morphic Fields')
+        assert catalogMorphic is not None
+
         dao.delete_catalog(catalogMorphic.id)
         catalogMorphic = dao.get_catalog(1)
         assert catalogMorphic is None

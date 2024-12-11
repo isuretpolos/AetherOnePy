@@ -9,6 +9,7 @@ import { DocumentationComponent } from './components/documentation/documentation
 import { SettingsComponent } from './components/settings/settings.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { MobileComponent } from './components/mobile/mobile.component';
+import { CaseComponent } from './components/case/case.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { MobileComponent } from './components/mobile/mobile.component';
     HomeComponent,
     DocumentationComponent,
     SettingsComponent,
-    MobileComponent
+    MobileComponent,
+    CaseComponent
   ],
   imports: [
     BrowserModule,

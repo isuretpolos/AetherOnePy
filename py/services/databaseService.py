@@ -140,6 +140,14 @@ class CaseDAO:
             return catalog
         return None
 
+    def get_catalog_by_name(self, name: str) -> Catalog | None:
+        row = self.conn.execute('SELECT * FROM catalog WHERE name = ?', (name,)).fetchone()
+        if row:
+            catalog = Catalog(row[1], row[2], row[3], datetime.fromisoformat(row[4]))
+            catalog.id = row[0]
+            return catalog
+        return None
+
     def delete_catalog(self, catalog_id: int):
         query = 'DELETE FROM catalog WHERE id = ?'
         self.conn.execute(query, (catalog_id,))
