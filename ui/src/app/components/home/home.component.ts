@@ -3,6 +3,7 @@ import {Case} from "../../domains/Case"
 import {FormControl} from "@angular/forms"
 import {AetherOneService} from "../../services/aether-one.service";
 import {Title} from "@angular/platform-browser";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
   selector: 'app-home',
@@ -18,7 +19,11 @@ export class HomeComponent implements OnInit {
   color = new FormControl('', { nonNullable: true });
   description= new FormControl('', { nonNullable: true });
 
-  constructor(private aopyService:AetherOneService, private titleService: Title) {
+  constructor(
+    private aopyService:AetherOneService,
+    private titleService: Title,
+    private router: Router,
+    private route: ActivatedRoute,) {
   }
 
   ngOnInit(): void {
@@ -45,6 +50,7 @@ export class HomeComponent implements OnInit {
 
   selectCase(caseObj: Case) {
     this.titleService.setTitle(caseObj.name)
-    this.case = caseObj
-  }
+    sessionStorage.setItem('caseData', JSON.stringify(caseObj));
+    this.router.navigate(['CASE']);
+   }
 }
