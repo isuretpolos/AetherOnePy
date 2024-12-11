@@ -15,6 +15,5 @@ export class CaseComponent implements OnInit {
   ngOnInit(): void {
     const storedData = sessionStorage.getItem('caseData');
     this.case = storedData ? JSON.parse(storedData) : null;
-    console.log('Received Data:', this.case);
   }
 }
