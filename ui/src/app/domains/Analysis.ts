@@ -16,6 +16,14 @@ export class RateObject {
   resonateCounter:number = 0
 }
 
+export class Catalog {
+  id:number = 0
+  name:string = ""
+  description:string = ""
+  author:string = ""
+  importdate:Date = new Date()
+}
+
 export class GV {
   gv:number = -1
 }

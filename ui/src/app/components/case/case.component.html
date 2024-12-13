@@ -1,16 +1,21 @@
-<div style="text-align: left" class="badge text-primary">
+<div style="text-align: left; width: 90%!important;" class="badge text-primary">
   <h1>{{case.name}}</h1>
   <p>{{case.description}}</p>
+  Each case contains multiple sessions.
   <div class="text-primary-emphasis rounded position-relative">
-    <h2>Session(s)</h2>
-    <button type="button" class="btn-close position-absolute top-0 end-0" aria-label="Close"></button>
-    <p>A session is when you sit down and analyze, broadcast and make notes.</p>
-    <div style="margin: 0.8rem" class="text-bg-warning">
+    <h2>Session</h2>
+    One session contains multiple analysis and broadcasts.
+    <div style="margin: 0.8rem;padding: 0.8rem ">
       <h3>Analysis</h3>
-      <p>For an analysis you select a list of so called "rates" (or just names of energetic signatures) and perform the
-        analysis.</p>
-      <table class="table table-sm">
-        <thead>
+      <h5 *ngIf="selectedCatalog">{{selectedCatalog.name}}</h5>
+      <p>
+        <button class="btn btn-sm btn-primary smallerButton" (click)="loadRateCatalogs()" data-bs-toggle="modal"
+                data-bs-target="#catalogsModal">SELECT RATE CATALOG</button>
+        <button *ngIf="selectedCatalog" class="btn btn-sm btn-danger smallerButton">ANALYZE</button>
+        <button *ngIf="selectedCatalog" class="btn btn-sm btn-danger smallerButton">GV</button>
+      </p>
+      <table class="table table-sm table-hover">
+        <thead class="table-light">
         <tr>
           <th>POS</th>
           <th>EV</th>
@@ -44,6 +49,54 @@
         </tr>
         </tbody>
       </table>
+      <div class="form-floating">
+        <textarea class="form-control" id="analysisNotes"></textarea>
+        <label for="analysisNotes">Notes</label>
+      </div>
+      <br/>
+      <p>
+        <button class="btn btn-sm btn-warning smallerButton">CLEAR</button>
+        <button class="btn btn-sm btn-warning smallerButton">GROUNDING</button>
+        <button class="btn btn-sm btn-success smallerButton">BROADCAST MIX</button>
+        <button class="btn btn-sm btn-success smallerButton">AUTO MODE ON</button>
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- Modal CASE -->
+<div class="modal fade " id="catalogsModal" tabindex="-1" aria-labelledby="caseModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="caseModalLabel">Select a Rate Catalog</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <table class="table table-sm table-hover">
+          <thead class="table-light">
+          <tr>
+            <th>NAME</th>
+            <th>DESCRIPTION</th>
+            <th>AUTHOR</th>
+            <th>IMPORTDATE</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let catalog of catalogs">
+            <td><button class="btn btn-sm btn-primary" (click)="selectedCatalog = catalog" data-bs-dismiss="modal">{{catalog.name}}</button></td>
+            <td>{{catalog.description}}</td>
+            <td>{{catalog.author}}</td>
+            <td>{{catalog.importdate}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Import from Github</button>
+      </div>
     </div>
   </div>
 </div>

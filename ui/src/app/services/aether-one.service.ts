@@ -3,6 +3,7 @@ import {environment} from "../../environments/environment";
 import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Case} from "../domains/Case";
+import {Catalog} from "../domains/Analysis";
 
 @Injectable({
   providedIn: 'root'
@@ -25,5 +26,9 @@ export class AetherOneService {
 
   loadAllCases():Observable<Case[]> {
     return this.http.get<Case[]>(`${this.baseUrl}case`)
+  }
+
+  loadAllCatalogs():Observable<Catalog[]> {
+    return this.http.get<Catalog[]>(`${this.baseUrl}catalog`)
   }
 }

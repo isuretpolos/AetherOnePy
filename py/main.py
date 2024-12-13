@@ -111,8 +111,19 @@ def case():
         response_data = json.dumps(allCases, ensure_ascii=False)
         return Response(response_data, content_type='application/json; charset=utf-8')
 
-    return "OK"
+    return "NOT IMPLEMENTED"
 
+@app.route('/catalog', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def catalog():
+
+    if request.method == 'GET':
+        allCatalogs = []
+        for catalog in aetherOneDB.list_catalogs():
+            allCatalogs.append(catalog.to_dict())
+        response_data = json.dumps(allCatalogs, ensure_ascii=False)
+        return  Response(response_data, content_type='application/json; charset=utf-8')
+
+    return "NOT IMPLEMENTED"
 
 def get_local_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
