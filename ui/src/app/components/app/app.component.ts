@@ -28,6 +28,9 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
+    this.theme = localStorage.getItem('theme') ?? 'light';
+    document.documentElement.setAttribute('data-bs-theme',this.theme)
+
     if (this.isMobileDevice()) {
       console.log('mobile device')
       this.mobileMode = true
