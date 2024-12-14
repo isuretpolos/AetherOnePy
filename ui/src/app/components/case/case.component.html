@@ -88,7 +88,7 @@
             <td><button class="btn btn-sm btn-primary" (click)="selectedCatalog = catalog" data-bs-dismiss="modal">{{catalog.name}}</button></td>
             <td>{{catalog.description}}</td>
             <td>{{catalog.author}}</td>
-            <td>{{catalog.importdate}}</td>
+            <td>{{catalog.importdate | date}}</td>
           </tr>
           </tbody>
         </table>
