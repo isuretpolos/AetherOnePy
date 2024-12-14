@@ -33,6 +33,8 @@ port = 80
 CORS(app)
 if not os.path.isdir("../data"):
     os.makedirs("../data")
+if not os.path.isdir("../data/private"):
+    os.makedirs("../data/private")
 aetherOneDB = get_case_dao('../data/aetherone.db')
 
 
@@ -148,6 +150,20 @@ def filesToImport():
 
     return "NOT IMPLEMENTED"
 
+@app.route('/upload', methods=['POST'])
+def upload_file():
+    if 'file' not in request.files:
+        return jsonify({'error': 'No file part in the request'}), 400
+
+    file = request.files['file']
+    if file.filename == '':
+        return jsonify({'error': 'No selected file'}), 400
+
+    # Save the file
+    file.save(os.path.join('../data/private', file.filename))
+    rateImporter = RateImporter(aetherOneDB)
+    rateImporter.import_file('../data/private', file.filename)
+    return jsonify({'message': 'File uploaded successfully'}), 200
 
 def get_local_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

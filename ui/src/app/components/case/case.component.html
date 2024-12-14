@@ -93,6 +93,11 @@
           </tbody>
         </table>
 
+        <form (submit)="uploadFile($event)" enctype="multipart/form-data" class="input-group">
+          <input class="form-control" type="file" id="formFile" (change)="onFileSelected($event)">
+          <button type="submit" class="btn btn-success">Upload</button>
+        </form>
+
         <div *ngIf="folderStructure">
           <h1>Import from Github</h1>
           Source: <a href="https://github.com/isuretpolos/radionics-rates" target="g">https://github.com/isuretpolos/radionics-rates</a>
@@ -127,8 +132,8 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
         <button type="button" class="btn btn-primary" (click)="loadFilesToImport()">Import from Github</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

@@ -40,4 +40,8 @@ export class AetherOneService {
   importFileFromGithub(fileName:string):Observable<FolderStructure> {
     return this.http.post<FolderStructure>(`${this.baseUrl}filesToImport?file=${fileName}`,undefined)
   }
+
+  uploadFile(formData: any):Observable<any> {
+    return this.http.post(`${this.baseUrl}upload`, formData);
+  }
 }
