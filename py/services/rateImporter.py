@@ -4,11 +4,14 @@ import json
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from domains.aetherOneDomains import Catalog, Rate
-from services.databaseService import get_case_dao
+from services.databaseService import get_case_dao, CaseDAO
 
-aetherOneDB = get_case_dao('../../data/aetherone.db')
+#aetherOneDB = get_case_dao('../../data/aetherone.db')
 
 class RateImporter:
+    def __init__(self,aetherOneDB:CaseDAO):
+        self.aetherOneDB = aetherOneDB #shared database
+
     def generate_folder_file_json(self, rootFolder):
         result = {"folders": {}}
 
@@ -40,10 +43,10 @@ class RateImporter:
         catalog_name = os.path.splitext(file_name)[0]
         try:
             # Insert the catalog
-            catalog = aetherOneDB.get_catalog_by_name(catalog_name)
+            catalog = self.aetherOneDB.get_catalog_by_name(catalog_name)
             if catalog is None:
-                aetherOneDB.insert_catalog(Catalog(catalog_name, 'radionics-rates', '-'))
-                catalog = aetherOneDB.get_catalog_by_name(catalog_name)
+                self.aetherOneDB.insert_catalog(Catalog(catalog_name, 'radionics-rates', '-'))
+                catalog = self.aetherOneDB.get_catalog_by_name(catalog_name)
             else:
                 print(f"Warning: catalog '{catalog_name}' already exists.")
                 return
@@ -59,7 +62,7 @@ class RateImporter:
                     try:
                         signature, *description = line.split('\t', 1)
                         description = description[0] if description else None
-                        aetherOneDB.insert_rate(Rate(signature, description, catalog.id))
+                        self.aetherOneDB.insert_rate(Rate(signature, description, catalog.id))
                     except ValueError as e:
                         print(f"Error processing line {idx + 1}: '{line}' - {e}")
 
@@ -68,7 +71,7 @@ class RateImporter:
             print(f"Error importing file '{file_name}': {e}")
 
 if __name__ == '__main__':
-    rateImporter = RateImporter()
+    rateImporter = RateImporter(get_case_dao('../../data/aetherone.db'))
     # Generate and print folder structure JSON
     json_result = rateImporter.generate_folder_file_json('../../data/radionics-rates')
     print(json_result)

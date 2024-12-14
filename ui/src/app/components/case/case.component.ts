@@ -3,6 +3,7 @@ import {Case} from "../../domains/Case";
 import {Router} from "@angular/router";
 import {Catalog} from "../../domains/Analysis";
 import {AetherOneService} from "../../services/aether-one.service";
+import {FolderStructure} from "../../domains/Files";
 
 @Component({
   selector: 'app-case',
@@ -13,6 +14,9 @@ export class CaseComponent implements OnInit {
   case:Case = new Case()
   catalogs:Catalog[] = []
   selectedCatalog:Catalog|undefined
+  folderStructure: FolderStructure | null = null
+  objectKeys = Object.keys;
+
 
   constructor(private aetherOne:AetherOneService) {}
 
@@ -23,5 +27,13 @@ export class CaseComponent implements OnInit {
 
   loadRateCatalogs() {
     this.aetherOne.loadAllCatalogs().subscribe( c => this.catalogs = c)
+  }
+
+  loadFilesToImport() {
+    this.aetherOne.loadAllFilesForImport().subscribe( f => this.folderStructure = f)
+  }
+
+  importFile(file: string) {
+    this.aetherOne.importFileFromGithub(file).subscribe(f => this.folderStructure = f)
   }
 }

@@ -18,7 +18,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
 
 from waitress import serve
-from flask import Flask, jsonify, request, send_from_directory, send_file,Response
+from flask import Flask, jsonify, request, send_from_directory, send_file, Response
 from flask_cors import CORS
 from PIL import Image, ImageDraw, ImageFont
 from pprint import pprint
@@ -26,6 +26,7 @@ from dateutil import parser
 
 from services.databaseService import get_case_dao, Case
 from services.updateRadionicsRates import update_or_clone_repo
+from services.rateImporter import RateImporter
 
 app = Flask(__name__)
 port = 80
@@ -34,15 +35,19 @@ if not os.path.isdir("../data"):
     os.makedirs("../data")
 aetherOneDB = get_case_dao('../data/aetherone.db')
 
+
 # Angular UI, serving static files
 # --------------------------------
 @app.route('/')
 def index():
     return send_from_directory('../ui/dist/ui/', 'index.html')
 
+
 @app.route('/<path:path>')
 def static_files(path):
     return send_from_directory('../ui/dist/ui/', path)
+
+
 # --------------------------------
 
 # API of AetherOnePy
@@ -50,6 +55,7 @@ def static_files(path):
 @app.route('/ping', methods=['GET'])
 def ping():
     return "pong"
+
 
 @app.route('/qrcode', methods=['GET'])
 def get_qrcode():
@@ -82,6 +88,7 @@ def get_qrcode():
 
     return send_file(img_byte_arr, mimetype='image/png')
 
+
 @app.route('/case', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def case():
     if request.method == 'POST':
@@ -113,17 +120,34 @@ def case():
 
     return "NOT IMPLEMENTED"
 
+
 @app.route('/catalog', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def catalog():
-
     if request.method == 'GET':
         allCatalogs = []
         for catalog in aetherOneDB.list_catalogs():
             allCatalogs.append(catalog.to_dict())
         response_data = json.dumps(allCatalogs, ensure_ascii=False)
-        return  Response(response_data, content_type='application/json; charset=utf-8')
+        return Response(response_data, content_type='application/json; charset=utf-8')
 
     return "NOT IMPLEMENTED"
+
+
+@app.route('/filesToImport', methods=['GET', 'POST'])
+def filesToImport():
+    rateImporter = RateImporter(aetherOneDB)
+
+    if request.method == 'GET':
+        json_result = rateImporter.generate_folder_file_json('../data/radionics-rates')
+        return Response(json_result, content_type='application/json; charset=utf-8')
+
+    if request.method == 'POST':
+        rateImporter.import_file('../data/radionics-rates', request.args.get('file'))
+        json_result = rateImporter.generate_folder_file_json('../data/radionics-rates')
+        return Response(json_result, content_type='application/json; charset=utf-8')
+
+    return "NOT IMPLEMENTED"
+
 
 def get_local_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -137,8 +161,10 @@ def get_local_ip():
         s.close()
     return local_ip
 
+
 def start_server(port):
     serve(app, host='0.0.0.0', port=port)
+
 
 def wait_for_server_and_open(port):
     url = f"http://localhost:{port}"
@@ -152,6 +178,7 @@ def wait_for_server_and_open(port):
         except requests.ConnectionError:
             pass
         time.sleep(1)
+
 
 def sanitize_filename(filename: str) -> str:
     """
@@ -173,7 +200,8 @@ def sanitize_filename(filename: str) -> str:
 
 if __name__ == '__main__':
 
-    update_or_clone_repo(os.path.join("../data", "radionics-rates"), "https://github.com/isuretpolos/radionics-rates.git")
+    update_or_clone_repo(os.path.join("../data", "radionics-rates"),
+                         "https://github.com/isuretpolos/radionics-rates.git")
 
     argParser = argparse.ArgumentParser(
         prog='AetherOnePy',

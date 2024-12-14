@@ -1,5 +1,5 @@
-<div style="text-align: left; width: 90%!important;" class="badge text-primary">
-  <h1>{{case.name}}</h1>
+<div style="text-align: left; width: 90%!important;" class="container-fluid py-5 badge text-primary">
+  <h1 class="display-5 fw-bold">{{case.name}}</h1>
   <p>{{case.description}}</p>
   Each case contains multiple sessions.
   <div class="text-primary-emphasis rounded position-relative">
@@ -92,10 +92,43 @@
           </tr>
           </tbody>
         </table>
+
+        <div *ngIf="folderStructure">
+          <h1>Import from Github</h1>
+          Source: <a href="https://github.com/isuretpolos/radionics-rates" target="g">https://github.com/isuretpolos/radionics-rates</a>
+          <table class="table table-sm table-hover">
+            <thead class="table-light">
+            <tr>
+              <th>CATEGORY</th>
+              <th>FILES</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let folder of objectKeys(folderStructure.folders)">
+              <td>{{ folder }}</td>
+              <td>
+                <table *ngIf="folderStructure" class="table table-sm table-hover">
+                  <thead class="table-light">
+                  <tr>
+                    <th>FILE</th>
+                  </tr>
+                  </thead>
+                  <tbody>
+                  <tr *ngFor="let file of folderStructure.folders[folder]">
+                    <td><button class="btn btn-sm btn-primary" (click)="importFile(file)">{{ file }}</button> </td>
+                  </tr>
+                  </tbody>
+                </table>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Import from Github</button>
+        <button type="button" class="btn btn-primary" (click)="loadFilesToImport()">Import from Github</button>
       </div>
     </div>
   </div>

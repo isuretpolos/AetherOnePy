@@ -4,6 +4,7 @@ import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Case} from "../domains/Case";
 import {Catalog} from "../domains/Analysis";
+import {FolderStructure} from "../domains/Files";
 
 @Injectable({
   providedIn: 'root'
@@ -30,5 +31,13 @@ export class AetherOneService {
 
   loadAllCatalogs():Observable<Catalog[]> {
     return this.http.get<Catalog[]>(`${this.baseUrl}catalog`)
+  }
+
+  loadAllFilesForImport():Observable<FolderStructure> {
+    return this.http.get<FolderStructure>(`${this.baseUrl}filesToImport`)
+  }
+
+  importFileFromGithub(fileName:string):Observable<FolderStructure> {
+    return this.http.post<FolderStructure>(`${this.baseUrl}filesToImport?file=${fileName}`,undefined)
   }
 }
