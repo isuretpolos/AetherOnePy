@@ -35,6 +35,8 @@ if not os.path.isdir("../data"):
     os.makedirs("../data")
 if not os.path.isdir("../data/private"):
     os.makedirs("../data/private")
+if not os.path.isdir("../hotbits"):
+    os.makedirs("../hotbits")
 aetherOneDB = get_case_dao('../data/aetherone.db')
 
 

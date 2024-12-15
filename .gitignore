@@ -164,3 +164,4 @@ cython_debug/
 /.idea/
 /py/test/test.db
 /data/radionics-rates/
+/hotbits/

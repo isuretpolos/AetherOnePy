@@ -1,87 +1,100 @@
 import cv2
 import numpy as np
-import random
 import json
+import time
 
-def compare_images(image1, image2):
-    # Convert images to grayscale
-    gray1 = cv2.cvtColor(image1, cv2.COLOR_BGR2GRAY)
-    gray2 = cv2.cvtColor(image2, cv2.COLOR_BGR2GRAY)
 
-    # Compute absolute difference between the images
-    diff = cv2.absdiff(gray1, gray2)
-
-    return diff
-
-def generate_random_numbers(diff):
-    # Convert the difference matrix to binary
-    binary_diff = (diff > 0).astype(int)
-
-    # Flatten the binary difference matrix
-    flattened_diff = binary_diff.flatten()
-
-    # Take only the first 32 bits and convert to integer
-    binary_string = ''.join(map(str, flattened_diff[:32]))
-    num = int(binary_string, 2)
-
-    return num
-
-def main():
-    consecutive_unchanged_frames = np.zeros((1080, 1920), dtype=int)  # Initialize array to keep track of consecutive unchanged frames
-    integers = []
-    # Open the default camera
-    cap = cv2.VideoCapture(0)
-
-    # Check if the camera is opened correctly
-    if not cap.isOpened():
-        print("Error: Could not open camera.")
-        return None
-
-    while True:
-        # Capture four images
-        print("Capturing first image...")
-        image1 = cap.read()
-        print("Capturing second image...")
-        image2 = cap.read()
-        print("Capturing third image...")
-        image3 = cap.read()
-        print("Capturing fourth image...")
-        image4 = cap.read()
-
-        if image1 is None or image2 is None or image3 is None or image4 is None:
-            return
-
-        # Compare consecutive images
-        print("Comparing images...")
-        diff1 = compare_images(image1, image2)
-        diff2 = compare_images(image2, image3)
-        diff3 = compare_images(image3, image4)
-
-        # Check for pixels that remain unchanged over the four images
-        unchanged_pixels = np.logical_and.reduce((diff1 == 0, diff2 == 0, diff3 == 0))
-        consecutive_unchanged_frames[unchanged_pixels] += 1
-
-        # Generate random numbers from differences, excluding unchanged pixels
-        invalid_pixels = consecutive_unchanged_frames >= 4
-        diff1[invalid_pixels] = 0
-
-        num = generate_random_numbers(diff1)
-        integers.append(num)
-
-        # Check if multiple integers are formed
-        if len(set(integers)) > 1:
-            # Save the integers to a JSON file
-            with open('random_numbers.json', 'w') as f:
-                json.dump(integers, f)
-            print("Multiple integers formed. Saved to file.")
-            break
-
-    # Release the camera
-    cap.release()
-
+def capture_image(cap):
+    """Capture an image using the provided VideoCapture object."""
+    ret, frame = cap.read()
     if not ret:
-        print("Error: Could not capture frame.")
-        return None
+        raise Exception("Failed to capture image")
+    return frame
+
+
+def pixel_to_bit(img1, img2):
+    """Compare two images pixel by pixel to generate bits."""
+    bits = []
+    for (pixel1, pixel2) in zip(img1.reshape(-1, 3), img2.reshape(-1, 3)):
+        if sum(pixel1) > sum(pixel2):
+            bits.append(1)
+        else:
+            bits.append(0)
+    return bits
+
+
+def bits_to_integer(bits):
+    """Convert a list of bits into an integer."""
+    bit_string = ''.join(map(str, bits))
+    return int(bit_string, 2)
+
+
+def sufficient_difference(img1, img2, threshold=500):
+    """Check if there is sufficient difference between two images."""
+    diff = np.abs(img1.astype(np.int32) - img2.astype(np.int32))
+    total_diff = np.sum(diff)
+
+    # Check if the generated bits are all zeros
+    bits = pixel_to_bit(img1, img2)
+    if bits[:9] == [0] * 9:
+        print("Detected a series of 0s. Skipping one image and retrying...")
+        return False
+
+    return total_diff > threshold
+
+
+def generate_hotbits(hotbitsPath: str, amount: int):
+    bit_array = []
+    max_bits = 32  # Maximum number of bits for an integer
+
+    cap = cv2.VideoCapture(0)
+    if not cap.isOpened():
+        raise Exception("Failed to open the camera")
+
+    try:
+        for _ in range(amount):
+            integer_list = []
+            unique_integers = set()
+
+            while len(integer_list) < 10000:
+                img1 = capture_image(cap)
+                img2 = capture_image(cap)
+
+                # Resize images to ensure they are the same dimensions
+                height, width = min(img1.shape[:2], img2.shape[:2])
+                img1 = cv2.resize(img1, (width, height))
+                img2 = cv2.resize(img2, (width, height))
+
+                # Wait until there is sufficient difference between images
+                if not sufficient_difference(img1, img2):
+                    print("Insufficient difference between images. Retrying...")
+                    continue
+
+                bits = pixel_to_bit(img1, img2)
+                bit_array.extend(bits)
+
+                while len(bit_array) >= max_bits:
+                    integer = bits_to_integer(bit_array[:max_bits])
+                    bit_array = bit_array[max_bits:]
+
+                    # Ensure the integer is unique
+                    if integer not in unique_integers:
+                        integer_list.append(integer)
+                        unique_integers.add(integer)
+
+                    if len(integer_list) >= 10000:
+                        break
+
+            # Save the integers to a JSON file
+            timestamp = int(time.time() * 1000)
+            filename = f"{hotbitsPath}/hotbits_{timestamp}.json"
+            with open(filename, 'w') as f:
+                json.dump({"integerList": integer_list}, f)
+
+            print(f"Hotbits saved to {filename}")
+    finally:
+        cap.release()
+
 
 if __name__ == "__main__":
-    main()
+    generate_hotbits("../../hotbits", 10)
