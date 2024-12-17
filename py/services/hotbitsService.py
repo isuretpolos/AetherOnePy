@@ -94,6 +94,7 @@ if __name__ == "__main__":
         print("Working from inside a RaspberryPi, great!")
     # hotbitsService.collectHotBits()
     hotbits = hotbitsService.getHotbits("../../hotbits")
+    print(hotbits)
     print(len(hotbits))
     print(hotbits[1])
     print(hotbits[2])
