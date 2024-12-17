@@ -19,6 +19,7 @@ class HotbitsService:
         self.source = hotbitsSource
         self.running = False
         if self.is_raspberry_pi():
+            print("This system is a Raspberry Pi.")
             self.source = HotbitsSource.RASPBERRY_PI
 
     def collectHotBits(self):
