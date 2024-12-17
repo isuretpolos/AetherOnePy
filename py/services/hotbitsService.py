@@ -1,4 +1,5 @@
 import sys, os, random, json
+import platform as sys_platform
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from enum import Enum
@@ -43,7 +44,8 @@ class HotbitsService:
         """Check if the computer is a Raspberry Pi."""
         try:
             # Check the platform
-            if sys.platform.system() != "Linux":
+            print(sys.platform)
+            if sys_platform.system() != "Linux":
                 print("not a linux system")
                 return False
 
