@@ -9,7 +9,8 @@ required_packages = [
     'qrcode[pil]',
     'PIL',
     'python-dateutil',
-    'gitpython'
+    'gitpython',
+    'opencv-python'
 ]
 
 def install_package(package):
