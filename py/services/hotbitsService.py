@@ -44,18 +44,21 @@ class HotbitsService:
         try:
             # Check the platform
             if sys.platform.system() != "Linux":
+                print("not a linux system")
                 return False
 
             # Check for the presence of Raspberry Pi-specific files
             if os.path.exists('/sys/firmware/devicetree/base/model'):
                 with open('/sys/firmware/devicetree/base/model', 'r') as model_file:
                     model_info = model_file.read().lower()
+                    print(model_info)
                     if 'raspberry pi' in model_info:
                         return True
 
             # Check the CPU information for Raspberry Pi specific hardware
             with open('/proc/cpuinfo', 'r') as cpuinfo:
                 for line in cpuinfo:
+                    print(line)
                     if 'Hardware' in line and 'BCM' in line:
                         return True
                     if 'Model' in line and 'Raspberry Pi' in line:
