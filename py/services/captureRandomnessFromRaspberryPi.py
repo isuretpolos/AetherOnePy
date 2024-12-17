@@ -1,6 +1,6 @@
-import os
 import struct
 
+# Getting true random numbers from a RaspberryPi is so fast, you don't need to store them on harddisk
 class RandomNumberGenerator:
     def __init__(self, total_numbers=10000):
         """
