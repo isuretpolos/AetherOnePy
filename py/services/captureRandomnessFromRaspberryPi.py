@@ -1,5 +1,8 @@
-import os
+import os, sys
 import struct
+
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
 
 class RandomNumberGenerator:
     def __init__(self, total_numbers=10000):
@@ -32,6 +35,7 @@ class RandomNumberGenerator:
         :return: List of integers
         """
         return list(self.numbers)
+
 
 # Example usage:
 if __name__ == "__main__":
