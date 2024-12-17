@@ -13,9 +13,10 @@ class Rate:
         self.description = description  # Markdown
         self.catalogID = catalogID
         self.value = 0  # This will store the enhanced value
+        self.gv = 0
 
 
-def analyze(rates: list, hotbits_service: HotbitsService) -> list:
+def analyze(rates: list, hotbits_service: HotbitsService, autoCheckGV:bool = False) -> list:
 
     newRates = []
     for rate in rates:
@@ -53,11 +54,35 @@ def analyze(rates: list, hotbits_service: HotbitsService) -> list:
     while maxReached == False:
         for rate in enhanced_rates:
             rate.value += hotbits_service.getInt(0, 10)
+
             if rate.value >= 1000:
                 maxReached = True
                 break
 
+    enhanced_rates.sort(key=lambda r: r.value, reverse=True)
+
+    if autoCheckGV:
+        for rate in enhanced_rates:
+            rate.gv = checkGeneralVitality(hotbits)
+
     return enhanced_rates
+
+
+def checkGeneralVitality(hotbits_service: HotbitsService):
+    list = []
+    for i in range(3):
+        list.append(hotbits_service.getInt(0,1000))
+
+    list.sort(reverse=True)
+    gv = list[0]
+
+    if gv > 950:
+        randomDice = hotbits_service.getInt(0,100)
+
+        while randomDice >= 50:
+            gv += randomDice
+            randomDice = hotbits_service.getInt(0, 100)
+    return gv
 
 
 # Example Usage
@@ -75,5 +100,5 @@ if __name__ == "__main__":
     enhanced_rates = analyze(rates_list, hotbits)
 
     for rate in enhanced_rates:
-        if rate.value > 0:
-            print(f"Signature: {rate.signature}, Value: {rate.value}")
+        rate.gv = checkGeneralVitality(hotbits)
+        print(f"Signature: {rate.signature}, Value: {rate.value}, GV: {rate.gv}")
