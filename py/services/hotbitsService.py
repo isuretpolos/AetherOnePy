@@ -16,9 +16,11 @@ class HotbitsSource(Enum):
 
 class HotbitsService:
 
-    def __init__(self, hotbitsSource: HotbitsSource):
+    def __init__(self, hotbitsSource: HotbitsSource, folder_path: str):
         self.source = hotbitsSource
         self.running = False
+        self.hotbits: [int] = []
+        self.folder_path = folder_path
         if self.is_raspberry_pi():
             print("This system is a Raspberry Pi.")
             self.source = HotbitsSource.RASPBERRY_PI
@@ -29,7 +31,7 @@ class HotbitsService:
             print("Raspberry Pi source enabled.")
         elif self.source == HotbitsSource.WEBCAM:
             self.running = True
-            generate_hotbits("../../hotbits", 1000)
+            generate_hotbits("../../hotbits", 10)
         elif self.source == HotbitsSource.ARDUINO:
             self.useArduino = True
             print("Arduino source enabled.")
@@ -69,32 +71,38 @@ class HotbitsService:
             print(f"Error while checking Raspberry Pi: {e}")
         return False
 
-    def getHotbits(self, folder_path):
+    def getHotbits(self):
         if self.source == HotbitsSource.RASPBERRY_PI:
             rng = RandomNumberGenerator()
             rng.generate_numbers()
             return rng.get_numbers()
         else:
             """Load integers from a random JSON file in a folder into an array."""
-            json_files = [f for f in os.listdir(folder_path) if f.endswith('.json')]
+            json_files = [f for f in os.listdir(self.folder_path) if f.endswith('.json')]
             if not json_files:
                 raise FileNotFoundError("No JSON files found in the folder")
             random_file = random.choice(json_files)
-            json_file_path = os.path.join(folder_path, random_file)
+            json_file_path = os.path.join(self.folder_path, random_file)
             with open(json_file_path, 'r') as f:
                 data = json.load(f)
             if "integerList" not in data:
                 raise KeyError("The JSON file does not contain 'integerList'")
+            os.remove(json_file_path)  # Delete the hotbits file after loading
             print(f"Loaded integers from {random_file}")
             return data["integerList"]
 
+    def getInt(self, min: int = 0, max: int = 1):
+        if len(self.hotbits) < 1:
+            self.hotbits = self.getHotbits()
+        random.seed(self.hotbits.pop(0))
+        return random.randint(min, max)
 
 if __name__ == "__main__":
-    hotbitsService = HotbitsService(HotbitsSource.WEBCAM)
+    hotbitsService = HotbitsService(HotbitsSource.WEBCAM, "../../hotbits")
     if hotbitsService.is_raspberry_pi():
         print("Working from inside a RaspberryPi, great!")
     # hotbitsService.collectHotBits()
-    hotbits = hotbitsService.getHotbits("../../hotbits")
+    hotbits = hotbitsService.getHotbits()
     print(hotbits)
     print(len(hotbits))
     print(hotbits[1])
