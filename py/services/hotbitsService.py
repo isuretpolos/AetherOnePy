@@ -24,7 +24,7 @@ class HotbitsService:
             self.source = HotbitsSource.RASPBERRY_PI
 
     def collectHotBits(self):
-        if self.source == HotbitsSource.RASPBERRY_PI or self.is_raspberry_pi():
+        if self.source == HotbitsSource.RASPBERRY_PI:
             self.raspberryPi = True
             print("Raspberry Pi source enabled.")
         elif self.source == HotbitsSource.WEBCAM:
@@ -73,6 +73,7 @@ class HotbitsService:
         if self.source == HotbitsSource.RASPBERRY_PI:
             rng = RandomNumberGenerator()
             rng.generate_numbers()
+            return rng.get_numbers()
         else:
             """Load integers from a random JSON file in a folder into an array."""
             json_files = [f for f in os.listdir(folder_path) if f.endswith('.json')]
