@@ -85,6 +85,8 @@ class HotbitsService:
 
 if __name__ == "__main__":
     hotbitsService = HotbitsService(HotbitsSource.WEBCAM)
+    if hotbitsService.is_raspberry_pi():
+        print("Working from inside a RaspberryPi, great!")
     # hotbitsService.collectHotBits()
     hotbits = hotbitsService.getHotbits("../../hotbits")
     print(len(hotbits))
