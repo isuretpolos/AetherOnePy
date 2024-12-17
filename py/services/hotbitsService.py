@@ -20,7 +20,7 @@ class HotbitsService:
         self.running = False
 
     def collectHotBits(self):
-        if self.source == HotbitsSource.RASPBERRY_PI:
+        if self.source == HotbitsSource.RASPBERRY_PI or self.is_raspberry_pi():
             self.raspberryPi = True
             print("Raspberry Pi source enabled.")
         elif self.source == HotbitsSource.WEBCAM:
@@ -35,6 +35,31 @@ class HotbitsService:
         else:
             print("Unknown Hotbits source selected. No changes made.")
         self.running = False
+
+    def is_raspberry_pi(self):
+        """Check if the computer is a Raspberry Pi."""
+        try:
+            # Check the platform
+            if sys.platform.system() != "Linux":
+                return False
+
+            # Check for the presence of Raspberry Pi-specific files
+            if os.path.exists('/sys/firmware/devicetree/base/model'):
+                with open('/sys/firmware/devicetree/base/model', 'r') as model_file:
+                    model_info = model_file.read().lower()
+                    if 'raspberry pi' in model_info:
+                        return True
+
+            # Check the CPU information for Raspberry Pi specific hardware
+            with open('/proc/cpuinfo', 'r') as cpuinfo:
+                for line in cpuinfo:
+                    if 'Hardware' in line and 'BCM' in line:
+                        return True
+                    if 'Model' in line and 'Raspberry Pi' in line:
+                        return True
+        except Exception as e:
+            print(f"Error while checking Raspberry Pi: {e}")
+        return False
 
     def getHotbits(self, folder_path):
         if self.source == HotbitsSource.RASPBERRY_PI:
