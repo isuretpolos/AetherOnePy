@@ -1,58 +1,57 @@
-import cv2  # For WebCam
-import json
-import os
-import numpy as np
+import sys, os, random, json
 
-class WebcamRandomService:
-    _instance = None
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from enum import Enum
+from services.captureRandomnessFromWebCam import generate_hotbits
 
-    def __new__(cls, *args, **kwargs):
-        if cls._instance is None:
-            cls._instance = super().__new__(cls)
-            cls._instance.data_dir = 'hotbits'  # Folder with Hotbits
-            os.makedirs(cls._instance.data_dir, exist_ok=True)
-        return cls._instance
+class HotbitsSource(Enum):
+    RASPBERRY_PI = 'RASPBERRY_PI'
+    WEBCAM = 'WEBCAM'
+    ARDUINO = 'ARDUINO'
+    ESP = 'ESP'
 
-    def capture_random_data(self, num_samples=10):
-        cap = cv2.VideoCapture(0)  # Zugriff auf die Webcam
-        random_data = []
 
-        for _ in range(num_samples):
-            ret, frame = cap.read()
-            if not ret:
-                break
-            # Hier könnten Sie den Frame analysieren, um echte Zufallszahlen zu generieren
-            random_numbers = np.random.randint(0, 255, size=(10,), dtype=np.uint8).tolist()
-            random_data.append(random_numbers)
+class HotbitsService:
 
-        cap.release()
+    def __init__(self, hotbitsSource: HotbitsSource):
+        self.source = hotbitsSource
+        self.running = False
 
-        # Daten als JSON-Datei speichern
-        file_path = os.path.join(self.data_dir, 'random_data.json')
-        with open(file_path, 'w') as file:
-            json.dump(random_data, file)
-
-        return file_path
-
-    def get_random_data(self):
-        file_path = os.path.join(self.data_dir, 'random_data.json')
-        if os.path.exists(file_path):
-            with open(file_path, 'r') as file:
-                random_data = json.load(file)
-            return random_data
+    def collectHotBits(self):
+        if self.source == HotbitsSource.RASPBERRY_PI:
+            self.raspberryPi = True
+            print("Raspberry Pi source enabled.")
+        elif self.source == HotbitsSource.WEBCAM:
+            self.running = True
+            generate_hotbits("../../hotbits", 1000)
+        elif self.source == HotbitsSource.ARDUINO:
+            self.useArduino = True
+            print("Arduino source enabled.")
+        elif self.source == HotbitsSource.ESP:
+            self.useESP = True
+            print("ESP source enabled.")
         else:
-            return None
+            print("Unknown Hotbits source selected. No changes made.")
+        self.running = False
 
-    def get_random_numbers(self, start, end):
-        random_data = self.get_random_data()
-        if random_data:
-            random_numbers = [number for data in random_data for number in data]
-            return random_numbers[start:end]
-        else:
-            return []
+    def getHotbits(self, folder_path):
+        """Load integers from a random JSON file in a folder into an array."""
+        json_files = [f for f in os.listdir(folder_path) if f.endswith('.json')]
+        if not json_files:
+            raise FileNotFoundError("No JSON files found in the folder")
+        random_file = random.choice(json_files)
+        json_file_path = os.path.join(folder_path, random_file)
+        with open(json_file_path, 'r') as f:
+            data = json.load(f)
+        if "integerList" not in data:
+            raise KeyError("The JSON file does not contain 'integerList'")
+        print(f"Loaded integers from {random_file}")
+        return data["integerList"]
 
-# Beispiel für die Verwendung:
-webcam_service = WebcamRandomService()
-webcam_service.capture_random_data(num_samples=100)  # Daten erfassen
-random_numbers = webcam_service.get_random_numbers(start=10, end=20)  # Zufallszahlen abrufen
-print(random_numbers)
+if __name__ == "__main__":
+    hotbitsService = HotbitsService(HotbitsSource.WEBCAM)
+    #hotbitsService.collectHotBits()
+    hotbits = hotbitsService.getHotbits("../../hotbits")
+    print(len(hotbits))
+    print(hotbits[1])
+    print(hotbits[2])

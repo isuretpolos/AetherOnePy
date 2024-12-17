@@ -1,15 +1,14 @@
 import cv2
 import numpy as np
 import json
-import time
+import time,os,sys
 
+sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-def capture_image(cap):
-    """Capture an image using the provided VideoCapture object."""
-    ret, frame = cap.read()
-    if not ret:
-        raise Exception("Failed to capture image")
-    return frame
+def bits_to_integer(bits):
+    """Convert a list of bits into an integer."""
+    bit_string = ''.join(map(str, bits))
+    return int(bit_string, 2)
 
 
 def pixel_to_bit(img1, img2):
@@ -23,10 +22,12 @@ def pixel_to_bit(img1, img2):
     return bits
 
 
-def bits_to_integer(bits):
-    """Convert a list of bits into an integer."""
-    bit_string = ''.join(map(str, bits))
-    return int(bit_string, 2)
+def capture_image(cap):
+    """Capture an image using the provided VideoCapture object."""
+    ret, frame = cap.read()
+    if not ret:
+        raise Exception("Failed to capture image")
+    return frame
 
 
 def sufficient_difference(img1, img2, threshold=500):
