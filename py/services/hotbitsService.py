@@ -18,6 +18,8 @@ class HotbitsService:
     def __init__(self, hotbitsSource: HotbitsSource):
         self.source = hotbitsSource
         self.running = False
+        if self.is_raspberry_pi():
+            self.source = HotbitsSource.RASPBERRY_PI
 
     def collectHotBits(self):
         if self.source == HotbitsSource.RASPBERRY_PI or self.is_raspberry_pi():
