@@ -3,7 +3,7 @@ import {environment} from "../../environments/environment";
 import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Case} from "../domains/Case";
-import {Catalog} from "../domains/Analysis";
+import {Catalog, CountHotbits, RateObject} from "../domains/Analysis";
 import {FolderStructure} from "../domains/Files";
 
 @Injectable({
@@ -43,5 +43,13 @@ export class AetherOneService {
 
   uploadFile(formData: any):Observable<any> {
     return this.http.post(`${this.baseUrl}upload`, formData);
+  }
+
+  analyze(catalogId:number):Observable<RateObject[]> {
+    return this.http.post<RateObject[]>(`${this.baseUrl}analyze`, {"catalog_id":catalogId});
+  }
+
+  countHotbits():Observable<CountHotbits> {
+    return this.http.get<CountHotbits>(`${this.baseUrl}countHotbits`)
   }
 }

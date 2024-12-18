@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Case} from "../../domains/Case";
 import {Router} from "@angular/router";
-import {Catalog} from "../../domains/Analysis";
+import {Catalog, RateObject} from "../../domains/Analysis";
 import {AetherOneService} from "../../services/aether-one.service";
 import {FolderStructure} from "../../domains/Files";
 
@@ -17,12 +17,15 @@ export class CaseComponent implements OnInit {
   folderStructure: FolderStructure | null = null
   objectKeys = Object.keys;
   selectedFile: File | null = null;
+  analysisResult:RateObject[] = []
+  countHotbits:number = 0
 
   constructor(private aetherOne:AetherOneService) {}
 
   ngOnInit(): void {
     const storedData = sessionStorage.getItem('caseData');
     this.case = storedData ? JSON.parse(storedData) : null;
+    this.aetherOne.countHotbits().subscribe( c => this.countHotbits = c.count)
   }
 
   loadRateCatalogs() {
@@ -66,5 +69,13 @@ export class CaseComponent implements OnInit {
     if (input.files?.length) {
       this.selectedFile = input.files[0];
     }
+  }
+
+  analyze() {
+    if (this.selectedCatalog)
+      this.aetherOne.analyze(this.selectedCatalog?.id).subscribe( r => {
+        this.analysisResult = r
+        this.aetherOne.countHotbits().subscribe( c => this.countHotbits = c.count)
+      })
   }
 }

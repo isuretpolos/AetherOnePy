@@ -5,10 +5,10 @@ export class Analysis {
 }
 
 export class RateObject {
-  energeticValue:number = 0
-  nameOrRate:string = ""
+  signature:string = ""
   url:string = ""
   gv:number = 0
+  value:number = 0
   recurring:number = 0
   recurringGeneralVitality:number = 0
   level:number = 0
@@ -26,4 +26,8 @@ export class Catalog {
 
 export class GV {
   gv:number = -1
+}
+
+export class CountHotbits {
+  count:number = 0
 }

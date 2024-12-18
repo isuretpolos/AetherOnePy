@@ -15,8 +15,26 @@ class Rate:
         self.value = 0  # This will store the enhanced value
         self.gv = 0
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'signature': self.signature,
+            'description': self.description,
+            'catalogID': self.catalogID,
+            'value': self.value,
+            'gv': self.gv
+        }
+
+def transformAnalyzeListToDict(rates: []):
+    dictList = []
+    for rate in rates:
+        dictList.append(rate.to_dict())
+    return dictList
 
 def analyze(rates: list, hotbits_service: HotbitsService, autoCheckGV:bool = False) -> list:
+
+    if rates is None or len(rates) == 0:
+        return []
 
     newRates = []
     for rate in rates:

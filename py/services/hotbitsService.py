@@ -1,5 +1,6 @@
 import sys, os, random, json
 import platform as sys_platform
+import asyncio
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from enum import Enum
@@ -25,13 +26,16 @@ class HotbitsService:
             print("This system is a Raspberry Pi.")
             self.source = HotbitsSource.RASPBERRY_PI
 
-    def collectHotBits(self):
+    def countHotbits(self):
+        return len([file for file in os.listdir(self.folder_path) if file.endswith(".json")])
+
+    async def collectHotBits(self):
         if self.source == HotbitsSource.RASPBERRY_PI:
             self.raspberryPi = True
             print("Raspberry Pi source enabled.")
         elif self.source == HotbitsSource.WEBCAM:
             self.running = True
-            generate_hotbits("../../hotbits", 10)
+            generate_hotbits(self.folder_path, 10)
         elif self.source == HotbitsSource.ARDUINO:
             self.useArduino = True
             print("Arduino source enabled.")
@@ -77,6 +81,15 @@ class HotbitsService:
             rng.generate_numbers()
             return rng.get_numbers()
         else:
+            if self.countHotbits() < 10 and self.running is False:
+                # TODO make this as a SETTING
+                asyncio.run(self.collectHotBits())
+            if self.countHotbits() < 1:
+                # SIMULATION MODE
+                simulatedHotbits: [int] = []
+                for i in range(10000):
+                    simulatedHotbits.append(random.randint(0, 10000))
+                return simulatedHotbits
             """Load integers from a random JSON file in a folder into an array."""
             json_files = [f for f in os.listdir(self.folder_path) if f.endswith('.json')]
             if not json_files:

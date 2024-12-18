@@ -11,7 +11,7 @@
       <p>
         <button class="btn btn-sm btn-primary smallerButton" (click)="loadRateCatalogs()" data-bs-toggle="modal"
                 data-bs-target="#catalogsModal">SELECT RATE CATALOG</button>
-        <button *ngIf="selectedCatalog" class="btn btn-sm btn-danger smallerButton">ANALYZE</button>
+        <button *ngIf="selectedCatalog" (click)="analyze()" class="btn btn-sm btn-danger smallerButton">ANALYZE (Hotbits = {{countHotbits}})</button>
         <button *ngIf="selectedCatalog" class="btn btn-sm btn-danger smallerButton">GV</button>
       </p>
       <table class="table table-sm table-hover">
@@ -25,25 +25,14 @@
         </tr>
         </thead>
         <tbody>
-        <tr>
-          <td>1</td>
-          <td>1001</td>
-          <td>Arsenicum album</td>
-          <td>455</td>
+        <tr *ngFor="let rate of analysisResult; let i = index">
+          <td>{{i}}</td>
+          <td>{{rate.value}}</td>
+          <td>{{rate.signature}}</td>
+          <td>{{rate.gv}}</td>
           <td>
             <button style="padding: 0.05rem; font-size: 0.6rem" class="btn btn-sm btn-success"
                     title="broadcast Arsenicum album">BROADCAST
-            </button>
-          </td>
-        </tr>
-        <tr>
-          <td>2</td>
-          <td>965</td>
-          <td>Nux vomica</td>
-          <td>1200</td>
-          <td>
-            <button style="padding: 0.05rem; font-size: 0.6rem" class="btn btn-sm btn-success"
-                    title="broadcast Nux vomica">BROADCAST
             </button>
           </td>
         </tr>
