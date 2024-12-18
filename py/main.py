@@ -27,7 +27,7 @@ from services.databaseService import get_case_dao, Case
 from services.updateRadionicsRates import update_or_clone_repo
 from services.rateImporter import RateImporter
 from services.hotbitsService import HotbitsService, HotbitsSource
-from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict
+from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict, checkGeneralVitality
 
 app = Flask(__name__)
 port = 80
@@ -179,6 +179,11 @@ def analyze():
     enhanced_rates = analyzeService(rates_list, hotbits)
     analyzeList = transformAnalyzeListToDict(enhanced_rates)
     return jsonify(analyzeList), 200
+
+@app.route('/checkGV', methods=['GET'])
+def checkGV():
+    gv = checkGeneralVitality(hotbits)
+    return jsonify({'gv': gv}), 200
 
 def get_local_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
