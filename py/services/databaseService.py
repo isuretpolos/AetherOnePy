@@ -6,7 +6,7 @@ from datetime import datetime
 import json
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from domains.aetherOneDomains import Case, Session, MapDesign, Feature, Analysis, Catalog, Rate
+from domains.aetherOneDomains import Case, Session, MapDesign, Feature, Analysis, Catalog, Rate, AnalysisRate
 
 
 class CaseDAO:
@@ -82,14 +82,19 @@ class CaseDAO:
             FOREIGN KEY (session_id) REFERENCES sessions (id) ON DELETE CASCADE
         )
         '''
-        rate_object_query = '''
-        CREATE TABLE IF NOT EXISTS "rate_object" (
+        rate_for_analysis_query = '''
+        CREATE TABLE IF NOT EXISTS rate_analysis (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            occurrence INTEGER,
-            overall_energetic_value INTEGER,
-            overall_gv INTEGER,
-            rate_object TEXT,
-            name TEXT
+            signature TEXT,
+            description TEXT,
+            catalog_id INTEGER NOT NULL,
+            analysis_id INTEGER NOT NULL,
+            energetic_value INTEGER,
+            gv INTEGER,
+            level INTEGER,
+            potencyType TEXT,
+            potency INTEGER,
+            note TEXT
         )
         '''
         map_design_query = '''
@@ -119,7 +124,7 @@ class CaseDAO:
         self.conn.execute(session_query)
         self.conn.execute(broadcast_query)
         self.conn.execute(analysis_object_query)
-        self.conn.execute(rate_object_query)
+        self.conn.execute(rate_for_analysis_query)
         self.conn.execute(map_design_query)
         self.conn.execute(feature_query)
         self.conn.commit()
@@ -311,6 +316,25 @@ class CaseDAO:
             analysis.sessionID = session_id
             analysisList.append(analysis)
         return analysisList
+
+    def insert_rates_for_analysis(self, rates: List[AnalysisRate]):
+        query = '''
+        INSERT INTO rate_analysis (signature, description, catalog_id, analysis_id, energetic_value, gv, level, 
+        potencyType, potency, note) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);
+        '''
+        rate_tuples = [rate.to_tuple() for rate in rates]
+        self.conn.executemany(query, rate_tuples)
+        self.conn.commit()
+
+    def list_rates_for_analysis(self, analysis_id: int) -> List[AnalysisRate]:
+        query = 'SELECT * FROM rate_analysis WHERE analysis_id = ?'
+        cursor = self.conn.execute(query, (analysis_id,))
+        rates = []
+        for row in cursor:
+            rate = AnalysisRate(row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10])
+            rate.id = row[0]
+            rates.append(rate)
+        return rates
 
     def insert_map_design(self, map_design: MapDesign):
         query = '''

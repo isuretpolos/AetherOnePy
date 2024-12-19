@@ -3,7 +3,7 @@ import os, sys
 from datetime import datetime
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from domains.aetherOneDomains import Case, Session, Analysis, Catalog, Rate
+from domains.aetherOneDomains import Case, Session, Analysis, Catalog, Rate, AnalysisRate
 from services.databaseService import get_case_dao
 
 if __name__ == '__main__':
@@ -89,6 +89,23 @@ if __name__ == '__main__':
                     assert analysis.note.endswith("UPDATED")
                     assert analysis.sessionID == sessionObj.id
                     assert analysis.id > 0
+
+                    # Create a list of AnalysisRate objects
+                    analysis_rates = [
+                        AnalysisRate("Sig1", "Description1", 1, analysis.id, 100, 50, 3, "Type1", 10, "Note1"),
+                        AnalysisRate("Sig2", "Description2", 2, analysis.id, 200, 60, 4, "Type2", 20, "Note2"),
+                    ]
+
+                    dao.insert_rates_for_analysis(analysis_rates)
+                    analysis_rates = dao.list_rates_for_analysis(analysis.id)
+
+                    assert analysis_rates is not None
+                    print(len(analysis_rates))
+                    assert len(analysis_rates) == 2
+
+                    for rate in analysis_rates:
+                        print(f" ANALYSIS_RATE ID {rate.id} | SIGNATURE {rate.signature}")
+
                     dao.delete_analysis(analysis.id)
                     analysis = dao.get_analysis(analysis.id)
                     assert analysis is None

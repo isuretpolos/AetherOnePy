@@ -119,14 +119,48 @@ class BroadCastData:
 
 
 class AnalysisRate:
-    def __init__(self, occurrence: int, overall_energetic_value: int, overall_gv: int, name: str, originalRateId: int,
-                 analysisId: int):
-        self.occurrence = occurrence
-        self.overall_energetic_value = overall_energetic_value
-        self.overall_gv = overall_gv
-        self.name = name
-        self.originalRateId = originalRateId
-        self.analysisId = analysisId
+    def __init__(self, signature: str, description: str, catalog_id: int, analysis_id: int, energetic_value: int,
+                 gv: int, level: int, potency_type: str, potency: int, note: str):
+        self.id = 0
+        self.signature = signature
+        self.description = description
+        self.catalog_id = catalog_id
+        self.analysis_id = analysis_id
+        self.energetic_value = energetic_value
+        self.gv = gv
+        self.level = level
+        self.potency_type = potency_type
+        self.potency = potency
+        self.note = note
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "signature": self.signature,
+            "description": self.description,
+            "catalog_id": self.catalog_id,
+            "analysis_id": self.analysis_id,
+            "energetic_value": self.energetic_value,
+            "gv": self.gv,
+            "level": self.level,
+            "potency_type": self.potency_type,
+            "potency": self.potency,
+            "note": self.note,
+        }
+
+    def to_tuple(self):
+        return (
+            self.signature,
+            self.description,
+            self.catalog_id,
+            self.analysis_id,
+            self.energetic_value,
+            self.gv,
+            self.level,
+            self.potency_type,
+            self.potency,
+            self.note
+        )
 
 
 class MapDesign:

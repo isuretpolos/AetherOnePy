@@ -1,29 +1,9 @@
 import sys, os
 
-
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from services.databaseService import get_case_dao
 from services.hotbitsService import HotbitsService, HotbitsSource
-
-
-class Rate:
-    def __init__(self, signature: str, description: str, catalogID: int):
-        self.id = 0
-        self.signature = signature
-        self.description = description  # Markdown
-        self.catalogID = catalogID
-        self.value = 0  # This will store the enhanced value
-        self.gv = 0
-
-    def to_dict(self):
-        return {
-            'id': self.id,
-            'signature': self.signature,
-            'description': self.description,
-            'catalogID': self.catalogID,
-            'value': self.value,
-            'gv': self.gv
-        }
+from domains.aetherOneDomains import AnalysisRate
 
 def transformAnalyzeListToDict(rates: []):
     dictList = []
@@ -31,14 +11,15 @@ def transformAnalyzeListToDict(rates: []):
         dictList.append(rate.to_dict())
     return dictList
 
-def analyze(rates: list, hotbits_service: HotbitsService, autoCheckGV:bool = False) -> list:
+def analyze(analysis_id: int, rates: list, hotbits_service: HotbitsService, autoCheckGV:bool = False) -> list:
 
     if rates is None or len(rates) == 0:
         return []
 
     newRates = []
     for rate in rates:
-        newRate = Rate(rate.signature,rate.description,rate.catalogID)
+        newRate = AnalysisRate(rate.signature, rate.description, rate.catalogID, analysis_id, 0, 0,
+                               0, "", 0, "")
         newRate.id = rate.id
         newRates.append(newRate)
 
