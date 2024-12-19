@@ -4,6 +4,28 @@
 AetherOnePy is a Web-based Desktop Application, which means the application runs on your computer but uses a web browser as its interface. You can run it on a Raspberry Pi or a PC (Windows, Linux or Mac).
 
 ## Install
+### Linux
+For Linux I wrote a [script](https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/scripts/run_aetherone.sh) which does the following:
+1) Create and activate the virtual python environment if it doesn't already exist
+2) Check if the git repository exists
+3) If the repository exists, navigate to it and pull the latest changes
+4) else it clones the repository
+5) It runs the setup.py for downloading the python dependencies
+6) Finally it runs main.py
+
+So you have an automatic update every time you start the application. If you don't wish to 
+automatically update it, just run the main.py by yourself.
+
+```shell
+# download the run_aetherone.sh script 
+wget https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/scripts/run_aetherone.sh
+# make it executable with chmod
+chmod +x run_aetherone.sh
+# run it once for installation and afterwards for every start
+./run_aetherone.sh
+```
+
+### Windows
 1) Install Python, from https://python.org/downloads/, Version 3.12.x
 2) Install Git, from https://git-scm.com, latest version is fine
 3) Create a folder for your AetherOnePy somewhere on you computer
@@ -17,7 +39,7 @@ python setup.py
 python main.py
 ```
 
-## Start
+#### Start
 Just run the main.py if you already runned the setup.py.
 ```shell
 python main.py
@@ -29,7 +51,7 @@ Some systems don't allow a port below 1024, like for example Windows WSL subsyst
 python main.py --port 7000
 ```
 
-## Update
+#### Update
 For updating you call **git pull** followed by **setup.py** which will download new dependencies.
 ```shell
 git pull
