@@ -1,18 +1,15 @@
 # AetherOnyPy Main Application
 # Copyright Isuret Polos 2024
 # Support me on https://www.patreon.com/aetherone
-import os
+import io,os,sys
 import time
 import requests
-import multiprocessing
+import multiprocessing, asyncio
 import argparse
 import qrcode
-import io
 import socket
 import re
 import json
-import sys
-
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
@@ -28,6 +25,7 @@ from services.updateRadionicsRates import update_or_clone_repo
 from services.rateImporter import RateImporter
 from services.hotbitsService import HotbitsService, HotbitsSource
 from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict, checkGeneralVitality
+from domains.aetherOneDomains import Analysis, Session
 
 app = Flask(__name__)
 port = 80
@@ -40,6 +38,7 @@ if not os.path.isdir("../hotbits"):
     os.makedirs("../hotbits")
 aetherOneDB = get_case_dao('../data/aetherone.db')
 hotbits = HotbitsService(HotbitsSource.WEBCAM, "../hotbits")
+
 
 # Angular UI, serving static files
 # --------------------------------
@@ -125,6 +124,31 @@ def case():
     return "NOT IMPLEMENTED"
 
 
+@app.route('/session', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def session():
+    if request.method == 'POST':
+        new_session = Session.from_dict(request.json)
+
+        # Insert the Session object into the database using aetherOneDB
+        aetherOneDB.insert_session(new_session)
+
+        response_data = json.dumps(new_session.to_dict(), ensure_ascii=False)
+        return Response(response_data, content_type='application/json; charset=utf-8')
+
+    if request.method == 'GET':
+        allSessions = []
+        for session in aetherOneDB.list_sessions(int(request.args.get('caseId'))):
+            allSessions.append(session.to_dict())
+        response_data = json.dumps(allSessions, ensure_ascii=False)
+        return Response(response_data, content_type='application/json; charset=utf-8')
+
+    if request.method == 'DELETE':
+        aetherOneDB.delete_session(int(request.args.get('id')))
+        return jsonify({'message': 'Session deleted successfully'}), 200
+
+    return "NOT IMPLEMENTED"
+
+
 @app.route('/catalog', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def catalog():
     if request.method == 'GET':
@@ -152,6 +176,7 @@ def filesToImport():
 
     return "NOT IMPLEMENTED"
 
+
 @app.route('/upload', methods=['POST'])
 def upload_file():
     if 'file' not in request.files:
@@ -167,23 +192,40 @@ def upload_file():
     rateImporter.import_file('../data/private', file.filename)
     return jsonify({'message': 'File uploaded successfully'}), 200
 
+
 @app.route('/countHotbits', methods=['GET'])
 def countHotbits():
     count = hotbits.countHotbits()
     return jsonify({'count': count}), 200
 
+
+@app.route('/collectHotBits', methods=['POST'])
+def collectHotbits():
+    asyncio.run(hotbits.collectHotBits())
+    return jsonify({'message': 'collecting hotbits started'}), 200
+
+
+@app.route('/collectHotBits', methods=['DELETE'])
+def stopCollectingHotbits():
+    hotbits.stopCollectingHotbits()
+    return jsonify({'message': 'collecting hotbits stopped'}), 200
+
+
 @app.route('/analyze', methods=['POST'])
 def analyze():
     analyzeRequest = request.json
     rates_list = aetherOneDB.list_rates_from_catalog(analyzeRequest["catalog_id"])
-    enhanced_rates = analyzeService(rates_list, hotbits)
+    analysis = aetherOneDB.insert_analysis(Analysis(analyzeRequest["note"], analyzeRequest["session_id"]))
+    enhanced_rates = analyzeService(analysis.id, rates_list, hotbits, True)
     analyzeList = transformAnalyzeListToDict(enhanced_rates)
     return jsonify(analyzeList), 200
+
 
 @app.route('/checkGV', methods=['GET'])
 def checkGV():
     gv = checkGeneralVitality(hotbits)
     return jsonify({'gv': gv}), 200
+
 
 def get_local_ip():
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

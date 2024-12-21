@@ -49,13 +49,16 @@ class Session:
             'caseID': self.caseID
         }
 
+    def from_dict(data):
+        return Session(data.get('intention'), data.get('description'), int(data.get('caseID')))
+
 
 class Analysis:
-    def __init__(self, note: str, created: datetime = datetime.now()):
+    def __init__(self, note: str, sessionID: int):
         self.id = 0
         self.note = note
-        self.sessionID = 0
-        self.created = created
+        self.sessionID = sessionID
+        self.created = datetime.now()
 
     def to_dict(self):
         return {

@@ -8,7 +8,7 @@ export class RateObject {
   signature:string = ""
   url:string = ""
   gv:number = 0
-  value:number = 0
+  energetic_value:number = 0
   recurring:number = 0
   recurringGeneralVitality:number = 0
   level:number = 0

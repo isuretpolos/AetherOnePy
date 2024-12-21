@@ -13,7 +13,7 @@ export class Case {
 export class Session {
   id:number = 0
   caseID:number = 0
-  intenion:string = ""
+  intention:string = ""
   description:string = ""
   created:Date = new Date()
 }

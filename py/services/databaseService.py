@@ -239,12 +239,14 @@ class CaseDAO:
             cases.append(caseObj)
         return cases
 
-    def insert_session(self, session: Session, case_id: int):
+    def insert_session(self, session: Session):
         query = '''
         INSERT INTO sessions (intention, description, created, case_id)
         VALUES (?, ?, datetime('now'), ?)
         '''
-        self.conn.execute(query, (session.intention, session.description, case_id))
+        cursor = self.conn.cursor()
+        cursor.execute(query, (session.intention, session.description, session.caseID))
+        session.id = cursor.lastrowid
         self.conn.commit()
 
     def get_session(self, session_id: int) -> Session:
@@ -264,31 +266,35 @@ class CaseDAO:
         self.conn.commit()
 
     def list_sessions(self, case_id: int) -> List[Session]:
-        query = 'SELECT * FROM sessions WHERE case_id = ?'
+        query = 'SELECT * FROM sessions WHERE case_id = ? ORDER BY id DESC'
         cursor = self.conn.execute(query, (case_id,))
         sessions = []
         for row in cursor:
             sessionObj = Session(row[1], row[2], case_id)
             sessionObj.id = row[0]
+            sessionObj.created = datetime.fromisoformat(row[3])
             sessions.append(sessionObj)
         return sessions
 
-    def insert_analysis(self, analysis: Analysis, session_id: int):
+    def insert_analysis(self, analysis: Analysis):
         query = '''
         INSERT INTO analysis (note, session_id, created)
         VALUES (?, ?, datetime('now'))
         '''
-        self.conn.execute(query, (analysis.note, session_id))
+        cursor = self.conn.cursor()
+        cursor.execute(query, (analysis.note, analysis.sessionID))
+        analysis.id = cursor.lastrowid
         self.conn.commit()
+        return analysis
 
-    def get_analysis(self, session_id: int) -> Analysis:
+    def get_analysis(self, session_id: int) -> Analysis | None:
         query = 'SELECT * FROM analysis WHERE id = ?'
         cursor = self.conn.execute(query, (session_id,))
         row = cursor.fetchone()
         if row:
-            analysis = Analysis(row[1], datetime.fromisoformat(row[3]))
+            analysis = Analysis(row[1], row[2])
             analysis.id = row[0]
-            analysis.sessionID = row[2]
+            analysis.created = datetime.fromisoformat(row[3])
             return analysis
         return None
 

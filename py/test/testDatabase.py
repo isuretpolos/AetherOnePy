@@ -63,8 +63,8 @@ if __name__ == '__main__':
                 f"CASE ID {caseObj.id} | NAME {caseObj.name} | COLOR {caseObj.color} | DESCRIPTION '{caseObj.description}' | CREATED {caseObj.created}")
 
             # add a session to each case
-            dao.insert_session(Session('balance energy 1', 'description', caseObj.id), caseObj.id)
-            dao.insert_session(Session('balance energy 2', 'description', caseObj.id), caseObj.id)
+            dao.insert_session(Session('balance energy 1', 'description', caseObj.id))
+            dao.insert_session(Session('balance energy 2', 'description', caseObj.id))
 
             # list sessions of the case
             listSessions = dao.list_sessions(caseObj.id)
@@ -74,14 +74,14 @@ if __name__ == '__main__':
             for sessionObj in listSessions:
                 print(f"  SESSION ID {sessionObj.id} | INTENTION {sessionObj.intention} | DESCRIPTION '{sessionObj.description} | CREATED {sessionObj.created}'")
                 # Add some analysis
-                dao.insert_analysis(Analysis('test analysis 1'), sessionObj.id)
-                dao.insert_analysis(Analysis('test analysis 2'), sessionObj.id)
+                dao.insert_analysis(Analysis('test analysis 1', sessionObj.id))
+                dao.insert_analysis(Analysis('test analysis 2', sessionObj.id))
                 listAnalysis = dao.list_analysis(sessionObj.id)
                 assert len(listAnalysis) == 2
                 assert sessionObj.id > 0
 
                 for analysis in listAnalysis:
-                    print(f"  ANALYSIS ID {analysis.id} | NOTE {analysis.note} | CREATED '{analysis.created}'")
+                    print(f"    ANALYSIS ID {analysis.id} | NOTE {analysis.note} | CREATED '{analysis.created}'")
                     analysis.note = f"{analysis.note} UPDATED"
                     dao.update_analysis(analysis)
                     analysis = dao.get_analysis(analysis.id)
@@ -100,11 +100,10 @@ if __name__ == '__main__':
                     analysis_rates = dao.list_rates_for_analysis(analysis.id)
 
                     assert analysis_rates is not None
-                    print(len(analysis_rates))
                     assert len(analysis_rates) == 2
 
                     for rate in analysis_rates:
-                        print(f" ANALYSIS_RATE ID {rate.id} | SIGNATURE {rate.signature}")
+                        print(f"      ANALYSIS_RATE ID {rate.id} | SIGNATURE {rate.signature}")
 
                     dao.delete_analysis(analysis.id)
                     analysis = dao.get_analysis(analysis.id)

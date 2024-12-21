@@ -4,7 +4,7 @@ import asyncio
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from enum import Enum
-from services.captureRandomnessFromWebCam import generate_hotbits
+from services.captureRandomnessFromWebCam import WebCamCollector
 from services.captureRandomnessFromRaspberryPi import RandomNumberGenerator
 
 
@@ -22,6 +22,7 @@ class HotbitsService:
         self.running = False
         self.hotbits: [int] = []
         self.folder_path = folder_path
+        self.webCamCollector = WebCamCollector()
         if self.is_raspberry_pi():
             print("This system is a Raspberry Pi.")
             self.source = HotbitsSource.RASPBERRY_PI
@@ -29,13 +30,16 @@ class HotbitsService:
     def countHotbits(self):
         return len([file for file in os.listdir(self.folder_path) if file.endswith(".json")])
 
+    def stopCollectingHotbits(self):
+        self.webCamCollector.stopCollectingHotbits = True
+
     async def collectHotBits(self):
         if self.source == HotbitsSource.RASPBERRY_PI:
             self.raspberryPi = True
             print("Raspberry Pi source enabled.")
         elif self.source == HotbitsSource.WEBCAM:
             self.running = True
-            generate_hotbits(self.folder_path, 10)
+            self.webCamCollector.generate_hotbits(self.folder_path, 10000)
         elif self.source == HotbitsSource.ARDUINO:
             self.useArduino = True
             print("Arduino source enabled.")

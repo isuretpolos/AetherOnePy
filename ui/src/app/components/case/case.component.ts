@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
-import {Case} from "../../domains/Case";
+import {Case, Session} from "../../domains/Case";
 import {Router} from "@angular/router";
 import {Catalog, RateObject} from "../../domains/Analysis";
 import {AetherOneService} from "../../services/aether-one.service";
 import {FolderStructure} from "../../domains/Files";
+import {FormControl} from "@angular/forms";
 
 @Component({
   selector: 'app-case',
@@ -12,6 +13,8 @@ import {FolderStructure} from "../../domains/Files";
 })
 export class CaseComponent implements OnInit {
   case:Case = new Case()
+  sessions:Session[] = []
+  session:Session|undefined
   catalogs:Catalog[] = []
   selectedCatalog:Catalog|undefined
   folderStructure: FolderStructure | null = null
@@ -19,12 +22,18 @@ export class CaseComponent implements OnInit {
   selectedFile: File | null = null;
   analysisResult:RateObject[] = []
   countHotbits:number = 0
+  sessionDescription= new FormControl('', { nonNullable: true });
+  sessionIntention= new FormControl('', { nonNullable: true });
+  analyzeNote= new FormControl('', { nonNullable: true });
 
   constructor(private aetherOne:AetherOneService) {}
 
   ngOnInit(): void {
     const storedData = sessionStorage.getItem('caseData');
     this.case = storedData ? JSON.parse(storedData) : null;
+    if (this.case) {
+      this.aetherOne.loadAllSessions(this.case.id).subscribe(sessions => this.sessions = sessions)
+    }
     this.aetherOne.countHotbits().subscribe( c => this.countHotbits = c.count)
   }
 
@@ -72,10 +81,25 @@ export class CaseComponent implements OnInit {
   }
 
   analyze() {
-    if (this.selectedCatalog)
-      this.aetherOne.analyze(this.selectedCatalog?.id).subscribe( r => {
+    if (this.selectedCatalog && this.session)
+      this.aetherOne.analyze(this.session?.id, this.selectedCatalog?.id, this.analyzeNote.getRawValue()).subscribe(r => {
         this.analysisResult = r
         this.aetherOne.countHotbits().subscribe( c => this.countHotbits = c.count)
+      })
+  }
+
+  newSession() {
+    this.session = new Session()
+    this.session.caseID = this.case.id
+    this.session.description = this.sessionDescription.getRawValue()
+    this.session.intention = this.sessionIntention.getRawValue()
+
+    this.aetherOne.newSession(this.session).subscribe( s => this.session = s)
+  }
+
+  deleteSession(id: number) {
+      this.aetherOne.deleteSession(id).subscribe( ()=>{
+        this.aetherOne.loadAllSessions(this.case.id).subscribe(sessions => this.sessions = sessions)
       })
   }
 }

@@ -5,25 +5,25 @@ from services.databaseService import get_case_dao
 from services.hotbitsService import HotbitsService, HotbitsSource
 from domains.aetherOneDomains import AnalysisRate
 
+
 def transformAnalyzeListToDict(rates: []):
     dictList = []
     for rate in rates:
         dictList.append(rate.to_dict())
     return dictList
 
+
 def analyze(analysis_id: int, rates: list, hotbits_service: HotbitsService, autoCheckGV:bool = False) -> list:
 
     if rates is None or len(rates) == 0:
         return []
 
-    newRates = []
+    enhanced_rates = []
     for rate in rates:
         newRate = AnalysisRate(rate.signature, rate.description, rate.catalogID, analysis_id, 0, 0,
                                0, "", 0, "")
         newRate.id = rate.id
-        newRates.append(newRate)
-
-    enhanced_rates = newRates
+        enhanced_rates.append(newRate)
 
     # PRE-SELECTION
     # FIRST ITERATION, assign +1 to value until 20 of them reach at least a value 10
@@ -31,34 +31,34 @@ def analyze(analysis_id: int, rates: list, hotbits_service: HotbitsService, auto
         for rate in enhanced_rates:
             random_value = hotbits_service.getInt(1, 5)
             if random_value == 5:
-                rate.value += 1
+                rate.energetic_value += 1
 
         if len(enhanced_rates) < 20:
             break
 
         countSelected = 0
         for rate in enhanced_rates:
-            if rate.value > 10:
+            if rate.energetic_value > 10:
                 countSelected += 1
 
         if countSelected >= 20:
             break
 
     # CLEAN ALL NOT WORTHY
-    enhanced_rates = [rate for rate in enhanced_rates if rate.value >= 11]
+    enhanced_rates = [rate for rate in enhanced_rates if rate.energetic_value >= 11]
 
     # SECOND ITERATION, assign 0 to 10 until at least one reach 1000
     maxReached = False
 
     while maxReached == False:
         for rate in enhanced_rates:
-            rate.value += hotbits_service.getInt(0, 10)
+            rate.energetic_value += hotbits_service.getInt(0, 10)
 
-            if rate.value >= 1000:
+            if rate.energetic_value >= 1000:
                 maxReached = True
                 break
 
-    enhanced_rates.sort(key=lambda r: r.value, reverse=True)
+    enhanced_rates.sort(key=lambda r: r.energetic_value, reverse=True)
 
     if autoCheckGV:
         for rate in enhanced_rates:
