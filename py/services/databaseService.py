@@ -422,6 +422,23 @@ class CaseDAO:
             features.append(Feature(row[1], row[2], row[3], row[4], row[5], datetime.fromisoformat(row[6])))
         return features
 
+    def ensure_settings_defaults(self, settings: json):
+        self.ensure_entry(settings,'hotbits_use_WebCam', 'false')
+        self.ensure_entry(settings,'hotbits_use_Arduino', 'false')
+        self.ensure_entry(settings,'hotbits_use_ESP', 'false')
+        self.ensure_entry(settings,'hotbits_use_RPi', 'false')
+        self.ensure_entry(settings,'hotbits_collectAutomatically', 'false')
+        self.ensure_entry(settings,'hotbits_mix_TRNG', 'false')
+        self.ensure_entry(settings,'analysisAdvanced', 'false')
+
+    def ensure_entry(self, dictionary, key, default_value):
+        """
+        Ensures that the key exists in the dictionary.
+        If the key doesn't exist, it adds it with the default value.
+        """
+        if key not in dictionary:
+            dictionary[key] = default_value
+
     def __del__(self):
         self.conn.close()
 

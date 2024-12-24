@@ -3,6 +3,8 @@
 # Support me on https://www.patreon.com/aetherone
 import io,os,sys
 import time
+from datetime import datetime
+
 import requests
 import multiprocessing, asyncio
 import argparse
@@ -152,6 +154,31 @@ def session():
         return jsonify({'message': 'Session deleted successfully'}), 200
 
     return "NOT IMPLEMENTED"
+
+
+@app.route('/settings', methods=['GET', 'POST'])
+def settings():
+    json_file_path = os.path.join('../data', 'settings.json')
+
+    if request.method == 'POST':
+        settings = request.json
+        aetherOneDB.ensure_settings_defaults(settings)
+        with open(json_file_path, 'w') as f:
+            json.dump(settings, f, indent=4)
+        return jsonify(settings), 200
+
+    if request.method == 'GET':
+        if os.path.isfile(json_file_path):
+            with open(json_file_path, 'r') as f:
+                settings = json.load(f)
+                aetherOneDB.ensure_settings_defaults(settings)
+                return settings, 200
+        else:
+            with open(json_file_path, 'w') as f:
+                settings = {'created': datetime.now().isoformat()}
+                aetherOneDB.ensure_settings_defaults(settings)
+                json.dump(settings, f)
+            return jsonify(settings), 200
 
 
 @app.route('/catalog', methods=['GET', 'POST', 'PUT', 'DELETE'])

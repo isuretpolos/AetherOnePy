@@ -21,8 +21,16 @@ export class AetherOneService {
     return this.http.get(`${this.baseUrl}ping`, {responseType: 'text'})
   }
 
+  loadSettings(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}settings`)
+  }
+
+  saveSettings(settings:any): Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}settings`,settings)
+  }
+
   saveNewCase(newCase: Case): Observable<Case> {
-    return this.http.post<Case>(`${this.baseUrl}case`, newCase);
+    return this.http.post<Case>(`${this.baseUrl}case`, newCase)
   }
 
   loadAllCases():Observable<Case[]> {
@@ -59,11 +67,11 @@ export class AetherOneService {
   }
 
   uploadFile(formData: any):Observable<any> {
-    return this.http.post(`${this.baseUrl}upload`, formData);
+    return this.http.post(`${this.baseUrl}upload`, formData)
   }
 
   analyze(session_id:number, catalogId:number, note:string):Observable<RateObject[]> {
-    return this.http.post<RateObject[]>(`${this.baseUrl}analyze`, {"catalog_id":catalogId,"note":note, "session_id": session_id});
+    return this.http.post<RateObject[]>(`${this.baseUrl}analyze`, {"catalog_id":catalogId,"note":note, "session_id": session_id})
   }
 
   countHotbits():Observable<CountHotbits> {
