@@ -52,8 +52,12 @@
     </div>
   </div>
  <hr>
-  <div *ngFor="let session of sessions" class="collapse text-primary-emphasis" id="sessionsCollapse">
+  <div *ngFor="let session of sessions" class="text-primary-emphasis" id="sessionsCollapse">
     <span class="badge text-bg-primary">{{session.created | date: 'short'}}</span>
+    <button (click)="showSessionDetails(session)" class="btn btn-success"
+            style="--bs-btn-padding-y: .012rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .625rem; margin-left: 0.25rem">
+      SHOW DETAILS
+    </button>
     <button (click)="deleteSession(session.id)" class="btn btn-danger"
             style="--bs-btn-padding-y: .012rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .625rem; margin-left: 0.25rem">
       DELETE

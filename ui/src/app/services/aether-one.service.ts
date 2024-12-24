@@ -37,6 +37,10 @@ export class AetherOneService {
     return this.http.post<Session>(`${this.baseUrl}session`, session)
   }
 
+  loadSession(id: string):Observable<Session> {
+    return this.http.get<Session>(`${this.baseUrl}session?id=${id}`)
+  }
+
   deleteSession(id:number):Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}session?id=${id}`)
   }

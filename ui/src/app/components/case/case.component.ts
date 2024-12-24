@@ -35,6 +35,9 @@ export class CaseComponent implements OnInit {
       this.aetherOne.loadAllSessions(this.case.id).subscribe(sessions => this.sessions = sessions)
     }
     this.aetherOne.countHotbits().subscribe( c => this.countHotbits = c.count)
+    let lastSessionId = localStorage.getItem(`lastSessionForCase ${this.case.id}`)
+    if (lastSessionId)
+      this.aetherOne.loadSession(lastSessionId).subscribe(s => this.session = s)
   }
 
   loadRateCatalogs() {
@@ -94,12 +97,21 @@ export class CaseComponent implements OnInit {
     this.session.description = this.sessionDescription.getRawValue()
     this.session.intention = this.sessionIntention.getRawValue()
 
-    this.aetherOne.newSession(this.session).subscribe( s => this.session = s)
+    this.aetherOne.newSession(this.session).subscribe( s => {
+      this.session = s
+      localStorage.setItem(`lastSessionForCase ${this.case.id}`,this.session.id.toString())
+    })
   }
 
   deleteSession(id: number) {
+    if(confirm("Are you sure you want to delete this session?")) {
       this.aetherOne.deleteSession(id).subscribe( ()=>{
         this.aetherOne.loadAllSessions(this.case.id).subscribe(sessions => this.sessions = sessions)
       })
+    }
+  }
+
+  showSessionDetails(session: Session) {
+
   }
 }

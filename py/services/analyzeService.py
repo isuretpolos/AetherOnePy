@@ -62,7 +62,7 @@ def analyze(analysis_id: int, rates: list, hotbits_service: HotbitsService, auto
 
     if autoCheckGV:
         for rate in enhanced_rates:
-            rate.gv = checkGeneralVitality(hotbits)
+            rate.gv = checkGeneralVitality(hotbits_service)
 
     return enhanced_rates
 

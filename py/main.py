@@ -136,11 +136,16 @@ def session():
         return Response(response_data, content_type='application/json; charset=utf-8')
 
     if request.method == 'GET':
-        allSessions = []
-        for session in aetherOneDB.list_sessions(int(request.args.get('caseId'))):
-            allSessions.append(session.to_dict())
-        response_data = json.dumps(allSessions, ensure_ascii=False)
-        return Response(response_data, content_type='application/json; charset=utf-8')
+        if request.args.get('id') is not None:
+            session = aetherOneDB.get_session(int(request.args.get('id')))
+            response_data = json.dumps(session.to_dict(), ensure_ascii=False)
+            return Response(response_data, content_type='application/json; charset=utf-8')
+        else:
+            allSessions = []
+            for session in aetherOneDB.list_sessions(int(request.args.get('caseId'))):
+                allSessions.append(session.to_dict())
+            response_data = json.dumps(allSessions, ensure_ascii=False)
+            return Response(response_data, content_type='application/json; charset=utf-8')
 
     if request.method == 'DELETE':
         aetherOneDB.delete_session(int(request.args.get('id')))

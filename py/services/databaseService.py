@@ -255,7 +255,7 @@ class CaseDAO:
         row = cursor.fetchone()
         if row:
             sessionObj = Session(row[1], row[2], row[4])
-            sessionObj.created = row[3]
+            sessionObj.created = datetime.fromisoformat(row[3])
             sessionObj.id = row[0]
             return sessionObj
         return None
