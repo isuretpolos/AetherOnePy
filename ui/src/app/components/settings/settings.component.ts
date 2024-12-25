@@ -11,12 +11,14 @@ export class SettingsComponent implements OnInit {
 
   settings:any
   analysisAdvanced = new FormControl(false);
+  analysisAlwaysCheckGV = new FormControl(false);
   hotbits_collectAutomatically = new FormControl(false);
   hotbits_mix_TRNG = new FormControl(false);
   hotbits_use_Arduino = new FormControl(false);
   hotbits_use_ESP = new FormControl(false);
   hotbits_use_RPi = new FormControl(false);
   hotbits_use_WebCam = new FormControl(false);
+  savedSuccessShow:boolean = false
 
   constructor(private aetherOne:AetherOneService) {
   }
@@ -27,18 +29,31 @@ export class SettingsComponent implements OnInit {
   loadSettings() {
     this.aetherOne.loadSettings().subscribe(s => {
       this.settings = s
-      this.setBooleanValueForForm(this.analysisAdvanced,s['analysisAdvanced'])
-      this.setBooleanValueForForm(this.hotbits_collectAutomatically,s['hotbits_collectAutomatically'])
-      this.setBooleanValueForForm(this.hotbits_mix_TRNG,s['hotbits_mix_TRNG'])
-      this.setBooleanValueForForm(this.hotbits_use_Arduino,s['hotbits_use_Arduino'])
-      this.setBooleanValueForForm(this.hotbits_use_ESP,s['hotbits_use_ESP'])
-      this.setBooleanValueForForm(this.hotbits_use_RPi,s['hotbits_use_RPi'])
-      this.setBooleanValueForForm(this.hotbits_use_WebCam,s['hotbits_use_WebCam'])
+      this.analysisAdvanced.setValue(s['analysisAdvanced'])
+      this.analysisAlwaysCheckGV.setValue(s['analysisAlwaysCheckGV'])
+      this.hotbits_collectAutomatically.setValue(s['hotbits_collectAutomatically'])
+      this.hotbits_mix_TRNG.setValue(s['hotbits_mix_TRNG'])
+      this.hotbits_use_Arduino.setValue(s['hotbits_use_Arduino'])
+      this.hotbits_use_ESP.setValue(s['hotbits_use_ESP'])
+      this.hotbits_use_RPi.setValue(s['hotbits_use_RPi'])
+      this.hotbits_use_WebCam.setValue(s['hotbits_use_WebCam'])
     })
   }
 
   saveSettings() {
+    this.settings['analysisAdvanced'] = this.analysisAdvanced.getRawValue()
+    this.settings['analysisAlwaysCheckGV'] = this.analysisAlwaysCheckGV.getRawValue()
+    this.settings['hotbits_collectAutomatically'] = this.hotbits_collectAutomatically.getRawValue()
+    this.settings['hotbits_mix_TRNG'] = this.hotbits_mix_TRNG.getRawValue()
+    this.settings['hotbits_use_Arduino'] = this.hotbits_use_Arduino.getRawValue()
+    this.settings['hotbits_use_ESP'] = this.hotbits_use_ESP.getRawValue()
+    this.settings['hotbits_use_RPi'] = this.hotbits_use_RPi.getRawValue()
+    this.settings['hotbits_use_WebCam'] = this.hotbits_use_WebCam.getRawValue()
 
+    this.aetherOne.saveSettings(this.settings).subscribe(()=> {
+      this.savedSuccessShow = true
+      setTimeout(()=>{ this.savedSuccessShow = false }, 3000)
+    })
   }
 
   setBooleanValueForForm(formControl:FormControl, setting:string) {

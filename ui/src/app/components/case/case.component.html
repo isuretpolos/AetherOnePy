@@ -3,8 +3,16 @@
   <p>{{case.description}}</p>
   <h2>Sessions</h2>
   <button data-bs-toggle="modal" data-bs-target="#sessionModal" class="btn btn-primary">NEW SESSION</button>
+  <hr>
   <div class="text-primary-emphasis rounded position-relative" *ngIf="session">
-    One session contains multiple analysis and broadcasts.
+    <div class="form-floating">
+      <textarea class="form-control" id="sessionDescription2" [formControl]="sessionDescription"></textarea>
+      <label for="sessionDescription2">Description</label>
+    </div>
+    <div class="form-floating">
+      <input class="form-control" id="sessionIntention2" [formControl]="sessionIntention">
+      <label for="sessionIntention2">Intention</label>
+    </div>
     <div style="margin: 0.8rem;padding: 0.8rem ">
       <h3>Analysis</h3>
       <h5 *ngIf="selectedCatalog">{{selectedCatalog.name}}</h5>
@@ -13,6 +21,7 @@
                 data-bs-target="#catalogsModal">SELECT RATE CATALOG</button>
         <button *ngIf="selectedCatalog" (click)="analyze()" class="btn btn-sm btn-danger smallerButton">ANALYZE (Hotbits = {{countHotbits}})</button>
         <button *ngIf="selectedCatalog" class="btn btn-sm btn-danger smallerButton">GV</button>
+        <span *ngIf="settings['analysisAlwaysCheckGV']" class="badge text-bg-warning" style="margin-left: 1rem">Automatic GV</span>
       </p>
       <table class="table table-sm table-hover">
         <thead class="table-light">

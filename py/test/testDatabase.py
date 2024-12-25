@@ -71,6 +71,10 @@ if __name__ == '__main__':
             assert len(listSessions) == 2
             assert caseObj.id > 0
 
+            last_session = dao.get_last_session(caseObj.id)
+            assert last_session is not None
+            print(f"  LAST SESSION ID {last_session.id} | INTENTION {last_session.intention} | DESCRIPTION '{last_session.description} | CREATED {last_session.created}'")
+
             for sessionObj in listSessions:
                 print(f"  SESSION ID {sessionObj.id} | INTENTION {sessionObj.intention} | DESCRIPTION '{sessionObj.description} | CREATED {sessionObj.created}'")
                 # Add some analysis
@@ -79,6 +83,10 @@ if __name__ == '__main__':
                 listAnalysis = dao.list_analysis(sessionObj.id)
                 assert len(listAnalysis) == 2
                 assert sessionObj.id > 0
+
+                last_analysis = dao.get_last_analysis(sessionObj.id)
+                assert last_analysis is not None
+                print(f"    LAST ANALYSIS ID {last_analysis.id} | NOTE {last_analysis.note} | CREATED '{last_analysis.created}'")
 
                 for analysis in listAnalysis:
                     print(f"    ANALYSIS ID {analysis.id} | NOTE {analysis.note} | CREATED '{analysis.created}'")

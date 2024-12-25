@@ -1,4 +1,7 @@
 <h1>Settings</h1>
+<p>
+  <button (click)="saveSettings()" class="btn btn-success">SAVE</button> <span *ngIf="savedSuccessShow" class="badge text-bg-success" style="margin-left: 1rem">Successfully saved</span>
+</p>
 
 <div class="card text-bg-danger p-3">
   <div class="card-body">
@@ -62,11 +65,19 @@
     <p class="card-text">Digital Radionics provides the fastest and effective analysis.</p>
 
     <div class="form-check">
-      <input [formControl]="analysisAdvanced" class="form-check-input" type="checkbox" id="analysisAdvanced">
+      <input [formControl]="analysisAlwaysCheckGV" class="form-check-input text-bg-danger" type="checkbox" id="analysisAlwaysCheckGV">
+      <label class="form-check-label" for="analysisAlwaysCheckGV">
+        Automatic General Vitality Check
+      </label>
+      <div class="form-text text-bg-primary p-3">It will check for you the GV of every rate and of the target. Use it for fast analysis. But better check every single rate yourself.</div>
+    </div>
+
+    <div class="form-check">
+      <input [formControl]="analysisAdvanced" class="form-check-input text-bg-warning" type="checkbox" id="analysisAdvanced">
       <label class="form-check-label" for="analysisAdvanced">
         Advanced Analysis
       </label>
-      <div class="form-text text-bg-danger p-3">Using more hotbits advanced analysis is able to deliver accurate energetic analysis. Use only if you have enough hotbits.</div>
+      <div class="form-text text-bg-primary p-3">Using more hotbits advanced analysis is able to deliver accurate energetic analysis. Use only if you have enough hotbits.</div>
     </div>
 
   </div>
@@ -81,3 +92,5 @@
 
   </div>
 </div>
+
+

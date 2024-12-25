@@ -260,6 +260,17 @@ class CaseDAO:
             return sessionObj
         return None
 
+    def get_last_session(self, case_id: int) -> Session:
+        query = 'SELECT * FROM sessions WHERE case_id = ? ORDER BY created DESC, id DESC LIMIT 1'
+        cursor = self.conn.execute(query, (case_id,))
+        row = cursor.fetchone()
+        if row:
+            sessionObj = Session(row[1], row[2], row[4])
+            sessionObj.created = datetime.fromisoformat(row[3])
+            sessionObj.id = row[0]
+            return sessionObj
+        return None
+
     def delete_session(self, session_id: int):
         query = 'DELETE FROM sessions WHERE id = ?'
         self.conn.execute(query, (session_id,))
@@ -287,8 +298,19 @@ class CaseDAO:
         self.conn.commit()
         return analysis
 
-    def get_analysis(self, session_id: int) -> Analysis | None:
+    def get_analysis(self, analysis_id: int) -> Analysis | None:
         query = 'SELECT * FROM analysis WHERE id = ?'
+        cursor = self.conn.execute(query, (analysis_id,))
+        row = cursor.fetchone()
+        if row:
+            analysis = Analysis(row[1], row[2])
+            analysis.id = row[0]
+            analysis.created = datetime.fromisoformat(row[3])
+            return analysis
+        return None
+
+    def get_last_analysis(self, session_id: int) -> Analysis | None:
+        query = 'SELECT * FROM analysis WHERE session_id = ? ORDER BY created DESC, id DESC LIMIT 1'
         cursor = self.conn.execute(query, (session_id,))
         row = cursor.fetchone()
         if row:
@@ -423,13 +445,14 @@ class CaseDAO:
         return features
 
     def ensure_settings_defaults(self, settings: json):
-        self.ensure_entry(settings,'hotbits_use_WebCam', 'false')
-        self.ensure_entry(settings,'hotbits_use_Arduino', 'false')
-        self.ensure_entry(settings,'hotbits_use_ESP', 'false')
-        self.ensure_entry(settings,'hotbits_use_RPi', 'false')
-        self.ensure_entry(settings,'hotbits_collectAutomatically', 'false')
-        self.ensure_entry(settings,'hotbits_mix_TRNG', 'false')
-        self.ensure_entry(settings,'analysisAdvanced', 'false')
+        self.ensure_entry(settings,'hotbits_use_WebCam', False)
+        self.ensure_entry(settings,'hotbits_use_Arduino', False)
+        self.ensure_entry(settings,'hotbits_use_ESP', False)
+        self.ensure_entry(settings,'hotbits_use_RPi', False)
+        self.ensure_entry(settings,'hotbits_collectAutomatically', False)
+        self.ensure_entry(settings,'hotbits_mix_TRNG', False)
+        self.ensure_entry(settings,'analysisAdvanced', False)
+        self.ensure_entry(settings,'analysisAlwaysCheckGV', True)
 
     def ensure_entry(self, dictionary, key, default_value):
         """

@@ -12,6 +12,7 @@ import {FormControl} from "@angular/forms";
   styleUrls: ['./case.component.scss']
 })
 export class CaseComponent implements OnInit {
+  settings:any
   case:Case = new Case()
   sessions:Session[] = []
   session:Session|undefined
@@ -29,15 +30,28 @@ export class CaseComponent implements OnInit {
   constructor(private aetherOne:AetherOneService) {}
 
   ngOnInit(): void {
+    this.aetherOne.loadSettings().subscribe(s => this.settings = s )
     const storedData = sessionStorage.getItem('caseData');
     this.case = storedData ? JSON.parse(storedData) : null;
     if (this.case) {
       this.aetherOne.loadAllSessions(this.case.id).subscribe(sessions => this.sessions = sessions)
+      this.aetherOne.loadLastSession(this.case.id).subscribe( s => {
+        this.session = s
+        this.sessionDescription.setValue(s.description)
+        this.sessionIntention.setValue(s.intention)
+      })
     }
     this.aetherOne.countHotbits().subscribe( c => this.countHotbits = c.count)
-    let lastSessionId = localStorage.getItem(`lastSessionForCase ${this.case.id}`)
+
+    /*let lastSessionId = localStorage.getItem(`lastSessionForCase ${this.case.id}`)
     if (lastSessionId)
-      this.aetherOne.loadSession(lastSessionId).subscribe(s => this.session = s)
+      this.aetherOne.loadSession(lastSessionId).subscribe(s => {
+        this.session = s
+        this.sessionDescription.setValue(s.description)
+        this.sessionIntention.setValue(s.intention)
+      })
+
+     */
   }
 
   loadRateCatalogs() {
