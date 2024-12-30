@@ -1,7 +1,9 @@
 export class Analysis {
-  id:string = ""
+  id:number = 0
+  session_id:number = 0
+  note:string = ""
   rateObjects:RateObject[] = []
-  generalVitality:number = 0
+  target_gv:number = 0
 }
 
 export class RateObject {

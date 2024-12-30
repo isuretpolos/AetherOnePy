@@ -57,6 +57,7 @@ class Analysis:
     def __init__(self, note: str, sessionID: int):
         self.id = 0
         self.note = note
+        self.target_gv = 0
         self.sessionID = sessionID
         self.created = datetime.now()
 
@@ -64,6 +65,7 @@ class Analysis:
         return {
             'id': self.id,
             'note': self.note,
+            'target_gv': self.target_gv,
             'sessionID': self.sessionID,
             'created': self.created.isoformat()
         }

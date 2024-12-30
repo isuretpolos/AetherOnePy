@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Case, Session} from "../../domains/Case";
 import {Router} from "@angular/router";
-import {Catalog, RateObject} from "../../domains/Analysis";
+import {Analysis, Catalog, RateObject} from "../../domains/Analysis";
 import {AetherOneService} from "../../services/aether-one.service";
 import {FolderStructure} from "../../domains/Files";
 import {FormControl} from "@angular/forms";
@@ -16,6 +16,8 @@ export class CaseComponent implements OnInit {
   case:Case = new Case()
   sessions:Session[] = []
   session:Session|undefined
+  analysis:Analysis|undefined
+  analysisList:Analysis[] = []
   catalogs:Catalog[] = []
   selectedCatalog:Catalog|undefined
   folderStructure: FolderStructure | null = null
@@ -39,19 +41,16 @@ export class CaseComponent implements OnInit {
         this.session = s
         this.sessionDescription.setValue(s.description)
         this.sessionIntention.setValue(s.intention)
+
+        this.aetherOne.loadAnalysisList(this.session.id).subscribe( a => {
+          this.analysisList = a
+          this.analysisList.forEach( analysis => {
+            this.aetherOne.loadRatesForAnalysis(analysis.id).subscribe(rates => analysis.rateObjects = rates)
+          })
+        })
       })
     }
     this.aetherOne.countHotbits().subscribe( c => this.countHotbits = c.count)
-
-    /*let lastSessionId = localStorage.getItem(`lastSessionForCase ${this.case.id}`)
-    if (lastSessionId)
-      this.aetherOne.loadSession(lastSessionId).subscribe(s => {
-        this.session = s
-        this.sessionDescription.setValue(s.description)
-        this.sessionIntention.setValue(s.intention)
-      })
-
-     */
   }
 
   loadRateCatalogs() {
@@ -98,11 +97,19 @@ export class CaseComponent implements OnInit {
   }
 
   analyze() {
-    if (this.selectedCatalog && this.session)
-      this.aetherOne.analyze(this.session?.id, this.selectedCatalog?.id, this.analyzeNote.getRawValue()).subscribe(r => {
-        this.analysisResult = r
-        this.aetherOne.countHotbits().subscribe( c => this.countHotbits = c.count)
+
+    if (this.selectedCatalog && this.session) {
+      let analysis = new Analysis()
+      analysis.session_id = this.session.id
+
+      this.aetherOne.newAnalysis(analysis).subscribe(persistedAnalysis => {
+        this.analysis = persistedAnalysis
+        this.aetherOne.analyze(this.analysis.id, this.session.id, this.selectedCatalog.id, this.analyzeNote.getRawValue()).subscribe(r => {
+          this.analysisResult = r
+          this.aetherOne.countHotbits().subscribe(c => this.countHotbits = c.count)
+        })
       })
+    }
   }
 
   newSession() {
@@ -113,7 +120,8 @@ export class CaseComponent implements OnInit {
 
     this.aetherOne.newSession(this.session).subscribe( s => {
       this.session = s
-      localStorage.setItem(`lastSessionForCase ${this.case.id}`,this.session.id.toString())
+      this.analysisList = []
+      this.analysis = undefined
     })
   }
 
@@ -126,6 +134,7 @@ export class CaseComponent implements OnInit {
   }
 
   showSessionDetails(session: Session) {
-
+    console.log("not yet implemented")
   }
+
 }

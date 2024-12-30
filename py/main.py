@@ -162,7 +162,7 @@ def session():
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
-    json_file_path = os.path.join('../data', 'settings.json')
+    json_file_path = os.path.join('..', 'data', 'settings.json')
 
     if request.method == 'POST':
         settings = request.json
@@ -172,17 +172,7 @@ def settings():
         return jsonify(settings), 200
 
     if request.method == 'GET':
-        if os.path.isfile(json_file_path):
-            with open(json_file_path, 'r') as f:
-                settings = json.load(f)
-                aetherOneDB.ensure_settings_defaults(settings)
-                return settings, 200
-        else:
-            with open(json_file_path, 'w') as f:
-                settings = {'created': datetime.now().isoformat()}
-                aetherOneDB.ensure_settings_defaults(settings)
-                json.dump(settings, f)
-            return jsonify(settings), 200
+        return aetherOneDB.loadSettings(), 200
 
 
 @app.route('/catalog', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -247,14 +237,53 @@ def stopCollectingHotbits():
     return jsonify({'message': 'collecting hotbits stopped'}), 200
 
 
-@app.route('/analyze', methods=['POST'])
+@app.route('/analysis', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def analysis():
+    if request.method == 'GET':
+        if request.args.get('id') is not None:
+            analysis = aetherOneDB.get_analysis(int(request.args.get('id')))
+            response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+            return Response(response_data, content_type='application/json; charset=utf-8')
+        elif request.args.get('last') is not None:
+            analysis = aetherOneDB.get_last_analysis(int(request.args.get('sessionId')))
+            response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+            return Response(response_data, content_type='application/json; charset=utf-8')
+        else:
+            analysisList = []
+            for analysis in aetherOneDB.list_analysis(int(request.args.get('session_id'))):
+                analysisList.append(analysis.to_dict())
+            response_data = json.dumps(analysisList, ensure_ascii=False)
+            return Response(response_data, content_type='application/json; charset=utf-8')
+
+    if request.method == 'POST':
+        analyzeRequest = request.json
+        analysis = aetherOneDB.insert_analysis(Analysis(analyzeRequest['note'],analyzeRequest['session_id']))
+        response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+        return Response(response_data, content_type='application/json; charset=utf-8')
+
+    if request.method == 'DELETE':
+        aetherOneDB.delete_analysis(int(request.args.get('id')))
+        return jsonify({'message': 'Analysis deleted successfully'}), 200
+
+    return "NOT IMPLEMENTED"
+
+
+@app.route('/analyze', methods=['GET', 'POST'])
 def analyze():
-    analyzeRequest = request.json
-    rates_list = aetherOneDB.list_rates_from_catalog(analyzeRequest["catalog_id"])
-    analysis = aetherOneDB.insert_analysis(Analysis(analyzeRequest["note"], analyzeRequest["session_id"]))
-    enhanced_rates = analyzeService(analysis.id, rates_list, hotbits, True)
-    analyzeList = transformAnalyzeListToDict(enhanced_rates)
-    return jsonify(analyzeList), 200
+    if request.method == 'GET':
+        rates_list = aetherOneDB.list_rates_for_analysis(int(request.args.get('analysis_id')))
+        analyzeList = transformAnalyzeListToDict(rates_list)
+        return jsonify(analyzeList), 200
+    if request.method == 'POST':
+        analyzeRequest = request.json
+        analysis = aetherOneDB.get_analysis(int(analyzeRequest['analysis_id']))
+        rates_list = aetherOneDB.list_rates_from_catalog(analyzeRequest["catalog_id"])
+        enhanced_rates = analyzeService(analysis.id, rates_list, hotbits, True)
+        aetherOneDB.insert_rates_for_analysis(enhanced_rates)
+        analyzeList = transformAnalyzeListToDict(enhanced_rates)
+        return jsonify(analyzeList), 200
+
+    return "NOT IMPLEMENTED"
 
 
 @app.route('/checkGV', methods=['GET'])

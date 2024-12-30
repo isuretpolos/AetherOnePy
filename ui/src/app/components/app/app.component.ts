@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
 
   serverOnline:boolean = false;
   links: Link[] = [];
-  case:Case|undefined = new Case()
+  case:Case = new Case()
   theme:string = "dark"
   searchText = new FormControl('');
   mobileMode:boolean = false
