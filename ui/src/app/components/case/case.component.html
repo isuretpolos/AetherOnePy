@@ -34,7 +34,7 @@
           <td>{{i+1}}</td>
           <td>{{rate.energetic_value}}</td>
           <td>{{rate.signature}}</td>
-          <td>{{rate.gv}}</td>
+          <td class="{{getRateClass(analysis.target_gv, rate.gv)}}">{{rate.gv}}</td>
           <td>
             <button style="padding: 0.05rem; font-size: 0.6rem" class="btn btn-sm btn-success"
                     title="broadcast Arsenicum album">BROADCAST

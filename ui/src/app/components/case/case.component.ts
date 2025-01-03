@@ -146,4 +146,15 @@ export class CaseComponent implements OnInit {
     this.sessionIntention.setValue("")
     this.sessionDescription.setValue("")
   }
+
+  getRateClass(target_gv: number, gv: number) {
+    let rateClass = ''
+    if (gv > target_gv) {
+      rateClass = 'hitOverTarget'
+    }
+    if (gv > target_gv && gv >= 1000) {
+      rateClass = 'hit1000'
+    }
+    return rateClass
+  }
 }
