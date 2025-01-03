@@ -1,6 +1,6 @@
 export class Analysis {
   id:number = 0
-  session_id:number = 0
+  sessionID:number = 0
   note:string = ""
   rateObjects:RateObject[] = []
   target_gv:number = 0

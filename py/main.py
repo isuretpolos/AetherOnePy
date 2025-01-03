@@ -257,7 +257,18 @@ def analysis():
 
     if request.method == 'POST':
         analyzeRequest = request.json
-        analysis = aetherOneDB.insert_analysis(Analysis(analyzeRequest['note'],analyzeRequest['session_id']))
+        analysis = Analysis(analyzeRequest['note'],analyzeRequest['sessionID'])
+        if aetherOneDB.get_setting('analysisAlwaysCheckGV'):
+            analysis.target_gv = checkGeneralVitality(hotbits)
+        analysis = aetherOneDB.insert_analysis(analysis)
+        response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+        return Response(response_data, content_type='application/json; charset=utf-8')
+
+    if request.method == 'PUT':
+        analyzeRequest = request.json
+        analysis = aetherOneDB.get_analysis(int(analyzeRequest['id']))
+        analysis.note = analyzeRequest['note']
+        aetherOneDB.update_analysis(analysis)
         response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
         return Response(response_data, content_type='application/json; charset=utf-8')
 

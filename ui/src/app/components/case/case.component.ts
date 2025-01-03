@@ -100,7 +100,7 @@ export class CaseComponent implements OnInit {
 
     if (this.selectedCatalog && this.session) {
       let analysis = new Analysis()
-      analysis.session_id = this.session.id
+      analysis.sessionID = this.session.id
 
       this.aetherOne.newAnalysis(analysis).subscribe(persistedAnalysis => {
         this.analysis = persistedAnalysis
@@ -137,4 +137,13 @@ export class CaseComponent implements OnInit {
     console.log("not yet implemented")
   }
 
+  saveAnalysisNote() {
+    this.analysis.note = this.analyzeNote.getRawValue()
+    this.aetherOne.updateAnalysis(this.analysis).subscribe( a=> console.log(a))
+  }
+
+  resetSessionData() {
+    this.sessionIntention.setValue("")
+    this.sessionDescription.setValue("")
+  }
 }

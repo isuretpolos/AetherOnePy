@@ -78,6 +78,10 @@ export class AetherOneService {
     return this.http.post<Analysis>(`${this.baseUrl}analysis`, analysis)
   }
 
+  updateAnalysis(analysis:Analysis):Observable<Analysis> {
+    return this.http.put<Analysis>(`${this.baseUrl}analysis`, analysis)
+  }
+
   loadAnalysisList(session_id:number):Observable<Analysis[]> {
     return this.http.get<Analysis[]>(`${this.baseUrl}analysis?session_id=${session_id}`)
   }

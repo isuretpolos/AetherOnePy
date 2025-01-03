@@ -292,11 +292,11 @@ class CaseDAO:
 
     def insert_analysis(self, analysis: Analysis):
         query = '''
-        INSERT INTO analysis (note, session_id, created)
-        VALUES (?, ?, datetime('now'))
+        INSERT INTO analysis (note, target_gv, session_id, created)
+        VALUES (?, ?, ?, datetime('now'))
         '''
         cursor = self.conn.cursor()
-        cursor.execute(query, (analysis.note, analysis.sessionID))
+        cursor.execute(query, (analysis.note, analysis.target_gv, analysis.sessionID))
         analysis.id = cursor.lastrowid
         self.conn.commit()
         return analysis
@@ -306,9 +306,9 @@ class CaseDAO:
         cursor = self.conn.execute(query, (analysis_id,))
         row = cursor.fetchone()
         if row:
-            analysis = Analysis(row[1], row[2])
+            analysis = Analysis(row[1], row[3])
             analysis.id = row[0]
-            analysis.target_gv = row[3]
+            analysis.target_gv = row[2]
             analysis.created = datetime.fromisoformat(row[4])
             return analysis
         return None
@@ -487,6 +487,9 @@ class CaseDAO:
         self.ensure_settings_defaults(settings)
         with open(json_file_path, 'w') as f:
             json.dump(settings, f, indent=4)
+
+    def get_setting(self, key:str):
+        return self.loadSettings()[key]
 
     def __del__(self):
         self.conn.close()
