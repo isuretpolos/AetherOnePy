@@ -37,7 +37,7 @@ This is a python version of the linux script, which runs on both operating syste
 # download the run_aetherone.py script 
 curl https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/scripts/run_aetherone.py > run_aetherone.py
 # run it once for installation and afterwards for every start
-python run_aetherone.sh
+python run_aetherone.py
 # some installation requires you to run python3 instead of python
 ```
 
