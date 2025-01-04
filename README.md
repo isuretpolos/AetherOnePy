@@ -25,7 +25,9 @@ chmod +x run_aetherone.sh
 ./run_aetherone.sh
 ```
 
-### Windows
+### Windows & Linux
+This is a python version of the linux script, which runs on both operating systems.
+
 1) Install Python, from https://python.org/downloads/, Version 3.12.x
 2) Install Git, from https://git-scm.com, latest version is fine
 3) Create a folder for your AetherOnePy somewhere on you computer
