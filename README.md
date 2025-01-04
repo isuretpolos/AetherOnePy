@@ -30,34 +30,22 @@ chmod +x run_aetherone.sh
 2) Install Git, from https://git-scm.com, latest version is fine
 3) Create a folder for your AetherOnePy somewhere on you computer
 4) Open a shell there and type:
-```shell
-git clone https://github.com/isuretpolos/AetherOnePy.git
-```
-5) Inside the AetherOnePy folder run the setup first and finally run the main.py
-```shell
-python setup.py
-python main.py
-```
 
-#### Start
-Just run the main.py if you already runned the setup.py.
 ```shell
-python main.py
+# download the run_aetherone.py script 
+wget https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/scripts/run_aetherone.py
+# run it once for installation and afterwards for every start
+python run_aetherone.sh
+# some installation requires you to run python3 instead of python
 ```
-
 Some systems don't allow a port below 1024, like for example Windows WSL subsystem (ubuntu). In this case use a different port:
 
 ```shell
 python main.py --port 7000
 ```
+# Update
+Just restart the run_aetherone.sh or run_aetherone.py script. It will update the application every time.
 
-#### Update
-For updating you call **git pull** followed by **setup.py** which will download new dependencies.
-```shell
-git pull
-python setup.py
-python main.py
-```
 # Raspberry Pi
 Some notes for users installing the application on the Raspberry Pi.
 
@@ -70,13 +58,7 @@ sudo apt update
 sudo apt upgrade
 # install pip for package management for python libraries
 sudo apt-get install python3-pip
-# install a python virtual environment (required by restrictions inside RaspyOS
-python -m venv aetherone
-cd aetherone
-git clone https://github.com/isuretpolos/AetherOnePy.git
-cd AetherOnePy
-cd py
-
+# install vim for easier editing scripts
 sudo apt install vim
 # now you can edit the hidden file .bashrc and set the alias
 vim .bashrc
@@ -85,6 +67,7 @@ alias ll='ls -la'
 ```
 
 # History
+- 2025-01-04 Session handling and Analysis works
 - 2024-12-04 SQLlite Database Design
 - 2024-05-28 automatic dependency install
 
