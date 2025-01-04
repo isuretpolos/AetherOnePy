@@ -5,7 +5,7 @@ from pathlib import Path
 
 def main():
     # Define paths
-    base_dir = Path("aetherone")
+    base_dir = Path("aetherone").absolute()
     repo_dir = base_dir / "AetherOnePy"
     py_dir = repo_dir / "py"
     main_file = py_dir / "main.py"
@@ -35,7 +35,6 @@ def main():
         subprocess.run(["git", "clone", "https://github.com/isuretpolos/AetherOnePy.git"])
 
     # Navigate to the py directory and verify main.py exists
-    print(py_dir)
     if py_dir.exists():
         print(f"Navigating to {py_dir}...")
         os.chdir(py_dir)
