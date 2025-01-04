@@ -35,11 +35,14 @@ This is a python version of the linux script, which runs on both operating syste
 
 ```shell
 # download the run_aetherone.py script 
-wget https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/scripts/run_aetherone.py
+curl https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/scripts/run_aetherone.py > run_aetherone.py
 # run it once for installation and afterwards for every start
 python run_aetherone.sh
 # some installation requires you to run python3 instead of python
 ```
+
+![RadionicsBox AetherOnyPy](https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/docs/run_aetherone.png)
+
 Some systems don't allow a port below 1024, like for example Windows WSL subsystem (ubuntu). In this case use a different port:
 
 ```shell

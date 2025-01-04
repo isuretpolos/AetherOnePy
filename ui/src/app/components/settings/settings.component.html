@@ -7,6 +7,9 @@
   <div class="card-body">
     <h5 class="card-title">Hotbits</h5>
     <p class="card-text">The <b><i>"fuel"</i></b> for the digital radionics analysis and broadcasting, the quantum interface between mind and matter.</p>
+    <hr>
+    <h6>Behavior</h6>
+    <p class="card-text">These settings control how hotbits should be handled.</p>
 
     <div class="form-check">
       <input [formControl]="hotbits_collectAutomatically" class="form-check-input" type="checkbox" id="hotbits_collectAutomatically">
@@ -22,6 +25,25 @@
         Mix TRNG sources
       </label>
       <div class="form-text text-bg-danger p-3">If more than one source for true randomness is available, it will mix the "hotbits" together, in order to get better quality.</div>
+    </div>
+
+    <hr>
+    <h6>Source</h6>
+    <p class="card-text">These settings handles the source for hotbits.</p>
+    <div class="form-check">
+      <input [formControl]="hotbits_use_RPi" class="form-check-input" type="checkbox" id="hotbits_use_RPi">
+      <label class="form-check-label" for="hotbits_use_RPi">
+        Use Raspberry Pi's own TRNG
+      </label>
+      <div class="form-text text-bg-danger p-3">For the new Raspberry Pi OS it should work out of the box.</div>
+    </div>
+
+    <div class="form-check">
+      <input [formControl]="hotbits_use_WebCam" class="form-check-input" type="checkbox" id="hotbits_use_WebCam">
+      <label class="form-check-label" for="hotbits_use_RPi">
+        Use your WebCam as a TRNG source
+      </label>
+      <div class="form-text text-bg-danger p-3">The WebCam is the best source for genuine hotbits, fast and effective.</div>
     </div>
 
     <div class="form-check">
@@ -41,19 +63,11 @@
     </div>
 
     <div class="form-check">
-      <input [formControl]="hotbits_use_RPi" class="form-check-input" type="checkbox" id="hotbits_use_RPi">
-      <label class="form-check-label" for="hotbits_use_RPi">
-        Use Raspberry Pi's own TRNG
+      <input [formControl]="hotbits_use_time_based_trng" class="form-check-input" type="checkbox" id="hotbits_use_time_based_trng">
+      <label class="form-check-label" for="hotbits_use_time_based_trng">
+        Use Time Based TRNG (low quality, with just a little bit of quantum effect)
       </label>
-      <div class="form-text text-bg-danger p-3">For the new Raspberry Pi OS it should work out of the box.</div>
-    </div>
-
-    <div class="form-check">
-      <input [formControl]="hotbits_use_WebCam" class="form-check-input" type="checkbox" id="hotbits_use_WebCam">
-      <label class="form-check-label" for="hotbits_use_RPi">
-        Use your WebCam as a TRNG source
-      </label>
-      <div class="form-text text-bg-danger p-3">The WebCam is the best source for genuine hotbits, fast and effective.</div>
+      <div class="form-text text-bg-danger p-3">A time-based TRNG generates randomness by measuring execution time differences between identical loops, which are influenced by system-level unpredictability like CPU load and scheduling. The randomness is primarily classical, with quantum effects (e.g., thermal noise and oscillator stability) contributing less than 0.001%. This makes it a practical but not quantum-driven method for generating random numbers.</div>
     </div>
 
   </div>

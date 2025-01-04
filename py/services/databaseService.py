@@ -455,10 +455,27 @@ class CaseDAO:
         self.ensure_entry(settings,'hotbits_use_Arduino', False)
         self.ensure_entry(settings,'hotbits_use_ESP', False)
         self.ensure_entry(settings,'hotbits_use_RPi', False)
+        self.ensure_entry(settings,'hotbits_use_time_based_trng', True)
         self.ensure_entry(settings,'hotbits_collectAutomatically', False)
         self.ensure_entry(settings,'hotbits_mix_TRNG', False)
         self.ensure_entry(settings,'analysisAdvanced', False)
         self.ensure_entry(settings,'analysisAlwaysCheckGV', True)
+
+    def getHotbitsSourcePriority(self):
+        settings = self.loadSettings()
+        prio = []
+        if settings['hotbits_use_WebCam']:
+            prio.append('WebCam')
+        if settings['hotbits_use_Arduino']:
+            prio.append('Arduino')
+        if settings['hotbits_use_ESP']:
+            prio.append('ESP')
+        if settings['hotbits_use_RPi']:
+            prio.append('RPi')
+        if settings['hotbits_use_time_based_trng']:
+            prio.append('TimeBaseTRNG')
+        return prio
+
 
     def ensure_entry(self, dictionary, key, default_value):
         """
@@ -489,7 +506,10 @@ class CaseDAO:
             json.dump(settings, f, indent=4)
 
     def get_setting(self, key:str):
-        return self.loadSettings()[key]
+        try:
+            return self.loadSettings()[key]
+        except:
+            return None
 
     def __del__(self):
         self.conn.close()

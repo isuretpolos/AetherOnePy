@@ -39,6 +39,7 @@ if not os.path.isdir("../data/private"):
 if not os.path.isdir("../hotbits"):
     os.makedirs("../hotbits")
 aetherOneDB = get_case_dao('../data/aetherone.db')
+aetherOneDB.get_setting('')
 hotbits = HotbitsService(HotbitsSource.WEBCAM, "../hotbits")
 
 

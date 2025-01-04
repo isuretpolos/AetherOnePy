@@ -18,6 +18,7 @@ export class SettingsComponent implements OnInit {
   hotbits_use_ESP = new FormControl(false);
   hotbits_use_RPi = new FormControl(false);
   hotbits_use_WebCam = new FormControl(false);
+  hotbits_use_time_based_trng = new FormControl(true);
   savedSuccessShow:boolean = false
 
   constructor(private aetherOne:AetherOneService) {
