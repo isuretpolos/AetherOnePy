@@ -35,6 +35,7 @@ def main():
         subprocess.run(["git", "clone", "https://github.com/isuretpolos/AetherOnePy.git"])
 
     # Navigate to the py directory and verify main.py exists
+    print(py_dir)
     if py_dir.exists():
         print(f"Navigating to {py_dir}...")
         os.chdir(py_dir)
