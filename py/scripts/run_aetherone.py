@@ -3,6 +3,13 @@ import subprocess
 import sys
 from pathlib import Path
 
+def find_main_file(repo_path):
+    """Search for the main application file dynamically."""
+    for root, _, files in os.walk(repo_path):
+        if "main.py" in files:
+            return Path(root) / "main.py"
+    return None
+
 def main():
     # Define variables
     base_dir = Path("aetherone")
@@ -25,33 +32,22 @@ def main():
         print(f"Directory {repo_dir} exists. Updating repository...")
         os.chdir(repo_dir)
         subprocess.run(["git", "pull"])
-        py_dir = repo_dir / "py"
-        if py_dir.exists():
-            os.chdir(py_dir)
-            subprocess.run([sys.executable, "setup.py"])
-        else:
-            print(f"Warning: The 'py' subdirectory does not exist in {repo_dir}")
     else:
         # Clone the repository if it doesn't exist
         print(f"Directory {repo_dir} does not exist. Cloning repository...")
         base_dir.mkdir(parents=True, exist_ok=True)
         os.chdir(base_dir)
         subprocess.run(["git", "clone", "https://github.com/isuretpolos/AetherOnePy.git"])
-        py_dir = repo_dir / "py"
-        if py_dir.exists():
-            os.chdir(py_dir)
-            subprocess.run([sys.executable, "setup.py"])
-        else:
-            print(f"Error: The 'py' subdirectory was not found after cloning {repo_dir}")
-            return
 
-    # Navigate to the repository's py directory and run the application
-    if py_dir.exists():
-        os.chdir(py_dir)
-        print("Starting application...")
-        subprocess.run([sys.executable, "main.py", "--port", "7000"])
+    # Dynamically find the main.py file
+    main_file_path = find_main_file(repo_dir)
+    if main_file_path:
+        main_dir = main_file_path.parent
+        os.chdir(main_dir)
+        print(f"Starting application from {main_file_path}...")
+        subprocess.run([sys.executable, str(main_file_path), "--port", "7000"])
     else:
-        print(f"Error: The 'py' subdirectory does not exist, application cannot start.")
+        print(f"Error: Could not find main.py in {repo_dir}. Check the repository structure.")
 
 if __name__ == "__main__":
     main()
