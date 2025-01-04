@@ -23,22 +23,35 @@ def main():
     if repo_dir.exists():
         # If the repository exists, navigate to it and pull the latest changes
         print(f"Directory {repo_dir} exists. Updating repository...")
-        os.chdir(repo_dir / "py")
+        os.chdir(repo_dir)
         subprocess.run(["git", "pull"])
-        subprocess.run([sys.executable, "setup.py"])
+        py_dir = repo_dir / "py"
+        if py_dir.exists():
+            os.chdir(py_dir)
+            subprocess.run([sys.executable, "setup.py"])
+        else:
+            print(f"Warning: The 'py' subdirectory does not exist in {repo_dir}")
     else:
         # Clone the repository if it doesn't exist
         print(f"Directory {repo_dir} does not exist. Cloning repository...")
         base_dir.mkdir(parents=True, exist_ok=True)
         os.chdir(base_dir)
         subprocess.run(["git", "clone", "https://github.com/isuretpolos/AetherOnePy.git"])
-        os.chdir(repo_dir / "py")
-        subprocess.run([sys.executable, "setup.py"])
+        py_dir = repo_dir / "py"
+        if py_dir.exists():
+            os.chdir(py_dir)
+            subprocess.run([sys.executable, "setup.py"])
+        else:
+            print(f"Error: The 'py' subdirectory was not found after cloning {repo_dir}")
+            return
 
     # Navigate to the repository's py directory and run the application
-    os.chdir(repo_dir / "py")
-    print("Starting application...")
-    subprocess.run([sys.executable, "main.py", "--port", "7000"])
+    if py_dir.exists():
+        os.chdir(py_dir)
+        print("Starting application...")
+        subprocess.run([sys.executable, "main.py", "--port", "7000"])
+    else:
+        print(f"Error: The 'py' subdirectory does not exist, application cannot start.")
 
 if __name__ == "__main__":
     main()
