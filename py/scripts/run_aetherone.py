@@ -3,17 +3,11 @@ import subprocess
 import sys
 from pathlib import Path
 
-def find_main_file(repo_path):
-    """Search for the main.py file dynamically."""
-    for root, _, files in os.walk(repo_path):
-        if "main.py" in files:
-            return Path(root) / "main.py"
-    return None
-
 def main():
     # Define variables
     base_dir = Path("aetherone")
     repo_dir = base_dir / "AetherOnePy"
+    py_dir = repo_dir / "py"
 
     # Create and activate the virtual environment if it doesn't already exist
     if not base_dir.exists():
@@ -39,15 +33,21 @@ def main():
         os.chdir(base_dir)
         subprocess.run(["git", "clone", "https://github.com/isuretpolos/AetherOnePy.git"])
 
-    # Dynamically find the main.py file
-    main_file_path = find_main_file(repo_dir)
-    if main_file_path:
-        main_dir = main_file_path.parent
-        os.chdir(main_dir)
-        print(f"Starting application from {main_file_path}...")
-        subprocess.run([sys.executable, str(main_file_path), "--port", "7000"])
+    # Check if the py directory exists
+    if py_dir.exists():
+        os.chdir(py_dir)
+        print(f"Running setup.py in {py_dir}...")
+        subprocess.run([sys.executable, "setup.py"])
+
+        # Start the application
+        main_file = py_dir / "main.py"
+        if main_file.exists():
+            print(f"Starting application from {main_file}...")
+            subprocess.run([sys.executable, str(main_file), "--port", "7000"])
+        else:
+            print(f"Error: main.py not found in {py_dir}")
     else:
-        print(f"Error: Could not find main.py in {repo_dir}. Please check the repository structure.")
+        print(f"Error: The 'py' directory does not exist in {repo_dir}. Check the repository structure.")
 
 if __name__ == "__main__":
     main()
