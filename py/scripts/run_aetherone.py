@@ -4,7 +4,7 @@ import sys
 from pathlib import Path
 
 def find_main_file(repo_path):
-    """Search for the main application file dynamically."""
+    """Search for the main.py file dynamically."""
     for root, _, files in os.walk(repo_path):
         if "main.py" in files:
             return Path(root) / "main.py"
@@ -25,15 +25,15 @@ def main():
     if activate_script.exists():
         with open(activate_script) as f:
             exec(f.read(), {'__file__': str(activate_script)})
+    else:
+        print(f"Warning: Could not find activation script {activate_script}")
 
-    # Check if the repository exists
+    # Clone or update the repository
     if repo_dir.exists():
-        # If the repository exists, navigate to it and pull the latest changes
         print(f"Directory {repo_dir} exists. Updating repository...")
         os.chdir(repo_dir)
         subprocess.run(["git", "pull"])
     else:
-        # Clone the repository if it doesn't exist
         print(f"Directory {repo_dir} does not exist. Cloning repository...")
         base_dir.mkdir(parents=True, exist_ok=True)
         os.chdir(base_dir)
@@ -47,7 +47,7 @@ def main():
         print(f"Starting application from {main_file_path}...")
         subprocess.run([sys.executable, str(main_file_path), "--port", "7000"])
     else:
-        print(f"Error: Could not find main.py in {repo_dir}. Check the repository structure.")
+        print(f"Error: Could not find main.py in {repo_dir}. Please check the repository structure.")
 
 if __name__ == "__main__":
     main()
