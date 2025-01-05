@@ -10,7 +10,8 @@ required_packages = [
     'PIL',
     'python-dateutil',
     'gitpython',
-    'opencv-python'
+    'opencv-python',
+    'matplotlib'
 ]
 
 def install_package(package):
