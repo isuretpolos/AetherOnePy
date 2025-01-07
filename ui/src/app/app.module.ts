@@ -10,6 +10,7 @@ import { SettingsComponent } from './components/settings/settings.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { MobileComponent } from './components/mobile/mobile.component';
 import { CaseComponent } from './components/case/case.component';
+import { RateCardsComponent } from './components/rate-cards/rate-cards.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CaseComponent } from './components/case/case.component';
     DocumentationComponent,
     SettingsComponent,
     MobileComponent,
-    CaseComponent
+    CaseComponent,
+    RateCardsComponent
   ],
   imports: [
     BrowserModule,

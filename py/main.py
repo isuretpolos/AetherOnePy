@@ -3,7 +3,6 @@
 # Support me on https://www.patreon.com/aetherone
 import io,os,sys
 import time
-from datetime import datetime
 
 import requests
 import multiprocessing, asyncio
@@ -22,6 +21,7 @@ from flask_cors import CORS
 from PIL import ImageDraw, ImageFont
 from dateutil import parser
 
+from services.rateCard import RadionicChart
 from services.databaseService import get_case_dao, Case
 from services.updateRadionicsRates import update_or_clone_repo
 from services.rateImporter import RateImporter
@@ -302,6 +302,18 @@ def analyze():
 def checkGV():
     gv = checkGeneralVitality(hotbits)
     return jsonify({'gv': gv}), 200
+
+
+@app.route('/rateCard', methods=['GET'])
+def rateCard():
+    input_string = request.args.get('rates')
+    rates = RadionicChart.parse_input(input_string)
+    chart = RadionicChart(request.args.get('rateName'), request.args.get('base'))
+    image = chart.draw_chart(rates)
+    buffer = io.BytesIO()
+    image.save(buffer, format='PNG')
+    buffer.seek(0)
+    return send_file(buffer, mimetype='image/png')
 
 
 def get_local_ip():
