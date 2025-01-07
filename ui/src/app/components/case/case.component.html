@@ -39,6 +39,17 @@
             <button style="padding: 0.05rem; font-size: 0.6rem" class="btn btn-sm btn-success"
                     title="broadcast Arsenicum album">BROADCAST
             </button>
+            <a *ngIf="selectedCatalog.name.startsWith('HOMEOPATHY')" style="margin-left: 1rem; padding: 0.05rem; font-size: 0.6rem" class="btn btn-sm btn-primary"
+                    title="search in qjure.com" href="https://www.google.com/search?q={{rate.signature}}+site%3Aqjure.com" target="new window for {{rate.signature}}">QJURE
+            </a>
+
+            <a *ngIf="selectedCatalog.name.startsWith('HOMEOPATHY')" style="margin-left: 1rem; padding: 0.05rem; font-size: 0.6rem" class="btn btn-sm btn-primary"
+               title="search in qjure.com" href="https://www.google.com/search?q={{rate.signature}}+site%3Ahomeoint.org" target="new window for {{rate.signature}}">HOMEOINT
+            </a>
+
+            <a *ngIf="selectedCatalog.name.startsWith('HOMEOPATHY')" style="margin-left: 1rem; padding: 0.05rem; font-size: 0.6rem" class="btn btn-sm btn-primary"
+               title="search in qjure.com" href="https://www.google.com/search?q={{rate.signature}}+site%3Asystem-sat.de" target="new window for {{rate.signature}}">SYSTEMSAT
+            </a>
           </td>
         </tr>
         </tbody>
