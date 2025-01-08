@@ -19,6 +19,6 @@ export class RateCardsComponent implements OnInit {
   }
 
   getImageUrl(): string {
-    return `${this.baseUrl}/rateCard?rateName=${encodeURIComponent(this.rateName.getRawValue())}&rates=${encodeURIComponent(this.rates.getRawValue())}&base=${encodeURIComponent(this.base.getRawValue())}`;
+    return `${this.baseUrl}rateCard?rateName=${encodeURIComponent(this.rateName.getRawValue())}&rates=${encodeURIComponent(this.rates.getRawValue())}&base=${encodeURIComponent(this.base.getRawValue())}`;
   }
 }

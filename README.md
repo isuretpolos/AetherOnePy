@@ -85,3 +85,5 @@ alias ll='ls -la'
 # Resources
 - https://github.com/Bowserinator/Periodic-Table-JSON/blob/master/PeriodicTableJSON.json
 - https://modelviewer.dev/
+- https://neumorphism.io/#e0e0e0
+- https://uiverse.io/
