@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
 
   serverOnline:boolean = false;
   links: Link[] = [];
-  case:Case|undefined = new Case()
+  case:Case = new Case()
   theme:string = "dark"
   searchText = new FormControl('');
   mobileMode:boolean = false
@@ -73,6 +73,7 @@ export class AppComponent implements OnInit {
   }
 
   private initLinks() {
+    this.addLink("CARDS", false, "#282086", "#fff");
     this.addLink("MANUAL", false, "#133185", "#fff");
     this.addLink("SETTINGS", false, "#ff9520", "#000");
   }

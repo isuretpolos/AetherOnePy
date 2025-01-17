@@ -3,7 +3,6 @@
 # Support me on https://www.patreon.com/aetherone
 import io,os,sys
 import time
-from datetime import datetime
 
 import requests
 import multiprocessing, asyncio
@@ -22,6 +21,7 @@ from flask_cors import CORS
 from PIL import ImageDraw, ImageFont
 from dateutil import parser
 
+from services.rateCard import RadionicChart
 from services.databaseService import get_case_dao, Case
 from services.updateRadionicsRates import update_or_clone_repo
 from services.rateImporter import RateImporter
@@ -39,6 +39,7 @@ if not os.path.isdir("../data/private"):
 if not os.path.isdir("../hotbits"):
     os.makedirs("../hotbits")
 aetherOneDB = get_case_dao('../data/aetherone.db')
+aetherOneDB.get_setting('')
 hotbits = HotbitsService(HotbitsSource.WEBCAM, "../hotbits")
 
 
@@ -162,7 +163,7 @@ def session():
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
-    json_file_path = os.path.join('../data', 'settings.json')
+    json_file_path = os.path.join('..', 'data', 'settings.json')
 
     if request.method == 'POST':
         settings = request.json
@@ -172,17 +173,7 @@ def settings():
         return jsonify(settings), 200
 
     if request.method == 'GET':
-        if os.path.isfile(json_file_path):
-            with open(json_file_path, 'r') as f:
-                settings = json.load(f)
-                aetherOneDB.ensure_settings_defaults(settings)
-                return settings, 200
-        else:
-            with open(json_file_path, 'w') as f:
-                settings = {'created': datetime.now().isoformat()}
-                aetherOneDB.ensure_settings_defaults(settings)
-                json.dump(settings, f)
-            return jsonify(settings), 200
+        return aetherOneDB.loadSettings(), 200
 
 
 @app.route('/catalog', methods=['GET', 'POST', 'PUT', 'DELETE'])
@@ -247,20 +238,82 @@ def stopCollectingHotbits():
     return jsonify({'message': 'collecting hotbits stopped'}), 200
 
 
-@app.route('/analyze', methods=['POST'])
+@app.route('/analysis', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def analysis():
+    if request.method == 'GET':
+        if request.args.get('id') is not None:
+            analysis = aetherOneDB.get_analysis(int(request.args.get('id')))
+            response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+            return Response(response_data, content_type='application/json; charset=utf-8')
+        elif request.args.get('last') is not None:
+            analysis = aetherOneDB.get_last_analysis(int(request.args.get('sessionId')))
+            response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+            return Response(response_data, content_type='application/json; charset=utf-8')
+        else:
+            analysisList = []
+            for analysis in aetherOneDB.list_analysis(int(request.args.get('session_id'))):
+                analysisList.append(analysis.to_dict())
+            response_data = json.dumps(analysisList, ensure_ascii=False)
+            return Response(response_data, content_type='application/json; charset=utf-8')
+
+    if request.method == 'POST':
+        analyzeRequest = request.json
+        analysis = Analysis(analyzeRequest['note'],analyzeRequest['sessionID'])
+        if aetherOneDB.get_setting('analysisAlwaysCheckGV'):
+            analysis.target_gv = checkGeneralVitality(hotbits)
+        analysis = aetherOneDB.insert_analysis(analysis)
+        response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+        return Response(response_data, content_type='application/json; charset=utf-8')
+
+    if request.method == 'PUT':
+        analyzeRequest = request.json
+        analysis = aetherOneDB.get_analysis(int(analyzeRequest['id']))
+        analysis.note = analyzeRequest['note']
+        aetherOneDB.update_analysis(analysis)
+        response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+        return Response(response_data, content_type='application/json; charset=utf-8')
+
+    if request.method == 'DELETE':
+        aetherOneDB.delete_analysis(int(request.args.get('id')))
+        return jsonify({'message': 'Analysis deleted successfully'}), 200
+
+    return "NOT IMPLEMENTED"
+
+
+@app.route('/analyze', methods=['GET', 'POST'])
 def analyze():
-    analyzeRequest = request.json
-    rates_list = aetherOneDB.list_rates_from_catalog(analyzeRequest["catalog_id"])
-    analysis = aetherOneDB.insert_analysis(Analysis(analyzeRequest["note"], analyzeRequest["session_id"]))
-    enhanced_rates = analyzeService(analysis.id, rates_list, hotbits, True)
-    analyzeList = transformAnalyzeListToDict(enhanced_rates)
-    return jsonify(analyzeList), 200
+    if request.method == 'GET':
+        rates_list = aetherOneDB.list_rates_for_analysis(int(request.args.get('analysis_id')))
+        analyzeList = transformAnalyzeListToDict(rates_list)
+        return jsonify(analyzeList), 200
+    if request.method == 'POST':
+        analyzeRequest = request.json
+        analysis = aetherOneDB.get_analysis(int(analyzeRequest['analysis_id']))
+        rates_list = aetherOneDB.list_rates_from_catalog(analyzeRequest["catalog_id"])
+        enhanced_rates = analyzeService(analysis.id, rates_list, hotbits, True)
+        aetherOneDB.insert_rates_for_analysis(enhanced_rates)
+        analyzeList = transformAnalyzeListToDict(enhanced_rates)
+        return jsonify(analyzeList), 200
+
+    return "NOT IMPLEMENTED"
 
 
 @app.route('/checkGV', methods=['GET'])
 def checkGV():
     gv = checkGeneralVitality(hotbits)
     return jsonify({'gv': gv}), 200
+
+
+@app.route('/rateCard', methods=['GET'])
+def rateCard():
+    input_string = request.args.get('rates')
+    rates = RadionicChart.parse_input(input_string)
+    chart = RadionicChart(request.args.get('rateName'), request.args.get('base'))
+    image = chart.draw_chart(rates)
+    buffer = io.BytesIO()
+    image.save(buffer, format='PNG')
+    buffer.seek(0)
+    return send_file(buffer, mimetype='image/png')
 
 
 def get_local_ip():

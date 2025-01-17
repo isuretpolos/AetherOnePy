@@ -3,7 +3,7 @@ import {environment} from "../../environments/environment";
 import {BehaviorSubject, Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {Case, Session} from "../domains/Case";
-import {Catalog, CountHotbits, RateObject} from "../domains/Analysis";
+import {Analysis, Catalog, CountHotbits, RateObject} from "../domains/Analysis";
 import {FolderStructure} from "../domains/Files";
 
 @Injectable({
@@ -74,8 +74,24 @@ export class AetherOneService {
     return this.http.post(`${this.baseUrl}upload`, formData)
   }
 
-  analyze(session_id:number, catalogId:number, note:string):Observable<RateObject[]> {
-    return this.http.post<RateObject[]>(`${this.baseUrl}analyze`, {"catalog_id":catalogId,"note":note, "session_id": session_id})
+  newAnalysis(analysis:Analysis):Observable<Analysis> {
+    return this.http.post<Analysis>(`${this.baseUrl}analysis`, analysis)
+  }
+
+  updateAnalysis(analysis:Analysis):Observable<Analysis> {
+    return this.http.put<Analysis>(`${this.baseUrl}analysis`, analysis)
+  }
+
+  loadAnalysisList(session_id:number):Observable<Analysis[]> {
+    return this.http.get<Analysis[]>(`${this.baseUrl}analysis?session_id=${session_id}`)
+  }
+
+  analyze(analysis_id:number,session_id:number, catalogId:number, note:string):Observable<RateObject[]> {
+    return this.http.post<RateObject[]>(`${this.baseUrl}analyze`, {"analysis_id":analysis_id,"catalog_id":catalogId,"note":note, "session_id": session_id})
+  }
+
+  loadRatesForAnalysis(analysis_id:number):Observable<RateObject[]> {
+    return this.http.get<RateObject[]>(`${this.baseUrl}analyze?analysis_id=${analysis_id}`)
   }
 
   countHotbits():Observable<CountHotbits> {

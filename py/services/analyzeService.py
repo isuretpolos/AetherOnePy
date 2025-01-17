@@ -60,6 +60,9 @@ def analyze(analysis_id: int, rates: list, hotbits_service: HotbitsService, auto
 
     enhanced_rates.sort(key=lambda r: r.energetic_value, reverse=True)
 
+    if len(enhanced_rates) > 24:
+        enhanced_rates = enhanced_rates[0:24]
+
     if autoCheckGV:
         for rate in enhanced_rates:
             rate.gv = checkGeneralVitality(hotbits_service)

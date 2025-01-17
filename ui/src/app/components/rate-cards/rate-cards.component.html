@@ -1,0 +1,31 @@
+<h1>Rate Cards Maker</h1>
+
+<div class="container mt-3">
+  <div class="row justify-content-center">
+    <div class="col-12 col-sm-6 col-md-4">
+
+      <div class="input-group mb-3">
+        <span class="input-group-text" id="rateName">Rate Name</span>
+        <input [formControl]="rateName" type="text" class="form-control" placeholder="Rate Name" aria-label="Rate Name" aria-describedby="rateName">
+      </div>
+
+      <div class="input-group mb-3">
+        <input class="form-control" type="text" placeholder="Rates" [formControl]="rates">
+      </div>
+      <div class="form-floating mb-2">
+        <select id="rateBase" [formControl]="base" title="base">
+          <option *ngFor="let base of bases" value="{{base}}">{{base}}</option>
+        </select>
+      </div>
+    </div>
+    <div class="col-12 col-sm-6 col-md-4">
+
+    </div>
+  </div>
+</div>
+
+<p>
+  <img [src]="getImageUrl()" class="rounded mx-auto d-block" alt="...">
+</p>
+
+

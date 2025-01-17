@@ -5,6 +5,8 @@ from typing import List
 from datetime import datetime
 import json
 
+from flask import jsonify
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from domains.aetherOneDomains import Case, Session, MapDesign, Feature, Analysis, Catalog, Rate, AnalysisRate
 
@@ -77,6 +79,7 @@ class CaseDAO:
         CREATE TABLE IF NOT EXISTS analysis (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             note TEXT,
+            target_gv INTEGER,
             session_id INTEGER,
             created DATETIME,
             FOREIGN KEY (session_id) REFERENCES sessions (id) ON DELETE CASCADE
@@ -289,11 +292,11 @@ class CaseDAO:
 
     def insert_analysis(self, analysis: Analysis):
         query = '''
-        INSERT INTO analysis (note, session_id, created)
-        VALUES (?, ?, datetime('now'))
+        INSERT INTO analysis (note, target_gv, session_id, created)
+        VALUES (?, ?, ?, datetime('now'))
         '''
         cursor = self.conn.cursor()
-        cursor.execute(query, (analysis.note, analysis.sessionID))
+        cursor.execute(query, (analysis.note, analysis.target_gv, analysis.sessionID))
         analysis.id = cursor.lastrowid
         self.conn.commit()
         return analysis
@@ -303,9 +306,10 @@ class CaseDAO:
         cursor = self.conn.execute(query, (analysis_id,))
         row = cursor.fetchone()
         if row:
-            analysis = Analysis(row[1], row[2])
+            analysis = Analysis(row[1], row[3])
             analysis.id = row[0]
-            analysis.created = datetime.fromisoformat(row[3])
+            analysis.target_gv = row[2]
+            analysis.created = datetime.fromisoformat(row[4])
             return analysis
         return None
 
@@ -316,17 +320,18 @@ class CaseDAO:
         if row:
             analysis = Analysis(row[1], row[2])
             analysis.id = row[0]
-            analysis.created = datetime.fromisoformat(row[3])
+            analysis.target_gv = row[3]
+            analysis.created = datetime.fromisoformat(row[4])
             return analysis
         return None
 
     def update_analysis(self, analysis: Analysis):
         query = '''
         UPDATE analysis
-        SET note = ?
+        SET note = ?, target_gv = ?
         WHERE id = ?
         '''
-        self.conn.execute(query, (analysis.note, analysis.id))
+        self.conn.execute(query, (analysis.note, analysis.target_gv, analysis.id))
         self.conn.commit()
 
     def delete_analysis(self, analysis_id: int):
@@ -339,9 +344,10 @@ class CaseDAO:
         cursor = self.conn.execute(query, (session_id,))
         analysisList = []
         for row in cursor:
-            analysis = Analysis(row[1], row[3])
+            analysis = Analysis(row[1], row[2])
             analysis.id = row[0]
-            analysis.sessionID = session_id
+            analysis.target_gv = row[3]
+            analysis.created = datetime.fromisoformat(row[4])
             analysisList.append(analysis)
         return analysisList
 
@@ -449,10 +455,27 @@ class CaseDAO:
         self.ensure_entry(settings,'hotbits_use_Arduino', False)
         self.ensure_entry(settings,'hotbits_use_ESP', False)
         self.ensure_entry(settings,'hotbits_use_RPi', False)
+        self.ensure_entry(settings,'hotbits_use_time_based_trng', True)
         self.ensure_entry(settings,'hotbits_collectAutomatically', False)
         self.ensure_entry(settings,'hotbits_mix_TRNG', False)
         self.ensure_entry(settings,'analysisAdvanced', False)
         self.ensure_entry(settings,'analysisAlwaysCheckGV', True)
+
+    def getHotbitsSourcePriority(self):
+        settings = self.loadSettings()
+        prio = []
+        if settings['hotbits_use_WebCam']:
+            prio.append('WebCam')
+        if settings['hotbits_use_Arduino']:
+            prio.append('Arduino')
+        if settings['hotbits_use_ESP']:
+            prio.append('ESP')
+        if settings['hotbits_use_RPi']:
+            prio.append('RPi')
+        if settings['hotbits_use_time_based_trng']:
+            prio.append('TimeBaseTRNG')
+        return prio
+
 
     def ensure_entry(self, dictionary, key, default_value):
         """
@@ -461,6 +484,32 @@ class CaseDAO:
         """
         if key not in dictionary:
             dictionary[key] = default_value
+
+    def loadSettings(self) -> json:
+        json_file_path = os.path.join("..", "data", "settings.json")
+        if os.path.isfile(json_file_path):
+            with open(json_file_path, 'r') as f:
+                settings = json.load(f)
+                self.ensure_settings_defaults(settings)
+                return settings
+        else:
+            with open(json_file_path, 'w') as f:
+                settings = {'created': datetime.now().isoformat()}
+                self.ensure_settings_defaults(settings)
+                json.dump(settings, f)
+            return jsonify(settings)
+
+    def saveSettings(self, settings):
+        json_file_path = os.path.join("..", "data", "settings.json")
+        self.ensure_settings_defaults(settings)
+        with open(json_file_path, 'w') as f:
+            json.dump(settings, f, indent=4)
+
+    def get_setting(self, key:str):
+        try:
+            return self.loadSettings()[key]
+        except:
+            return None
 
     def __del__(self):
         self.conn.close()
