@@ -131,7 +131,7 @@ def case():
 def session():
     if request.method == 'POST':
         new_session = Session.from_dict(request.json)
-        if session is None:
+        if new_session is None:
             return jsonify({'error': 'No active session found'}), 404
 
         # Insert the Session object into the database using aetherOneDB
