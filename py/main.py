@@ -20,7 +20,6 @@ from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 from PIL import ImageDraw, ImageFont
 from dateutil import parser
-from threading import Thread
 
 from services.rateCard import RadionicChart
 from services.databaseService import get_case_dao, Case

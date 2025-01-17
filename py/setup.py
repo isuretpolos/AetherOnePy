@@ -5,6 +5,7 @@ required_packages = [
     'requests',
     'Flask',
     'flask-cors',
+    'flask_socketio',
     'waitress',
     'qrcode[pil]',
     'PIL',
