@@ -78,8 +78,13 @@ if __name__ == '__main__':
             for sessionObj in listSessions:
                 print(f"  SESSION ID {sessionObj.id} | INTENTION {sessionObj.intention} | DESCRIPTION '{sessionObj.description} | CREATED {sessionObj.created}'")
                 # Add some analysis
-                dao.insert_analysis(Analysis('test analysis 1', sessionObj.id))
-                dao.insert_analysis(Analysis('test analysis 2', sessionObj.id))
+                analysis1 = Analysis('test analysis 1', sessionObj.id)
+                analysis1.catalogId = catalogClarke.id
+                analysis2 = Analysis('test analysis 2', sessionObj.id)
+                analysis2.catalogId = catalogClarke.id
+
+                dao.insert_analysis(analysis1)
+                dao.insert_analysis(analysis2)
                 listAnalysis = dao.list_analysis(sessionObj.id)
                 assert len(listAnalysis) == 2
                 assert sessionObj.id > 0
@@ -89,7 +94,7 @@ if __name__ == '__main__':
                 print(f"    LAST ANALYSIS ID {last_analysis.id} | NOTE {last_analysis.note} | CREATED '{last_analysis.created}'")
 
                 for analysis in listAnalysis:
-                    print(f"    ANALYSIS ID {analysis.id} | NOTE {analysis.note} | CREATED '{analysis.created}'")
+                    print(f"    ANALYSIS ID {analysis.id} | NOTE {analysis.note} | CATALOG ID {analysis.catalogId} | CREATED '{analysis.created}'")
                     analysis.note = f"{analysis.note} UPDATED"
                     dao.update_analysis(analysis)
                     analysis = dao.get_analysis(analysis.id)

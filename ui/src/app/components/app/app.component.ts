@@ -5,6 +5,7 @@ import {NavigationService} from "../../services/navigation.service";
 import {Case} from "../../domains/Case";
 import {AetherOneService} from "../../services/aether-one.service";
 import {FormControl} from "@angular/forms";
+import {SocketService} from "../../services/socket.service";
 
 @Component({
   selector: 'app-root',
@@ -19,17 +20,25 @@ export class AppComponent implements OnInit {
   theme:string = "dark"
   searchText = new FormControl('');
   mobileMode:boolean = false
+  serverMessages: string[] = [];
 
   constructor(private router: Router,
               private route: ActivatedRoute,
               private navigationService:NavigationService,
-              private aetherOne: AetherOneService) {
+              private aetherOne: AetherOneService,
+              private socketService: SocketService) {
   }
 
   ngOnInit() {
 
-    this.theme = localStorage.getItem('theme') ?? 'light';
-    document.documentElement.setAttribute('data-bs-theme',this.theme)
+    // Listen for server updates
+    this.socketService.getServerUpdates().subscribe((data) => {
+      this.serverMessages.push(data.message);
+    });
+
+    // this.theme = localStorage.getItem('theme') ?? 'light';
+    // document.documentElement.setAttribute('data-bs-theme',this.theme)
+    document.documentElement.setAttribute('data-bs-theme','light')
 
     if (this.isMobileDevice()) {
       console.log('mobile device')

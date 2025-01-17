@@ -101,6 +101,7 @@ export class CaseComponent implements OnInit {
     if (this.selectedCatalog && this.session) {
       let analysis = new Analysis()
       analysis.sessionID = this.session.id
+      analysis.catalogId = this.selectedCatalog.id
 
       this.aetherOne.newAnalysis(analysis).subscribe(persistedAnalysis => {
         this.analysis = persistedAnalysis
