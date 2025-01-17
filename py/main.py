@@ -3,7 +3,6 @@
 # Support me on https://www.patreon.com/aetherone
 import io,os,sys
 import time
-
 import requests
 import multiprocessing, asyncio
 import argparse
@@ -18,8 +17,10 @@ os.environ['FLASK_ENV'] = 'development'
 from waitress import serve
 from flask import Flask, jsonify, request, send_from_directory, send_file, Response
 from flask_cors import CORS
+from flask_socketio import SocketIO, emit
 from PIL import ImageDraw, ImageFont
 from dateutil import parser
+from threading import Thread
 
 from services.rateCard import RadionicChart
 from services.databaseService import get_case_dao, Case
@@ -30,6 +31,7 @@ from services.analyzeService import analyze as analyzeService, transformAnalyzeL
 from domains.aetherOneDomains import Analysis, Session
 
 app = Flask(__name__)
+socketio = SocketIO(app, cors_allowed_origins="*")
 port = 80
 CORS(app)
 if not os.path.isdir("../data"):
@@ -50,6 +52,11 @@ def index():
     return send_from_directory('../ui/dist/ui/', 'index.html')
 
 
+@socketio.on('connect')
+def handle_connect():
+    emit('server_update', {'message': 'Welcome!'}, broadcast=True)
+
+
 @app.route('/<path:path>')
 def static_files(path):
     return send_from_directory('../ui/dist/ui/', path)
@@ -68,6 +75,7 @@ def ping():
 def get_qrcode():
     data = f"http://{get_local_ip()}:{port}"
     print(data)
+    socketio.emit('server_update', {'message': data})
 
     qr = qrcode.QRCode(
         version=1,

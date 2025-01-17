@@ -59,6 +59,7 @@ class Analysis:
         self.note = note
         self.target_gv = 0
         self.sessionID = sessionID
+        self.catalogId = -1
         self.created = datetime.now()
 
     def to_dict(self):
@@ -67,6 +68,7 @@ class Analysis:
             'note': self.note,
             'target_gv': self.target_gv,
             'sessionID': self.sessionID,
+            'catalogId': self.catalogId,
             'created': self.created.isoformat()
         }
 

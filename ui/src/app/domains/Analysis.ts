@@ -2,6 +2,7 @@ export class Analysis {
   id:number = 0
   sessionID:number = 0
   note:string = ""
+  catalogId:number = -1
   rateObjects:RateObject[] = []
   target_gv:number = 0
 }

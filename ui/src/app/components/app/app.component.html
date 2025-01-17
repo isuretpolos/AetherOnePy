@@ -18,7 +18,7 @@
         <input #weaverText [formControl]="searchText" (ngModelChange)="search()" type="text" class="form-control me-2" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
-      <button class="btn btn-sm" [class.btn-dark]="theme == 'light'" [class.btn-light]="theme == 'dark'" style="margin-left: 3rem; padding: 0.1rem" (click)="switchTheme()">{{theme}} Mode</button>
+      <!--<button class="btn btn-sm" [class.btn-dark]="theme == 'light'" [class.btn-light]="theme == 'dark'" style="margin-left: 3rem; padding: 0.1rem" (click)="switchTheme()">{{theme}} Mode</button>-->
     </div>
   </div>
 </nav>
@@ -28,4 +28,11 @@
 <div class="container-fluid" *ngIf="!serverOnline">
   <h1 class="serverOffline" style="color:red">OFFLINE</h1>
   <p>This means the AetherOne application is not started. Just restart if you wish to use the application.</p>
+</div>
+
+<div>
+  <h1>WebSocket with Flask and Angular</h1>
+  <ul>
+    <li *ngFor="let msg of serverMessages">{{ msg }}</li>
+  </ul>
 </div>
