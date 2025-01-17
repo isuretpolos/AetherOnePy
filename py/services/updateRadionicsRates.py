@@ -3,6 +3,8 @@ import git
 from git.exc import GitCommandError
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+
 def update_or_clone_repo(target_dir, repo_url):
     # Check if the target directory exists
     if os.path.exists(target_dir):
@@ -22,4 +24,5 @@ def update_or_clone_repo(target_dir, repo_url):
             print(f"Error while cloning repository: {e}")
 
 if __name__ == "__main__":
-    update_or_clone_repo(os.path.join("../../data", "radionics-rates"), "https://github.com/isuretpolos/radionics-rates.git")
+    update_or_clone_repo(os.path.join(PROJECT_ROOT, "data", "radionics-rates"), 
+                        "https://github.com/isuretpolos/radionics-rates.git")

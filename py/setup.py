@@ -11,7 +11,8 @@ required_packages = [
     'python-dateutil',
     'gitpython',
     'opencv-python',
-    'matplotlib'
+    'matplotlib',
+    'flask_socketio'
 ]
 
 def install_package(package):

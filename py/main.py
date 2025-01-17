@@ -30,19 +30,24 @@ from services.hotbitsService import HotbitsService, HotbitsSource
 from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict, checkGeneralVitality
 from domains.aetherOneDomains import Analysis, Session
 
+# Get the absolute path to the AetherOnePy project root directory
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 port = 80
 CORS(app)
-if not os.path.isdir("../data"):
-    os.makedirs("../data")
-if not os.path.isdir("../data/private"):
-    os.makedirs("../data/private")
-if not os.path.isdir("../hotbits"):
-    os.makedirs("../hotbits")
-aetherOneDB = get_case_dao('../data/aetherone.db')
+# Update paths to use PROJECT_ROOT
+if not os.path.isdir(os.path.join(PROJECT_ROOT, "data")):
+    os.makedirs(os.path.join(PROJECT_ROOT, "data"))
+if not os.path.isdir(os.path.join(PROJECT_ROOT, "data/private")):
+    os.makedirs(os.path.join(PROJECT_ROOT, "data/private"))
+if not os.path.isdir(os.path.join(PROJECT_ROOT, "hotbits")):
+    os.makedirs(os.path.join(PROJECT_ROOT, "hotbits"))
+
+aetherOneDB = get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db'))
 aetherOneDB.get_setting('')
-hotbits = HotbitsService(HotbitsSource.WEBCAM, "../hotbits")
+hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"))
 
 
 # Angular UI, serving static files
@@ -177,7 +182,7 @@ def session():
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
-    json_file_path = os.path.join('..', 'data', 'settings.json')
+    json_file_path = os.path.join(PROJECT_ROOT, 'data', 'settings.json')
 
     if request.method == 'POST':
         settings = request.json
@@ -207,12 +212,12 @@ def filesToImport():
     rateImporter = RateImporter(aetherOneDB)
 
     if request.method == 'GET':
-        json_result = rateImporter.generate_folder_file_json('../data/radionics-rates')
+        json_result = rateImporter.generate_folder_file_json(os.path.join(PROJECT_ROOT, 'data/radionics-rates'))
         return Response(json_result, content_type='application/json; charset=utf-8')
 
     if request.method == 'POST':
-        rateImporter.import_file('../data/radionics-rates', request.args.get('file'))
-        json_result = rateImporter.generate_folder_file_json('../data/radionics-rates')
+        rateImporter.import_file(os.path.join(PROJECT_ROOT, 'data/radionics-rates'), request.args.get('file'))
+        json_result = rateImporter.generate_folder_file_json(os.path.join(PROJECT_ROOT, 'data/radionics-rates'))
         return Response(json_result, content_type='application/json; charset=utf-8')
 
     return "NOT IMPLEMENTED"
@@ -228,9 +233,9 @@ def upload_file():
         return jsonify({'error': 'No selected file'}), 400
 
     # Save the file
-    file.save(os.path.join('../data/private', file.filename))
+    file.save(os.path.join(PROJECT_ROOT, 'data/private', file.filename))
     rateImporter = RateImporter(aetherOneDB)
-    rateImporter.import_file('../data/private', file.filename)
+    rateImporter.import_file(os.path.join(PROJECT_ROOT, 'data/private'), file.filename)
     return jsonify({'message': 'File uploaded successfully'}), 200
 
 
@@ -272,6 +277,7 @@ def analysis():
 
     if request.method == 'POST':
         analyzeRequest = request.json
+        print(analyzeRequest)
         analysis = Analysis(analyzeRequest['note'],analyzeRequest['sessionID'])
         analysis.catalogId = analyzeRequest['catalogId']
         if aetherOneDB.get_setting('analysisAlwaysCheckGV'):
@@ -382,7 +388,7 @@ def sanitize_filename(filename: str) -> str:
 
 if __name__ == '__main__':
 
-    update_or_clone_repo(os.path.join("../data", "radionics-rates"),
+    update_or_clone_repo(os.path.join(PROJECT_ROOT, "data", "radionics-rates"),
                          "https://github.com/isuretpolos/radionics-rates.git")
 
     argParser = argparse.ArgumentParser(

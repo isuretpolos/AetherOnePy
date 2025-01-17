@@ -8,6 +8,8 @@ from services.databaseService import get_case_dao, CaseDAO
 
 #aetherOneDB = get_case_dao('../../data/aetherone.db')
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+
 class RateImporter:
     def __init__(self,aetherOneDB:CaseDAO):
         self.aetherOneDB = aetherOneDB #shared database
@@ -71,10 +73,11 @@ class RateImporter:
             print(f"Error importing file '{file_name}': {e}")
 
 if __name__ == '__main__':
-    rateImporter = RateImporter(get_case_dao('../../data/aetherone.db'))
+    rateImporter = RateImporter(get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db')))
     # Generate and print folder structure JSON
-    json_result = rateImporter.generate_folder_file_json('../../data/radionics-rates')
+    json_result = rateImporter.generate_folder_file_json(os.path.join(PROJECT_ROOT, 'data/radionics-rates'))
     print(json_result)
 
     # Import a specific file
-    rateImporter.import_file('../../data/radionics-rates', 'HOMEOPATHY_Clarke_With_MateriaMedicaUrls.txt')
+    rateImporter.import_file(os.path.join(PROJECT_ROOT, 'data/radionics-rates'), 
+                           'HOMEOPATHY_Clarke_With_MateriaMedicaUrls.txt')
