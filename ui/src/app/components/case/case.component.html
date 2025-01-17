@@ -1,12 +1,11 @@
-<div style="text-align: left; width: 90%!important;" class="container-fluid py-5 badge text-primary">
+<div style="text-align: left; width: 90%!important; margin: 3rem;" class="container-fluid py-5 badge text-primary">
   <h1 class="display-5 fw-bold">{{case.name}}</h1>
   <p>{{case.description }}</p>
   <h2>Sessions</h2>
   <button data-bs-toggle="modal" data-bs-target="#sessionModal" class="btn btn-sm btn-primary" (click)="resetSessionData()">NEW SESSION</button>
   <hr>
-  <div class="text-primary-emphasis rounded position-relative" *ngIf="session">
-    <span class="badge text-bg-primary">{{session.created | date: 'short'}}</span>
-    <div class="form-floating">{{session.description}}</div>
+  <div class="neumorph text-primary-emphasis rounded position-relative" *ngIf="session">
+    <div class="form-floating">{{session.created | date: 'short'}} | {{session.description}}</div>
     <div class="form-floating">{{session.intention}}</div>
     <div *ngIf="settings" style="margin: 0.8rem;padding: 0.8rem ">
       <h3>Analysis</h3>
@@ -72,6 +71,7 @@
       <h3 *ngIf="analysisList.length > 0">History of analysis</h3>
       <div class="shadow" style="margin-top: 1rem" *ngFor="let analysis of analysisList">
         <p>{{analysis.note}}</p>
+        <p>General vitality: {{analysis.target_gv}}</p>
         <table class="table table-sm table-hover">
           <thead class="table-light">
           <tr>
@@ -86,7 +86,7 @@
             <td>{{i+1}}</td>
             <td>{{rate.energetic_value}}</td>
             <td>{{rate.signature}}</td>
-            <td>{{rate.gv}}</td>
+            <td class="{{getRateClass(analysis.target_gv, rate.gv)}}">{{rate.gv}}</td>
           </tr>
           </tbody>
         </table>

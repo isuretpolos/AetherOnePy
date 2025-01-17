@@ -81,6 +81,7 @@ class CaseDAO:
             note TEXT,
             target_gv INTEGER,
             session_id INTEGER,
+            catalogId INTEGER,
             created DATETIME,
             FOREIGN KEY (session_id) REFERENCES sessions (id) ON DELETE CASCADE
         )
@@ -292,11 +293,11 @@ class CaseDAO:
 
     def insert_analysis(self, analysis: Analysis):
         query = '''
-        INSERT INTO analysis (note, target_gv, session_id, created)
-        VALUES (?, ?, ?, datetime('now'))
+        INSERT INTO analysis (note, target_gv, session_id, catalogId, created)
+        VALUES (?, ?, ?, ?, datetime('now'))
         '''
         cursor = self.conn.cursor()
-        cursor.execute(query, (analysis.note, analysis.target_gv, analysis.sessionID))
+        cursor.execute(query, (analysis.note, analysis.target_gv, analysis.sessionID, analysis.catalogId))
         analysis.id = cursor.lastrowid
         self.conn.commit()
         return analysis
@@ -309,7 +310,8 @@ class CaseDAO:
             analysis = Analysis(row[1], row[3])
             analysis.id = row[0]
             analysis.target_gv = row[2]
-            analysis.created = datetime.fromisoformat(row[4])
+            analysis.catalogId = row[4]
+            analysis.created = datetime.fromisoformat(row[5])
             return analysis
         return None
 
@@ -321,7 +323,8 @@ class CaseDAO:
             analysis = Analysis(row[1], row[2])
             analysis.id = row[0]
             analysis.target_gv = row[3]
-            analysis.created = datetime.fromisoformat(row[4])
+            analysis.catalogId = row[4]
+            analysis.created = datetime.fromisoformat(row[5])
             return analysis
         return None
 
@@ -347,7 +350,8 @@ class CaseDAO:
             analysis = Analysis(row[1], row[2])
             analysis.id = row[0]
             analysis.target_gv = row[3]
-            analysis.created = datetime.fromisoformat(row[4])
+            analysis.catalogId = row[4]
+            analysis.created = datetime.fromisoformat(row[5])
             analysisList.append(analysis)
         return analysisList
 

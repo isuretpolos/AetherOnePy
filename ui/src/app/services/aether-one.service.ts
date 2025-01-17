@@ -75,6 +75,7 @@ export class AetherOneService {
   }
 
   newAnalysis(analysis:Analysis):Observable<Analysis> {
+    console.log(analysis)
     return this.http.post<Analysis>(`${this.baseUrl}analysis`, analysis)
   }
 
