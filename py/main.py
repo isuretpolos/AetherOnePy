@@ -139,6 +139,8 @@ def case():
 def session():
     if request.method == 'POST':
         new_session = Session.from_dict(request.json)
+        if session is None:
+            return jsonify({'error': 'No active session found'}), 404
 
         # Insert the Session object into the database using aetherOneDB
         aetherOneDB.insert_session(new_session)
@@ -149,10 +151,14 @@ def session():
     if request.method == 'GET':
         if request.args.get('id') is not None:
             session = aetherOneDB.get_session(int(request.args.get('id')))
+            if session is None:
+                return jsonify({'error': 'No last session found'}), 404
             response_data = json.dumps(session.to_dict(), ensure_ascii=False)
             return Response(response_data, content_type='application/json; charset=utf-8')
         if request.args.get('last') is not None:
             session = aetherOneDB.get_last_session(int(request.args.get('caseId')))
+            if session is None:
+                return jsonify({'error': 'No last session found'}), 404
             response_data = json.dumps(session.to_dict(), ensure_ascii=False)
             return Response(response_data, content_type='application/json; charset=utf-8')
         else:

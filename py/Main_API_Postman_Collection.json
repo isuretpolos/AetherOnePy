@@ -1,0 +1,343 @@
+{
+    "info": {
+        "name": "Main API Collection",
+        "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "Health Checks",
+            "item": [
+                {
+                    "name": "Ping",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/ping",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "ping"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "QR Code",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/qrcode",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "qrcode"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Case Management",
+            "item": [
+                {
+                    "name": "Create Case",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{base_url}}/case",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "case"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Get Case",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/case",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "case"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Session Management",
+            "item": [
+                {
+                    "name": "Create Session",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{base_url}}/session",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "session"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Get Session",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/session",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "session"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Delete Session",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{base_url}}/session",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "session"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Catalog Management",
+            "item": [
+                {
+                    "name": "Get Catalog",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/catalog",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "catalog"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "File Management",
+            "item": [
+                {
+                    "name": "Get Files to Import",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/filesToImport",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "filesToImport"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Post Files to Import",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{base_url}}/filesToImport",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "filesToImport"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Upload File",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{base_url}}/upload",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "upload"
+                            ]
+                        },
+                        "body": {
+                            "mode": "formdata",
+                            "formdata": [
+                                {
+                                    "key": "file",
+                                    "type": "file",
+                                    "src": ""
+                                }
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Hotbits Operations",
+            "item": [
+                {
+                    "name": "Count Hotbits",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/countHotbits",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "countHotbits"
+                            ]
+                        }
+                    }
+                },
+                {
+                    "name": "Collect HotBits",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{base_url}}/collectHotBits",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "collectHotBits"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                },
+                {
+                    "name": "Delete HotBits",
+                    "request": {
+                        "method": "DELETE",
+                        "url": {
+                            "raw": "{{base_url}}/collectHotBits",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "collectHotBits"
+                            ]
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "Analysis",
+            "item": [
+                {
+                    "name": "Analyze",
+                    "request": {
+                        "method": "POST",
+                        "url": {
+                            "raw": "{{base_url}}/analyze",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "analyze"
+                            ]
+                        },
+                        "body": {
+                            "mode": "raw",
+                            "raw": "{}",
+                            "options": {
+                                "raw": {
+                                    "language": "json"
+                                }
+                            }
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "name": "General Vitality Check",
+            "item": [
+                {
+                    "name": "Check GV",
+                    "request": {
+                        "method": "GET",
+                        "url": {
+                            "raw": "{{base_url}}/checkGV",
+                            "host": [
+                                "{{base_url}}"
+                            ],
+                            "path": [
+                                "checkGV"
+                            ]
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
