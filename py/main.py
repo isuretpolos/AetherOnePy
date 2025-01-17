@@ -139,9 +139,6 @@ def case():
 def session():
     if request.method == 'POST':
         new_session = Session.from_dict(request.json)
-        if session is None:
-            return jsonify({'error': 'No active session found'}), 404
-
         # Insert the Session object into the database using aetherOneDB
         aetherOneDB.insert_session(new_session)
 
@@ -273,6 +270,7 @@ def analysis():
     if request.method == 'POST':
         analyzeRequest = request.json
         analysis = Analysis(analyzeRequest['note'],analyzeRequest['sessionID'])
+        analysis.catalogId = analyzeRequest['catalogId']
         if aetherOneDB.get_setting('analysisAlwaysCheckGV'):
             analysis.target_gv = checkGeneralVitality(hotbits)
         analysis = aetherOneDB.insert_analysis(analysis)
