@@ -1,5 +1,7 @@
 import sys, os
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from services.databaseService import get_case_dao
 from services.hotbitsService import HotbitsService, HotbitsSource
@@ -89,10 +91,10 @@ def checkGeneralVitality(hotbits_service: HotbitsService):
 
 # Example Usage
 if __name__ == "__main__":
-    aetherOneDB = get_case_dao('../../data/aetherone.db')
+    aetherOneDB = get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db'))
     catalogs = aetherOneDB.list_catalogs()
     rates_list = aetherOneDB.list_rates_from_catalog(catalogs[0].id)
-    hotbits = HotbitsService(HotbitsSource.WEBCAM, "../../hotbits")
+    hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"))
     #rates_list = [
     #    Rate("R1", "Rate 1 Description", 101),
     #    Rate("R2", "Rate 2 Description", 102),

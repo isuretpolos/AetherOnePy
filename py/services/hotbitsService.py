@@ -7,6 +7,8 @@ from enum import Enum
 from services.captureRandomnessFromWebCam import WebCamCollector
 from services.captureRandomnessFromRaspberryPi import RandomNumberGenerator
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+
 
 class HotbitsSource(Enum):
     RASPBERRY_PI = 'RASPBERRY_PI'
@@ -113,7 +115,7 @@ class HotbitsService:
         return random.randint(min, max)
 
 if __name__ == "__main__":
-    hotbitsService = HotbitsService(HotbitsSource.WEBCAM, "../../hotbits")
+    hotbitsService = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"))
     if hotbitsService.is_raspberry_pi():
         print("Working from inside a RaspberryPi, great!")
     # hotbitsService.collectHotBits()
