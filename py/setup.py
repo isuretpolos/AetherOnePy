@@ -5,6 +5,7 @@ required_packages = [
     'requests',
     'Flask',
     'flask-cors',
+    'flask_socketio',
     'waitress',
     'qrcode[pil]',
     'PIL',
@@ -12,7 +13,7 @@ required_packages = [
     'gitpython',
     'opencv-python',
     'matplotlib',
-    'flask_socketio'
+    'eventlet'
 ]
 
 def install_package(package):

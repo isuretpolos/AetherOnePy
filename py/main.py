@@ -4,12 +4,13 @@
 import io,os,sys
 import time
 import requests
-import multiprocessing, asyncio
+import asyncio
 import argparse
 import qrcode
 import socket
 import re
 import json
+import logging
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
@@ -20,7 +21,6 @@ from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 from PIL import ImageDraw, ImageFont
 from dateutil import parser
-from threading import Thread
 
 from services.rateCard import RadionicChart
 from services.databaseService import get_case_dao, Case
@@ -37,6 +37,11 @@ app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 port = 80
 CORS(app)
+
+# Suppress logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+
 # Update paths to use PROJECT_ROOT
 if not os.path.isdir(os.path.join(PROJECT_ROOT, "data")):
     os.makedirs(os.path.join(PROJECT_ROOT, "data"))
@@ -394,7 +399,7 @@ if __name__ == '__main__':
     argParser = argparse.ArgumentParser(
         prog='AetherOnePy',
         description='Open Source Digital Radionics',
-        epilog='Support me on Patreon https://www.patreon.com/aetherone'
+        epilog=f"Click here http://localhost:{port} or open the URL in your favorite browser\nSupport me on Patreon https://www.patreon.com/aetherone"
     )
     argParser.add_argument('-p', '--port', default='80')
     argParser.print_help()
@@ -404,13 +409,15 @@ if __name__ == '__main__':
     print("Starting AetherOnePy server ...")
 
     try:
-        server_process = multiprocessing.Process(target=start_server, args=(port,))
-        server_process.start()
+        #server_process = multiprocessing.Process(target=start_server, args=(port,))
+        #server_process.start()
+        #wait_for_server_and_open(port)
+        #server_process.join()  # keep it alive
+        socketio.run(app, host='0.0.0.0', port=port, debug=False)
         wait_for_server_and_open(port)
-        server_process.join()  # keep it alive
     except KeyboardInterrupt:
         print("\nStopping AetherOnePy server ...")
-        server_process.terminate()  # Ensure server stops properly
-        server_process.join()
+        #server_process.terminate()  # Ensure server stops properly
+        #server_process.join()
         aetherOneDB.close()
         sys.exit(0)

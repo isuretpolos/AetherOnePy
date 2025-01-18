@@ -56,9 +56,7 @@ class HotbitsService:
         """Check if the computer is a Raspberry Pi."""
         try:
             # Check the platform
-            print(sys.platform)
             if sys_platform.system() != "Linux":
-                print("not a linux system")
                 return False
 
             # Check for the presence of Raspberry Pi-specific files
