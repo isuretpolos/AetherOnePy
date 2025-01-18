@@ -12,7 +12,8 @@ required_packages = [
     'python-dateutil',
     'gitpython',
     'opencv-python',
-    'matplotlib'
+    'matplotlib',
+    'eventlet'
 ]
 
 def install_package(package):
