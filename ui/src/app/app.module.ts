@@ -12,6 +12,7 @@ import { MobileComponent } from './components/mobile/mobile.component';
 import { CaseComponent } from './components/case/case.component';
 import { RateCardsComponent } from './components/rate-cards/rate-cards.component';
 import {SocketIoConfig, SocketIoModule} from "ngx-socket-io";
+import {ToastrModule} from "ngx-toastr";
 
 const config: SocketIoConfig = {
   url: 'http://localhost:80', // Replace with your Flask server's URL
@@ -32,7 +33,8 @@ const config: SocketIoConfig = {
     BrowserModule,
     AppRoutingModule,
     ReactiveFormsModule,
-    SocketIoModule.forRoot(config)
+    SocketIoModule.forRoot(config),
+    ToastrModule.forRoot()
   ],
   providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
   bootstrap: [AppComponent]

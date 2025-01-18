@@ -6,6 +6,7 @@ import {Case} from "../../domains/Case";
 import {AetherOneService} from "../../services/aether-one.service";
 import {FormControl} from "@angular/forms";
 import {SocketService} from "../../services/socket.service";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-root',
@@ -26,7 +27,8 @@ export class AppComponent implements OnInit {
               private route: ActivatedRoute,
               private navigationService:NavigationService,
               private aetherOne: AetherOneService,
-              private socketService: SocketService) {
+              private socketService: SocketService,
+              private toastr: ToastrService) {
   }
 
   ngOnInit() {
@@ -125,7 +127,10 @@ export class AppComponent implements OnInit {
   private ping() {
     this.aetherOne.ping().subscribe({
       next: () => {this.serverOnline = true},
-      error: () => {this.serverOnline = false}
+      error: () => {
+        this.serverOnline = false;
+        this.toastr.error('Server is offline!', 'AetherOnePy');
+      }
     });
 
     setTimeout(() => {
