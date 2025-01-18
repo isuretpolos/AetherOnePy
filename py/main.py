@@ -2,8 +2,6 @@
 # Copyright Isuret Polos 2024
 # Support me on https://www.patreon.com/aetherone
 import io,os,sys
-import time
-import requests
 import asyncio
 import argparse
 import qrcode
@@ -15,7 +13,6 @@ import logging
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
 
-from waitress import serve
 from flask import Flask, jsonify, request, send_from_directory, send_file, Response
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
@@ -59,6 +56,10 @@ hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbi
 # --------------------------------
 @app.route('/')
 def index():
+    """
+    Static files handler, for the Angular UI
+    Returns: index.html
+    """
     return send_from_directory('../ui/dist/ui/', 'index.html')
 
 
@@ -343,6 +344,11 @@ def rateCard():
 
 
 def get_local_ip():
+    """
+    Retrieves the local ip address for example QR code generation
+    :return:
+    IP ADDRESS
+    """
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         # doesn't even have to be reachable
@@ -353,24 +359,6 @@ def get_local_ip():
     finally:
         s.close()
     return local_ip
-
-
-def start_server(port):
-    serve(app, host='0.0.0.0', port=port)
-
-
-def wait_for_server_and_open(port):
-    url = f"http://localhost:{port}"
-    while True:
-        try:
-            response = requests.get(url)
-            if response.status_code == 200:
-                print(f"Click here http://localhost:{port} or open the URL in your favorite browser")
-                # webbrowser.open(f"http://localhost:{port}")
-                break
-        except requests.ConnectionError:
-            pass
-        time.sleep(1)
 
 
 def sanitize_filename(filename: str) -> str:
@@ -392,6 +380,9 @@ def sanitize_filename(filename: str) -> str:
 
 
 if __name__ == '__main__':
+    """
+    Main application, starts the webserver and provides services for digital radionics
+    """
 
     update_or_clone_repo(os.path.join(PROJECT_ROOT, "data", "radionics-rates"),
                          "https://github.com/isuretpolos/radionics-rates.git")
@@ -409,15 +400,8 @@ if __name__ == '__main__':
     print("Starting AetherOnePy server ...")
 
     try:
-        #server_process = multiprocessing.Process(target=start_server, args=(port,))
-        #server_process.start()
-        #wait_for_server_and_open(port)
-        #server_process.join()  # keep it alive
         socketio.run(app, host='0.0.0.0', port=port, debug=False)
-        wait_for_server_and_open(port)
     except KeyboardInterrupt:
         print("\nStopping AetherOnePy server ...")
-        #server_process.terminate()  # Ensure server stops properly
-        #server_process.join()
         aetherOneDB.close()
         sys.exit(0)
