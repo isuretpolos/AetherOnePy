@@ -1,11 +1,13 @@
 import sys, os, random, json
 import platform as sys_platform
 import asyncio
+import threading, time
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from enum import Enum
 from services.captureRandomnessFromWebCam import WebCamCollector
 from services.captureRandomnessFromRaspberryPi import RandomNumberGenerator
+from py.services.databaseService import CaseDAO, get_case_dao
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
@@ -19,16 +21,34 @@ class HotbitsSource(Enum):
 
 class HotbitsService:
 
-    def __init__(self, hotbitsSource: HotbitsSource, folder_path: str, emitMessage):
+    def __init__(self, hotbitsSource: HotbitsSource, folder_path: str, aetherOneDB: CaseDAO, emitMessage):
         self.source = hotbitsSource
         self.emitMessage = emitMessage
         self.running = False
+        self.aetherOneDB = aetherOneDB
         self.hotbits: [int] = []
         self.folder_path = folder_path
         self.webCamCollector = WebCamCollector(self.emitMessage, self.countHotbits)
         if self.is_raspberry_pi():
             print("This system is a Raspberry Pi.")
             self.source = HotbitsSource.RASPBERRY_PI
+        # always start collecting some hotbits
+        thread = threading.Thread(target=self.initHotbits)
+        thread.daemon = True
+        thread.start()
+
+    def initHotbits(self):
+        amount = 1000 - self.countHotbits()
+        for _ in range(amount):
+            timeLoopedHotbits: [int] = []
+            for i in range(10000):
+                timeLoopedHotbits.append(self.generate_random_integer())
+            print("time loop generated random number ...")
+            # Save the integers to a JSON file
+            timestamp = int(time.time() * 1000)
+            filename = f"{self.folder_path}/hotbits_{timestamp}.json"
+            with open(filename, 'w') as f:
+                json.dump({"integerList": timeLoopedHotbits, "source": "timeLoop"}, f)
 
     def countHotbits(self):
         return len([file for file in os.listdir(self.folder_path) if file.endswith(".json")])
@@ -36,14 +56,14 @@ class HotbitsService:
     def stopCollectingHotbits(self):
         self.webCamCollector.stopCollectingHotbits = True
 
-    async def collectWebCamHotBits(self):
+    def collectWebCamHotBits(self):
         self.running = True
         self.emitMessage('hotbits', 'running webCam')
         self.webCamCollector.generate_hotbits(self.folder_path, 100)
         self.emitMessage('hotbits', 'stopped webCam')
         self.running = False
 
-    async def collectHotBits(self):
+    def collectHotBits(self):
         if self.source == HotbitsSource.RASPBERRY_PI:
             self.raspberryPi = True
             print("Raspberry Pi source enabled.")
@@ -87,6 +107,38 @@ class HotbitsService:
             print(f"Error while checking Raspberry Pi: {e}")
         return False
 
+    def generate_random_integer(self, bit_count: int = 32):
+        """
+        Generates a random integer using time differences in loop execution.
+
+        :param bit_count: The number of bits to generate for the random integer.
+        :return: A randomly generated integer.
+        """
+        maxCount = 50
+        bits = []
+
+        while len(bits) < bit_count:
+            # Define two identical loops for timing comparison
+            start_time_1 = time.perf_counter()
+            for _ in range(maxCount):
+                _ = random.randint(1, 10) * random.randint(1, 10)
+            end_time_1 = time.perf_counter()
+
+            start_time_2 = time.perf_counter()
+            for _ in range(maxCount):
+                _ = random.randint(1, 10) * random.randint(1, 10)
+            end_time_2 = time.perf_counter()
+
+            # Compare the durations and store a bit based on the result
+            if (end_time_1 - start_time_1) < (end_time_2 - start_time_2):
+                bits.append(1)
+            else:
+                bits.append(0)
+
+        # Convert the collected bits into an integer
+        random_integer = int("".join(map(str, bits)), 2)
+        return random_integer
+
     def getHotbits(self):
         if self.source == HotbitsSource.RASPBERRY_PI:
             rng = RandomNumberGenerator()
@@ -95,13 +147,19 @@ class HotbitsService:
         else:
             if self.countHotbits() < 10 and self.running is False:
                 # TODO make this as a SETTING
-                asyncio.run(self.collectHotBits())
+                if self.aetherOneDB.get_setting('hotbits_use_WebCam'):
+                    thread = threading.Thread(target=self.collectHotBits)
+                    thread.daemon = True
+                    thread.start()
+                    print("collect webcam hotbits")
+                    #asyncio.run(self.collectHotBits())
             if self.countHotbits() < 1:
                 # SIMULATION MODE
-                simulatedHotbits: [int] = []
-                for i in range(10000):
-                    simulatedHotbits.append(random.randint(0, 10000))
-                return simulatedHotbits
+                timeLoopedHotbits: [int] = []
+                for i in range(250):
+                    timeLoopedHotbits.append(self.generate_random_integer())
+                print("time loop generated random number ...")
+                return timeLoopedHotbits
             """Load integers from a random JSON file in a folder into an array."""
             json_files = [f for f in os.listdir(self.folder_path) if f.endswith('.json')]
             if not json_files:
@@ -123,7 +181,8 @@ class HotbitsService:
         return random.randint(min, max)
 
 if __name__ == "__main__":
-    hotbitsService = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"))
+    aetherOneDB = get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db'))
+    hotbitsService = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"),aetherOneDB)
     if hotbitsService.is_raspberry_pi():
         print("Working from inside a RaspberryPi, great!")
     # hotbitsService.collectHotBits()

@@ -20,12 +20,12 @@ from PIL import ImageDraw, ImageFont
 from dateutil import parser
 
 from services.rateCard import RadionicChart
-from services.databaseService import get_case_dao, Case
+from services.databaseService import get_case_dao
 from services.updateRadionicsRates import update_or_clone_repo
 from services.rateImporter import RateImporter
 from services.hotbitsService import HotbitsService, HotbitsSource
 from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict, checkGeneralVitality
-from domains.aetherOneDomains import Analysis, Session
+from domains.aetherOneDomains import Analysis, Session, Case
 
 # Get the absolute path to the AetherOnePy project root directory
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -55,7 +55,7 @@ def emitMessage(event: str, text: str):
     socketio.emit(event, {'message': text})
 
 
-hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"), emitMessage)
+hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"), aetherOneDB, emitMessage)
 
 # Angular UI, serving static files
 # --------------------------------
@@ -260,12 +260,6 @@ def countHotbits():
 def collectHotbits():
     asyncio.run(hotbits.collectHotBits())
     return jsonify({'message': 'collecting hotbits started'}), 200
-
-
-@app.route('/collectWebCamHotBits', methods=['POST'])
-def collectWebCamHotBits():
-    asyncio.run(hotbits.collectWebCamHotBits())
-    return jsonify({'message': 'collecting webCam hotbits started'}), 200
 
 
 @app.route('/collectHotBits', methods=['DELETE'])
