@@ -35,6 +35,7 @@ export class AppComponent implements OnInit {
 
     // Listen for server updates
     this.socketService.getServerUpdates().subscribe((data) => {
+      console.log(data)
       this.serverMessages.push(data.message);
     });
 
@@ -136,5 +137,11 @@ export class AppComponent implements OnInit {
     setTimeout(() => {
       this.ping();
     }, 5000);
+  }
+
+  startCollectingWebCamHotbits() {
+    this.aetherOne.collectWebCamHotBits().subscribe(()=>{
+
+    })
   }
 }

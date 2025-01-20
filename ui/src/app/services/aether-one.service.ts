@@ -98,4 +98,9 @@ export class AetherOneService {
   countHotbits():Observable<CountHotbits> {
     return this.http.get<CountHotbits>(`${this.baseUrl}countHotbits`)
   }
+
+  collectWebCamHotBits():Observable<any> {
+    console.log("collectWebCamHotBits ...")
+    return this.http.post<any>(`${this.baseUrl}collectWebCamHotBits`,undefined)
+  }
 }

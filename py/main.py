@@ -49,8 +49,13 @@ if not os.path.isdir(os.path.join(PROJECT_ROOT, "hotbits")):
 
 aetherOneDB = get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db'))
 aetherOneDB.get_setting('')
-hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"))
 
+
+def emitMessage(event: str, text: str):
+    socketio.emit(event, {'message': text})
+
+
+hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"), emitMessage)
 
 # Angular UI, serving static files
 # --------------------------------
@@ -255,6 +260,12 @@ def countHotbits():
 def collectHotbits():
     asyncio.run(hotbits.collectHotBits())
     return jsonify({'message': 'collecting hotbits started'}), 200
+
+
+@app.route('/collectWebCamHotBits', methods=['POST'])
+def collectWebCamHotBits():
+    asyncio.run(hotbits.collectWebCamHotBits())
+    return jsonify({'message': 'collecting webCam hotbits started'}), 200
 
 
 @app.route('/collectHotBits', methods=['DELETE'])

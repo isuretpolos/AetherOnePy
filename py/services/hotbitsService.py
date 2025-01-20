@@ -19,12 +19,13 @@ class HotbitsSource(Enum):
 
 class HotbitsService:
 
-    def __init__(self, hotbitsSource: HotbitsSource, folder_path: str):
+    def __init__(self, hotbitsSource: HotbitsSource, folder_path: str, emitMessage):
         self.source = hotbitsSource
+        self.emitMessage = emitMessage
         self.running = False
         self.hotbits: [int] = []
         self.folder_path = folder_path
-        self.webCamCollector = WebCamCollector()
+        self.webCamCollector = WebCamCollector(self.emitMessage, self.countHotbits)
         if self.is_raspberry_pi():
             print("This system is a Raspberry Pi.")
             self.source = HotbitsSource.RASPBERRY_PI
@@ -34,6 +35,13 @@ class HotbitsService:
 
     def stopCollectingHotbits(self):
         self.webCamCollector.stopCollectingHotbits = True
+
+    async def collectWebCamHotBits(self):
+        self.running = True
+        self.emitMessage('hotbits', 'running webCam')
+        self.webCamCollector.generate_hotbits(self.folder_path, 100)
+        self.emitMessage('hotbits', 'stopped webCam')
+        self.running = False
 
     async def collectHotBits(self):
         if self.source == HotbitsSource.RASPBERRY_PI:
