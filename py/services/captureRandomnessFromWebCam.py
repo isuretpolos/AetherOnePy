@@ -99,7 +99,7 @@ class WebCamCollector:
                 timestamp = int(time.time() * 1000)
                 filename = f"{hotbitsPath}/hotbits_{timestamp}.json"
                 with open(filename, 'w') as f:
-                    json.dump({"integerList": integer_list}, f)
+                    json.dump({"integerList": integer_list, "source": "webCam"}, f)
 
                 print(f"Hotbits saved to {filename}")
         finally:

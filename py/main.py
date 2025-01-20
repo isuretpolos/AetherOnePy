@@ -49,7 +49,7 @@ if not os.path.isdir(os.path.join(PROJECT_ROOT, "hotbits")):
 
 aetherOneDB = get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db'))
 aetherOneDB.get_setting('')
-hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"))
+hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"), aetherOneDB)
 
 
 # Angular UI, serving static files
