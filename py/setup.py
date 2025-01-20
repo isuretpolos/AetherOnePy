@@ -12,7 +12,10 @@ required_packages = [
     'python-dateutil',
     'gitpython',
     'opencv-python',
-    'matplotlib'
+    'matplotlib',
+    'eventlet',
+    'sphinx',
+    'sphinx_rtd_theme'
 ]
 
 def install_package(package):
@@ -26,4 +29,7 @@ def check_and_install_packages():
             install_package(package)
 
 if __name__ == '__main__':
+    """
+    Installs automatically the required dependencies
+    """
     check_and_install_packages()

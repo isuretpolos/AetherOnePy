@@ -7,6 +7,8 @@ import json
 
 from flask import jsonify
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from domains.aetherOneDomains import Case, Session, MapDesign, Feature, Analysis, Catalog, Rate, AnalysisRate
 
@@ -490,7 +492,7 @@ class CaseDAO:
             dictionary[key] = default_value
 
     def loadSettings(self) -> json:
-        json_file_path = os.path.join("..", "data", "settings.json")
+        json_file_path = os.path.join(PROJECT_ROOT, "data", "settings.json")
         if os.path.isfile(json_file_path):
             with open(json_file_path, 'r') as f:
                 settings = json.load(f)
@@ -504,7 +506,7 @@ class CaseDAO:
             return jsonify(settings)
 
     def saveSettings(self, settings):
-        json_file_path = os.path.join("..", "data", "settings.json")
+        json_file_path = os.path.join(PROJECT_ROOT, "data", "settings.json")
         self.ensure_settings_defaults(settings)
         with open(json_file_path, 'w') as f:
             json.dump(settings, f, indent=4)

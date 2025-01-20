@@ -2,19 +2,17 @@
 # Copyright Isuret Polos 2024
 # Support me on https://www.patreon.com/aetherone
 import io,os,sys
-import time
-import requests
-import multiprocessing, asyncio
+import asyncio
 import argparse
 import qrcode
 import socket
 import re
 import json
+import logging
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
 
-from waitress import serve
 from flask import Flask, jsonify, request, send_from_directory, send_file, Response
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
@@ -22,32 +20,46 @@ from PIL import ImageDraw, ImageFont
 from dateutil import parser
 
 from services.rateCard import RadionicChart
-from services.databaseService import get_case_dao, Case
+from services.databaseService import get_case_dao
 from services.updateRadionicsRates import update_or_clone_repo
 from services.rateImporter import RateImporter
 from services.hotbitsService import HotbitsService, HotbitsSource
 from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict, checkGeneralVitality
-from domains.aetherOneDomains import Analysis, Session
+from domains.aetherOneDomains import Analysis, Session, Case
+
+# Get the absolute path to the AetherOnePy project root directory
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 app = Flask(__name__)
 socketio = SocketIO(app, cors_allowed_origins="*")
 port = 80
 CORS(app)
-if not os.path.isdir("../data"):
-    os.makedirs("../data")
-if not os.path.isdir("../data/private"):
-    os.makedirs("../data/private")
-if not os.path.isdir("../hotbits"):
-    os.makedirs("../hotbits")
-aetherOneDB = get_case_dao('../data/aetherone.db')
+
+# Suppress logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+
+# Update paths to use PROJECT_ROOT
+if not os.path.isdir(os.path.join(PROJECT_ROOT, "data")):
+    os.makedirs(os.path.join(PROJECT_ROOT, "data"))
+if not os.path.isdir(os.path.join(PROJECT_ROOT, "data/private")):
+    os.makedirs(os.path.join(PROJECT_ROOT, "data/private"))
+if not os.path.isdir(os.path.join(PROJECT_ROOT, "hotbits")):
+    os.makedirs(os.path.join(PROJECT_ROOT, "hotbits"))
+
+aetherOneDB = get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db'))
 aetherOneDB.get_setting('')
-hotbits = HotbitsService(HotbitsSource.WEBCAM, "../hotbits")
+hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"))
 
 
 # Angular UI, serving static files
 # --------------------------------
 @app.route('/')
 def index():
+    """
+    Static files handler, for the Angular UI
+    Returns: index.html
+    """
     return send_from_directory('../ui/dist/ui/', 'index.html')
 
 
@@ -176,7 +188,7 @@ def session():
 
 @app.route('/settings', methods=['GET', 'POST'])
 def settings():
-    json_file_path = os.path.join('..', 'data', 'settings.json')
+    json_file_path = os.path.join(PROJECT_ROOT, 'data', 'settings.json')
 
     if request.method == 'POST':
         settings = request.json
@@ -206,12 +218,12 @@ def filesToImport():
     rateImporter = RateImporter(aetherOneDB)
 
     if request.method == 'GET':
-        json_result = rateImporter.generate_folder_file_json('../data/radionics-rates')
+        json_result = rateImporter.generate_folder_file_json(os.path.join(PROJECT_ROOT, 'data/radionics-rates'))
         return Response(json_result, content_type='application/json; charset=utf-8')
 
     if request.method == 'POST':
-        rateImporter.import_file('../data/radionics-rates', request.args.get('file'))
-        json_result = rateImporter.generate_folder_file_json('../data/radionics-rates')
+        rateImporter.import_file(os.path.join(PROJECT_ROOT, 'data/radionics-rates'), request.args.get('file'))
+        json_result = rateImporter.generate_folder_file_json(os.path.join(PROJECT_ROOT, 'data/radionics-rates'))
         return Response(json_result, content_type='application/json; charset=utf-8')
 
     return "NOT IMPLEMENTED"
@@ -227,9 +239,9 @@ def upload_file():
         return jsonify({'error': 'No selected file'}), 400
 
     # Save the file
-    file.save(os.path.join('../data/private', file.filename))
+    file.save(os.path.join(PROJECT_ROOT, 'data/private', file.filename))
     rateImporter = RateImporter(aetherOneDB)
-    rateImporter.import_file('../data/private', file.filename)
+    rateImporter.import_file(os.path.join(PROJECT_ROOT, 'data/private'), file.filename)
     return jsonify({'message': 'File uploaded successfully'}), 200
 
 
@@ -271,6 +283,7 @@ def analysis():
 
     if request.method == 'POST':
         analyzeRequest = request.json
+        print(analyzeRequest)
         analysis = Analysis(analyzeRequest['note'],analyzeRequest['sessionID'])
         analysis.catalogId = analyzeRequest['catalogId']
         if aetherOneDB.get_setting('analysisAlwaysCheckGV'):
@@ -331,6 +344,11 @@ def rateCard():
 
 
 def get_local_ip():
+    """
+    Retrieves the local ip address for example QR code generation
+    :return:
+    IP ADDRESS
+    """
     s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     try:
         # doesn't even have to be reachable
@@ -341,24 +359,6 @@ def get_local_ip():
     finally:
         s.close()
     return local_ip
-
-
-def start_server(port):
-    serve(app, host='0.0.0.0', port=port)
-
-
-def wait_for_server_and_open(port):
-    url = f"http://localhost:{port}"
-    while True:
-        try:
-            response = requests.get(url)
-            if response.status_code == 200:
-                print(f"Click here http://localhost:{port} or open the URL in your favorite browser")
-                # webbrowser.open(f"http://localhost:{port}")
-                break
-        except requests.ConnectionError:
-            pass
-        time.sleep(1)
 
 
 def sanitize_filename(filename: str) -> str:
@@ -380,14 +380,17 @@ def sanitize_filename(filename: str) -> str:
 
 
 if __name__ == '__main__':
+    """
+    Main application, starts the webserver and provides services for digital radionics
+    """
 
-    update_or_clone_repo(os.path.join("../data", "radionics-rates"),
+    update_or_clone_repo(os.path.join(PROJECT_ROOT, "data", "radionics-rates"),
                          "https://github.com/isuretpolos/radionics-rates.git")
 
     argParser = argparse.ArgumentParser(
         prog='AetherOnePy',
         description='Open Source Digital Radionics',
-        epilog='Support me on Patreon https://www.patreon.com/aetherone'
+        epilog=f"Click here http://localhost:{port} or open the URL in your favorite browser\nSupport me on Patreon https://www.patreon.com/aetherone"
     )
     argParser.add_argument('-p', '--port', default='80')
     argParser.print_help()
@@ -397,13 +400,8 @@ if __name__ == '__main__':
     print("Starting AetherOnePy server ...")
 
     try:
-        server_process = multiprocessing.Process(target=start_server, args=(port,))
-        server_process.start()
-        wait_for_server_and_open(port)
-        server_process.join()  # keep it alive
+        socketio.run(app, host='0.0.0.0', port=port, debug=False)
     except KeyboardInterrupt:
         print("\nStopping AetherOnePy server ...")
-        server_process.terminate()  # Ensure server stops properly
-        server_process.join()
         aetherOneDB.close()
         sys.exit(0)

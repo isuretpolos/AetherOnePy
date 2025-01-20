@@ -5,6 +5,8 @@ import time, os, sys
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
+
 
 class WebCamCollector:
     def __init__(self):
@@ -107,4 +109,4 @@ class WebCamCollector:
 
 if __name__ == "__main__":
     collector = WebCamCollector()
-    collector.generate_hotbits("../../hotbits", 10)
+    collector.generate_hotbits(os.path.join(PROJECT_ROOT, "hotbits"), 10)
