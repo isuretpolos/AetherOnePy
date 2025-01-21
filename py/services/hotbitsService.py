@@ -1,13 +1,12 @@
 import sys, os, random, json
 import platform as sys_platform
-import asyncio
 import threading, time
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from enum import Enum
 from services.captureRandomnessFromWebCam import WebCamCollector
 from services.captureRandomnessFromRaspberryPi import RandomNumberGenerator
-from py.services.databaseService import CaseDAO, get_case_dao
+from services.databaseService import CaseDAO, get_case_dao
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
