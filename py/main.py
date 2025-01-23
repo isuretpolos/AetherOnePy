@@ -131,8 +131,8 @@ def case():
         )
 
         # Insert the Case object into the database using aetherOneDB
-        aetherOneDB.insert_case(new_case)
-
+        user_id = aetherOneDB.insert_case(new_case)
+        case_data["id"] = user_id
         response_data = json.dumps(case_data, ensure_ascii=False)
         return Response(response_data, content_type='application/json; charset=utf-8')
 
