@@ -153,8 +153,12 @@ def session():
         if new_session is None:
             return jsonify({'error': 'No active session found'}), 404
 
-        # Insert the Session object into the database using aetherOneDB
-        aetherOneDB.insert_session(new_session)
+        # Insert the Session object into the database using aetherOneDB and get the user_id
+        session_id = aetherOneDB.insert_session(new_session)
+
+        # Add the user_id to the session object or response data
+        session_data = new_session.to_dict()
+        session_data['user_id'] = session_id
 
         response_data = json.dumps(new_session.to_dict(), ensure_ascii=False)
         return Response(response_data, content_type='application/json; charset=utf-8')
