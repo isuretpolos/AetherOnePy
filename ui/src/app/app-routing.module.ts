@@ -7,6 +7,7 @@ import {SettingsComponent} from "./components/settings/settings.component";
 import {MobileComponent} from "./components/mobile/mobile.component";
 import {CaseComponent} from "./components/case/case.component";
 import {RateCardsComponent} from "./components/rate-cards/rate-cards.component";
+import {HotbitsComponent} from "./components/hotbits/hotbits.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'HOME', pathMatch: 'full'},
@@ -16,6 +17,7 @@ const routes: Routes = [
   {path: 'SETTINGS', component: SettingsComponent},
   {path: 'MOBILE', component: MobileComponent},
   {path: 'CASE', component: CaseComponent},
+  {path: 'HOTBITS', component: HotbitsComponent},
 ];
 
 @NgModule({

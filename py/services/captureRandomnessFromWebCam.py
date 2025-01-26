@@ -52,6 +52,7 @@ class WebCamCollector:
         self.stopCollectingHotbits = True
 
     def generate_hotbits(self, hotbitsPath: str, amount: int):
+        print("generate_hotbits with webCam")
         bit_array = []
         max_bits = 32  # Maximum number of bits for an integer
 
@@ -105,7 +106,7 @@ class WebCamCollector:
                     json.dump({"integerList": integer_list, "source": "webCam"}, f)
 
 
-                self.emitMessage('hotbits-count', str(self.countHotbits()))
+                self.emitMessage('server_update', str(self.countHotbits()))
                 print(f"Hotbits saved to {filename}")
         finally:
             cap.release()

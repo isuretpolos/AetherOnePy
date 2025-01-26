@@ -100,7 +100,10 @@ export class AetherOneService {
   }
 
   collectWebCamHotBits():Observable<any> {
-    console.log("collectWebCamHotBits ...")
     return this.http.post<any>(`${this.baseUrl}collectWebCamHotBits`,undefined)
+  }
+
+  isWebCamHotRunning():Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}collectWebCamHotBits`)
   }
 }

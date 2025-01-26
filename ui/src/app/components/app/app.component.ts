@@ -21,7 +21,9 @@ export class AppComponent implements OnInit {
   theme:string = "dark"
   searchText = new FormControl('');
   mobileMode:boolean = false
-  serverMessages: string[] = [];
+  serverMessages: string[] = []
+  hotbitsCount: number = 0
+  webCamRunning: boolean = false
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -62,6 +64,14 @@ export class AppComponent implements OnInit {
     this.aetherOne.case$.subscribe(value => {
       this.case = value
     })
+
+    this.countHotbits()
+  }
+
+  countHotbits() {
+    this.aetherOne.countHotbits().subscribe( c => this.hotbitsCount = c.count)
+    this.aetherOne.isWebCamHotRunning().subscribe( r => this.webCamRunning = r['running'])
+    setTimeout(()=>{this.countHotbits()}, 10000)
   }
 
   navigate(navigationPath: string) {
@@ -139,9 +149,4 @@ export class AppComponent implements OnInit {
     }, 5000);
   }
 
-  startCollectingWebCamHotbits() {
-    this.aetherOne.collectWebCamHotBits().subscribe(()=>{
-
-    })
-  }
 }

@@ -1,23 +1,28 @@
-<nav class="navbar navbar-expand-lg bg-body-tertiary" *ngIf="!mobileMode">
-    <a class="navbar-brand" href="#"
+<!-- *ngIf="!mobileMode" -->
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <a class="navbar-brand" style="margin-left: 1rem" href="#"
        [class.serverOnline]="serverOnline"
-       [class.serverOffline]="!serverOnline">AetherOne<b>Py</b></a> - <b style="margin-right: 1rem">{{case?.name}}</b> <span class="serverOfflineInfo" *ngIf="!serverOnline">is offline</span>
+       [class.serverOffline]="!serverOnline">AetherOne<strong>Py</strong></a> - <b style="margin-right: 1rem">{{case?.name}}</b> <span class="serverOfflineInfo" *ngIf="!serverOnline">is offline</span>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="serverOnline">
+        <li class="nav-item" style="background-color: darkred; margin-left:0.1rem;margin-bottom:0.1rem">
+          <a class="nav-link active navigationButton" aria-current="page" href="#HOTBITS" style="color:white!important;" (click)="navigate('HOTBITS')">HOTBITS ({{hotbitsCount}}) <span *ngIf="webCamRunning"><i class="bi bi-webcam"></i></span></a>
+        </li>
         <li class="nav-item" *ngFor="let link of links" style="background-color: {{link.backgroundColor}}; margin-left:0.1rem;margin-bottom:0.1rem">
           <a class="nav-link active navigationButton" aria-current="page" href="#{{link.name}}" style="color:{{link.color}}!important;" (click)="navigate(link.name)"
              [class.activeLink]="link.active" [class.inactiveLink]="!link.active">{{link.name}}</a>
         </li>
       </ul>
+
       <form class="d-flex" role="search" *ngIf="serverOnline">
         <input #weaverText [formControl]="searchText" (ngModelChange)="search()" type="text" class="form-control me-2" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
-      <button class="btn btn-outline-success" (click)="startCollectingWebCamHotbits()">WebCam</button>
+
       <!--<button class="btn btn-sm" [class.btn-dark]="theme == 'light'" [class.btn-light]="theme == 'dark'" style="margin-left: 3rem; padding: 0.1rem" (click)="switchTheme()">{{theme}} Mode</button>-->
     </div>
 </nav>

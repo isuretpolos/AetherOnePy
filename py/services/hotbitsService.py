@@ -7,7 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from enum import Enum
 from services.captureRandomnessFromWebCam import WebCamCollector
 from services.captureRandomnessFromRaspberryPi import RandomNumberGenerator
-from py.services.databaseService import CaseDAO, get_case_dao
+from services.databaseService import CaseDAO, get_case_dao
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
@@ -59,9 +59,12 @@ class HotbitsService:
     def collectWebCamHotBits(self):
         self.running = True
         self.emitMessage('hotbits', 'running webCam')
-        self.webCamCollector.generate_hotbits(self.folder_path, 100)
-        self.emitMessage('hotbits', 'stopped webCam')
-        self.running = False
+        thread = threading.Thread(target=self.webCamCollector.generate_hotbits, args=[self.folder_path, 100])
+        thread.daemon = True
+        thread.start()
+        #self.webCamCollector.generate_hotbits(self.folder_path, 100)
+        #self.emitMessage('hotbits', 'stopped webCam')
+        #self.running = False
 
     def collectHotBits(self):
         if self.source == HotbitsSource.RASPBERRY_PI:
