@@ -1,6 +1,15 @@
 import sys
 import os
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
+from typing import Optional
+
+# Add the project root and py directory to Python path
+current_dir = os.path.dirname(os.path.abspath(__file__))
+project_root = os.path.dirname(os.path.dirname(current_dir))
+py_dir = os.path.join(project_root, 'py')
+sys.path.extend([project_root, py_dir])
+
+from py.domains.aetherOneDomains import Case, Session, Analysis, Catalog, Rate, AnalysisRate
+from py.services.databaseService import get_case_dao
 
 import unittest
 from py.main import app
@@ -32,6 +41,7 @@ class FlaskEndpointsTestCase(unittest.TestCase):
 
     def test_case_post(self):
         """Test the /case endpoint for POST method."""
+        # Input data for the POST request
         data = {
             "name": "Test Case",
             "email": "test@example.com",
@@ -40,9 +50,31 @@ class FlaskEndpointsTestCase(unittest.TestCase):
             "created": "2025-01-01T12:00:00",
             "lastChange": "2025-01-02T12:00:00"
         }
+
+        # Mock the database insert to return a specific user_id
+        expected_user_id = 42
+        case_dao = get_case_dao()
+        case_dao.insert_case = lambda case: expected_user_id  # Mock method
+
+        # Send POST request
         response = self.app.post('/case', json=data)
+
+        # Assertions
         self.assertEqual(response.status_code, 200)
         self.assertTrue(response.is_json)
+
+        # Verify response contains the correct user_id
+        response_data = response.get_json()
+        self.assertIn("user_id", response_data)
+        self.assertEqual(response_data["user_id"], expected_user_id)
+
+        # Optional: Check if the other fields match the input data
+        self.assertEqual(response_data["name"], data["name"])
+        self.assertEqual(response_data["email"], data["email"])
+        self.assertEqual(response_data["color"], data["color"])
+        self.assertEqual(response_data["description"], data["description"])
+        self.assertEqual(response_data["created"], data["created"])
+        self.assertEqual(response_data["lastChange"], data["lastChange"])
 
     def test_collect_hotbits_post(self):
         """Test the /collectHotBits endpoint for POST method."""

@@ -208,8 +208,13 @@ class CaseDAO:
         INSERT INTO cases (name, email, color, description, created, last_change)
         VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))
         '''
-        self.conn.execute(query, (case.name, case.email, case.color, case.description))
+        cursor = self.conn.cursor() 
+        cursor.execute(query, (case.name, case.email, case.color, case.description))
         self.conn.commit()
+
+        # Get the last inserted ID
+        last_id = cursor.lastrowid
+        return last_id
 
     def get_case(self, case_id: int) -> Case | None:
         row = self.conn.execute('SELECT * FROM cases WHERE id = ?', (case_id,)).fetchone()
