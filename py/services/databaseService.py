@@ -327,9 +327,9 @@ class CaseDAO:
         cursor = self.conn.execute(query, (session_id,))
         row = cursor.fetchone()
         if row:
-            analysis = Analysis(row[1], row[2])
+            analysis = Analysis(row[1], row[3])
             analysis.id = row[0]
-            analysis.target_gv = row[3]
+            analysis.target_gv = row[2]
             analysis.catalogId = row[4]
             analysis.created = datetime.fromisoformat(row[5])
             return analysis
@@ -354,9 +354,9 @@ class CaseDAO:
         cursor = self.conn.execute(query, (session_id,))
         analysisList = []
         for row in cursor:
-            analysis = Analysis(row[1], row[2])
+            analysis = Analysis(row[1], row[3])
             analysis.id = row[0]
-            analysis.target_gv = row[3]
+            analysis.target_gv = row[2]
             analysis.catalogId = row[4]
             analysis.created = datetime.fromisoformat(row[5])
             analysisList.append(analysis)
