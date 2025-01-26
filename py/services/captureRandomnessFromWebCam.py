@@ -4,13 +4,14 @@ import json
 import time, os, sys
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
 
 class WebCamCollector:
-    def __init__(self):
+    def __init__(self, emitMessage, countHotbits):
         self.stopCollectingHotbits: bool = False
+        self.emitMessage = emitMessage
+        self.countHotbits = countHotbits
 
     def bits_to_integer(self, bits):
         """Convert a list of bits into an integer."""
@@ -51,14 +52,17 @@ class WebCamCollector:
         self.stopCollectingHotbits = True
 
     def generate_hotbits(self, hotbitsPath: str, amount: int):
+        print("generate_hotbits with webCam")
         bit_array = []
         max_bits = 32  # Maximum number of bits for an integer
 
         cap = cv2.VideoCapture(0)
         if not cap.isOpened():
+            self.emitMessage('hotbits', 'Failed to open the camera!')
             raise Exception("Failed to open the camera")
 
         try:
+            self.emitMessage('hotbits', 'Starting to collect ...')
             for _ in range(amount):
                 integer_list = []
                 unique_integers = set()
@@ -101,6 +105,8 @@ class WebCamCollector:
                 with open(filename, 'w') as f:
                     json.dump({"integerList": integer_list, "source": "webCam"}, f)
 
+
+                self.emitMessage('server_update', str(self.countHotbits()))
                 print(f"Hotbits saved to {filename}")
         finally:
             cap.release()

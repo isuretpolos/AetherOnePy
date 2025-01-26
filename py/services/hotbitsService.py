@@ -20,13 +20,14 @@ class HotbitsSource(Enum):
 
 class HotbitsService:
 
-    def __init__(self, hotbitsSource: HotbitsSource, folder_path: str, aetherOneDB:CaseDAO):
+    def __init__(self, hotbitsSource: HotbitsSource, folder_path: str, aetherOneDB: CaseDAO, emitMessage):
         self.source = hotbitsSource
+        self.emitMessage = emitMessage
         self.running = False
         self.aetherOneDB = aetherOneDB
         self.hotbits: [int] = []
         self.folder_path = folder_path
-        self.webCamCollector = WebCamCollector()
+        self.webCamCollector = WebCamCollector(self.emitMessage, self.countHotbits)
         if self.is_raspberry_pi():
             print("This system is a Raspberry Pi.")
             self.source = HotbitsSource.RASPBERRY_PI
@@ -47,12 +48,22 @@ class HotbitsService:
             filename = f"{self.folder_path}/hotbits_{timestamp}.json"
             with open(filename, 'w') as f:
                 json.dump({"integerList": timeLoopedHotbits, "source": "timeLoop"}, f)
-    
+
     def countHotbits(self):
         return len([file for file in os.listdir(self.folder_path) if file.endswith(".json")])
 
     def stopCollectingHotbits(self):
         self.webCamCollector.stopCollectingHotbits = True
+
+    def collectWebCamHotBits(self):
+        self.running = True
+        self.emitMessage('hotbits', 'running webCam')
+        thread = threading.Thread(target=self.webCamCollector.generate_hotbits, args=[self.folder_path, 100])
+        thread.daemon = True
+        thread.start()
+        #self.webCamCollector.generate_hotbits(self.folder_path, 100)
+        #self.emitMessage('hotbits', 'stopped webCam')
+        #self.running = False
 
     def collectHotBits(self):
         if self.source == HotbitsSource.RASPBERRY_PI:

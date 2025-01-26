@@ -49,8 +49,13 @@ if not os.path.isdir(os.path.join(PROJECT_ROOT, "hotbits")):
 
 aetherOneDB = get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db'))
 aetherOneDB.get_setting('')
-hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"), aetherOneDB)
 
+
+def emitMessage(event: str, text: str):
+    socketio.emit(event, {'message': text})
+
+
+hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"), aetherOneDB, emitMessage)
 
 # Angular UI, serving static files
 # --------------------------------
@@ -260,6 +265,15 @@ def collectHotbits():
     asyncio.run(hotbits.collectHotBits())
     return jsonify({'message': 'collecting hotbits started'}), 200
 
+
+@app.route('/collectWebCamHotBits', methods=['GET', 'POST'])
+def collectWebCamHotBits():
+    if request.method == 'GET':
+        return jsonify({'running': hotbits.running}), 200
+    if request.method == 'POST':
+        hotbits.collectWebCamHotBits()
+        return jsonify({'message': 'collecting hotbits with webCam started'}), 200
+    return "NOT IMPLEMENTED"
 
 @app.route('/collectHotBits', methods=['DELETE'])
 def stopCollectingHotbits():
