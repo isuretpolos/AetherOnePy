@@ -54,16 +54,18 @@ class HotbitsService:
 
     def stopCollectingHotbits(self):
         self.webCamCollector.stopCollectingHotbits = True
+        self.running = False
 
     def collectWebCamHotBits(self):
-        self.running = True
         self.emitMessage('hotbits', 'running webCam')
-        thread = threading.Thread(target=self.webCamCollector.generate_hotbits, args=[self.folder_path, 100])
-        thread.daemon = True
-        thread.start()
-        #self.webCamCollector.generate_hotbits(self.folder_path, 100)
-        #self.emitMessage('hotbits', 'stopped webCam')
-        #self.running = False
+        if self.webCamCollector.checkIfWebCamIsAvailable():
+            self.running = True
+            thread = threading.Thread(target=self.webCamCollector.generate_hotbits, args=[self.folder_path, 100])
+            thread.daemon = True
+            thread.start()
+            return True
+        else:
+            return False
 
     def collectHotBits(self):
         if self.source == HotbitsSource.RASPBERRY_PI:

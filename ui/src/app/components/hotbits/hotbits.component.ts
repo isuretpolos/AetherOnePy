@@ -33,12 +33,23 @@ export class HotbitsComponent implements OnInit {
   }
 
   startCollectingWebCamHotbits() {
-    this.aetherOne.collectWebCamHotBits().subscribe(()=>{
-      console.log("... collect hotbits from webcam ...")
+    this.aetherOne.collectWebCamHotBits().subscribe({
+      next: () => {
+        this.toastr.success("WebCam is now collecting hotbits ... you can continue working.")
+      },
+      error: (err) => {
+        this.toastr.error("WebCam is not available for hotbits collection!")
+      }
     })
   }
 
   stopCollectingWebCamHotbits() {
-
+    this.aetherOne.stopCollectingHotbits().subscribe(()=> {
+      this.aetherOne.isWebCamHotRunning().subscribe( r => {
+        this.webCamRunning = r['running']
+        if (!this.webCamRunning)
+          this.toastr.info("WebCam has stopped collecting hotbits.")
+      })
+    })
   }
 }

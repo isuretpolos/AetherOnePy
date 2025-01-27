@@ -51,6 +51,21 @@ class WebCamCollector:
     def stop_generate_hotbits(self):
         self.stopCollectingHotbits = True
 
+
+    def checkIfWebCamIsAvailable(self):
+        cap = cv2.VideoCapture(0)
+        try:
+            if not cap.isOpened():
+                self.emitMessage('hotbits', 'Failed to open the camera!')
+                return False
+            ret, frame = cap.read()
+            if not ret:
+                self.emitMessage('hotbits', 'Failed to open the camera!')
+                return False
+        finally:
+            cap.release()
+        return True
+
     def generate_hotbits(self, hotbitsPath: str, amount: int):
         print("generate_hotbits with webCam")
         bit_array = []
@@ -60,6 +75,10 @@ class WebCamCollector:
         if not cap.isOpened():
             self.emitMessage('hotbits', 'Failed to open the camera!')
             raise Exception("Failed to open the camera")
+        ret, frame = cap.read()
+        if not ret:
+            self.emitMessage('hotbits', 'Failed to open the camera!')
+            raise Exception("Failed to capture image")
 
         try:
             self.emitMessage('hotbits', 'Starting to collect ...')

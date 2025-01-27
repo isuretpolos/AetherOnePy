@@ -271,8 +271,10 @@ def collectWebCamHotBits():
     if request.method == 'GET':
         return jsonify({'running': hotbits.running}), 200
     if request.method == 'POST':
-        hotbits.collectWebCamHotBits()
-        return jsonify({'message': 'collecting hotbits with webCam started'}), 200
+        if hotbits.collectWebCamHotBits():
+            return jsonify({'message': 'collecting hotbits with webCam started'}), 200
+        else:
+            return jsonify({'message': 'collecting hotbits with webCam failed'}), 500
     return "NOT IMPLEMENTED"
 
 @app.route('/collectHotBits', methods=['DELETE'])
