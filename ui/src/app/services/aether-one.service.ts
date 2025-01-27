@@ -106,4 +106,8 @@ export class AetherOneService {
   isWebCamHotRunning():Observable<any> {
     return this.http.get<any>(`${this.baseUrl}collectWebCamHotBits`)
   }
+
+  stopCollectingHotbits():Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}collectHotBits`)
+  }
 }
