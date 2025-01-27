@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   serverMessages: string[] = []
   hotbitsCount: number = 0
   webCamRunning: boolean = false
+  version: string = ''
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -55,6 +56,7 @@ export class AppComponent implements OnInit {
     }
 
     this.ping()
+    this.aetherOne.version().subscribe( v => this.version = v)
     this.initLinks()
     this.navigationService.navigate.subscribe( (url:string) => {
       this.navigate(url);

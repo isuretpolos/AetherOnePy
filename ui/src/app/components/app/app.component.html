@@ -2,7 +2,7 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary">
     <a class="navbar-brand" style="margin-left: 1rem" href="#"
        [class.serverOnline]="serverOnline"
-       [class.serverOffline]="!serverOnline">AetherOne<strong>Py</strong></a> - <b style="margin-right: 1rem">{{case?.name}}</b> <span class="serverOfflineInfo" *ngIf="!serverOnline">is offline</span>
+       [class.serverOffline]="!serverOnline">AetherOne<strong>Py</strong> {{version}}</a> - <b style="margin-right: 1rem">{{case?.name}}</b> <span class="serverOfflineInfo" *ngIf="!serverOnline">is offline</span>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
             aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>

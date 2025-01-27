@@ -86,6 +86,15 @@ def ping():
     return "pong"
 
 
+@app.route('/version', methods=['GET'])
+def version():
+    try:
+        with open("version.txt", "r") as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        return "0.0.0"
+
+
 @app.route('/qrcode', methods=['GET'])
 def get_qrcode():
     data = f"http://{get_local_ip()}:{port}"
