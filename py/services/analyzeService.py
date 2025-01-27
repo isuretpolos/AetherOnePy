@@ -1,4 +1,4 @@
-import sys, os
+import sys, os, random
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
@@ -15,41 +15,54 @@ def transformAnalyzeListToDict(rates: []):
     return dictList
 
 
-def analyze(analysis_id: int, rates: list, hotbits_service: HotbitsService, autoCheckGV:bool = False) -> list:
+def analyze(analysis_id: int, rates: list, hotbits_service: HotbitsService, autoCheckGV:bool = False, enhancedAnalysis:bool = False) -> list:
 
     if rates is None or len(rates) == 0:
         return []
 
     enhanced_rates = []
-    for rate in rates:
-        newRate = AnalysisRate(rate.signature, rate.description, rate.catalogID, analysis_id, 0, 0,
-                               0, "", 0, "")
-        newRate.id = rate.id
-        enhanced_rates.append(newRate)
 
     # PRE-SELECTION
-    # FIRST ITERATION, assign +1 to value until 20 of them reach at least a value 10
-    while True:
-        for rate in enhanced_rates:
-            random_value = hotbits_service.getInt(1, 5)
-            if random_value == 5:
-                rate.energetic_value += 1
-
-        if len(enhanced_rates) < 20:
-            break
-
+    # FIRST ITERATION
+    if not enhancedAnalysis:
+        # DEFAULT PRE-SELECTION
         countSelected = 0
-        for rate in enhanced_rates:
-            if rate.energetic_value > 10:
-                countSelected += 1
-
-        if countSelected >= 20:
-            break
-
-    # CLEAN ALL NOT WORTHY
-    enhanced_rates = [rate for rate in enhanced_rates if rate.energetic_value >= 11]
+        random.shuffle(rates)
+        while countSelected < 24:
+            countSelected += 1
+            rate = rates.pop(hotbits_service.getInt(0, len(rates)))  # random select 24 rates
+            newRate = AnalysisRate(rate.signature, rate.description, rate.catalogID, analysis_id, 0, 0,
+                                   0, "", 0, "")
+            newRate.id = rate.id
+            enhanced_rates.append(newRate)
+            if len(rates) == 0:
+                break
+    else:
+        # ADVANCED PRE-SELECTION
+        for rate in rates:
+            newRate = AnalysisRate(rate.signature, rate.description, rate.catalogID, analysis_id, 0, 0,
+                                   0, "", 0, "")
+            newRate.id = rate.id
+            enhanced_rates.append(newRate)
+        # assign +1 to value until 20 of them reach at least a value 10
+        while True:
+            for rate in enhanced_rates:
+                random_value = hotbits_service.getInt(1, 5)
+                if random_value == 5:
+                    rate.energetic_value += 1
+            if len(enhanced_rates) < 20:
+                break
+            countSelected = 0
+            for rate in enhanced_rates:
+                if rate.energetic_value > 10:
+                    countSelected += 1
+            if countSelected >= 20:
+                break
+        # CLEAN ALL NON WORTHY
+        enhanced_rates = [rate for rate in enhanced_rates if rate.energetic_value >= 11]
 
     # SECOND ITERATION, assign 0 to 10 until at least one reach 1000
+    # from this point there is no difference between advanced or default analysis
     maxReached = False
 
     while maxReached == False:

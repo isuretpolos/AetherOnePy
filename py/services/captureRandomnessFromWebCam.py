@@ -51,7 +51,6 @@ class WebCamCollector:
     def stop_generate_hotbits(self):
         self.stopCollectingHotbits = True
 
-
     def checkIfWebCamIsAvailable(self):
         cap = cv2.VideoCapture(0)
         try:
