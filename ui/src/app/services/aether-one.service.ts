@@ -21,6 +21,10 @@ export class AetherOneService {
     return this.http.get(`${this.baseUrl}ping`, {responseType: 'text'})
   }
 
+  version(): Observable<any> {
+    return this.http.get(`${this.baseUrl}version`, {responseType: 'text'})
+  }
+
   loadSettings(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}settings`)
   }

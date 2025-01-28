@@ -77,7 +77,6 @@ if not os.path.isdir(os.path.join(PROJECT_ROOT, "hotbits")):
     os.makedirs(os.path.join(PROJECT_ROOT, "hotbits"))
 
 aetherOneDB = get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db'))
-aetherOneDB.get_setting('')
 
 
 def emitMessage(event: str, text: str):
@@ -114,6 +113,15 @@ def static_files(path):
 @app.route('/ping', methods=['GET'])
 def ping():
     return "pong"
+
+
+@app.route('/version', methods=['GET'])
+def version():
+    try:
+        with open("version.txt", "r") as f:
+            return f.read().strip()
+    except FileNotFoundError:
+        return "0.0.0"
 
 
 @app.route('/qrcode', methods=['GET'])
@@ -366,7 +374,7 @@ def analyze():
         analyzeRequest = request.json
         analysis = aetherOneDB.get_analysis(int(analyzeRequest['analysis_id']))
         rates_list = aetherOneDB.list_rates_from_catalog(analyzeRequest["catalog_id"])
-        enhanced_rates = analyzeService(analysis.id, rates_list, hotbits, True)
+        enhanced_rates = analyzeService(analysis.id, rates_list, hotbits, aetherOneDB.get_setting('analysisAlwaysCheckGV'), aetherOneDB.get_setting('analysisAdvanced'))
         aetherOneDB.insert_rates_for_analysis(enhanced_rates)
         analyzeList = transformAnalyzeListToDict(enhanced_rates)
         return jsonify(analyzeList), 200
