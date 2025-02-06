@@ -70,9 +70,11 @@ class CaseDAO:
             signature TEXT,
             delay INTEGER,
             repeat INTEGER,
+            analysis_id INTEGER,
             entering_with_general_vitality INTEGER,
             leaving_with_general_vitality INTEGER,
             session_id INTEGER,
+            created DATETIME,
             FOREIGN KEY (session_id) REFERENCES sessions (id) ON DELETE CASCADE
         )
         '''

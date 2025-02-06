@@ -13,11 +13,23 @@
       <p>
         <button class="btn btn-sm btn-primary smallerButton" (click)="loadRateCatalogs()" data-bs-toggle="modal"
                 data-bs-target="#catalogsModal">SELECT RATE CATALOG</button>
+        <span *ngIf="!selectedCatalog"> Hotbits = {{countHotbits}}</span>
         <button *ngIf="selectedCatalog" (click)="analyze()" class="btn btn-sm btn-danger smallerButton">ANALYZE (Hotbits = {{countHotbits}})</button>
         <button *ngIf="selectedCatalog" class="btn btn-sm btn-danger smallerButton">GV</button>
         <span *ngIf="settings['analysisAlwaysCheckGV'] == 'true'" class="badge text-bg-warning" style="margin-left: 1rem">Automatic GV</span>
         <button *ngIf="analysis" class="btn btn-sm btn-primary">GENERAL VITALITY = {{analysis.target_gv}}</button>
       </p>
+      <div class="progress-stacked" *ngIf="analysis">
+        <div class="progress" role="progressbar" aria-label="Segment one" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100" style="width: {{analysis.lowest_gv_percent}}%">
+          <div class="progress-bar">LOWEST {{analysis.lowest_gv | number: '1.0-0'}}</div>
+        </div>
+        <div class="progress" role="progressbar" aria-label="Segment two" aria-valuenow="30" aria-valuemin="0" aria-valuemax="100" style="width: {{analysis.target_gv_percent}}%">
+          <div class="progress-bar bg-success">TARGET {{analysis.target_gv | number: '1.0-0'}}</div>
+        </div>
+        <div *ngIf="analysis.target_gv < analysis.hit_gv" class="progress" role="progressbar" aria-label="Segment three" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100" style="width: {{100 - analysis.target_gv_percent}}%">
+          <div class="progress-bar bg-danger">HIT {{analysis.hit_gv | number: '1.0-0'}}</div>
+        </div>
+      </div>
       <table class="table table-sm table-hover">
         <thead class="table-light">
         <tr>
@@ -33,11 +45,9 @@
           <td>{{i+1}}</td>
           <td>{{rate.energetic_value}}</td>
           <td>{{rate.signature}}</td>
-          <td class="{{getRateClass(analysis.target_gv, rate.gv)}}">{{rate.gv}}</td>
+          <td class="{{getRateClass(analysis.target_gv, rate.gv)}}">{{rate.gv}} <span *ngIf="rate.gv == analysis.hit_gv" class="badge rounded-pill text-bg-danger">HIT</span></td>
           <td>
-            <button style="padding: 0.05rem; font-size: 0.6rem" class="btn btn-sm btn-success"
-                    title="broadcast Arsenicum album">BROADCAST
-            </button>
+            <button (click)="broadcast(rate)" style="padding: 0.05rem; font-size: 0.6rem" class="btn btn-sm btn-success" title="broadcast {{rate.signature}}">BROADCAST</button>
             <a *ngIf="selectedCatalog.name.startsWith('HOMEOPATHY')" style="margin-left: 1rem; padding: 0.05rem; font-size: 0.6rem" class="btn btn-sm btn-primary"
                     title="search in qjure.com" href="https://www.google.com/search?q={{rate.signature}}+site%3Aqjure.com" target="new window for {{rate.signature}}">QJURE
             </a>

@@ -18,16 +18,6 @@ export class Session {
   created:Date = new Date()
 }
 
-export class BroadCastData {
-  sessionID:number = 0
-  clear:boolean = false
-  intention:string = ""
-  signature:string = ""
-  delay:number = 25
-  repeat:number = 1
-  enteringWithGeneralVitality:number = 0
-  leavingWithGeneralVitality:number = 0
-}
 
 export class RateObjectWrapper {
   occurrence:number = 0

@@ -18,8 +18,10 @@ required_packages = [
     'sphinx_rtd_theme'
 ]
 
+# TODO: get the list for dependecies from the requirements.txt file
 def install_package(package):
     subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
+
 
 def check_and_install_packages():
     for package in required_packages:
@@ -27,6 +29,7 @@ def check_and_install_packages():
             __import__(package)
         except ImportError:
             install_package(package)
+
 
 if __name__ == '__main__':
     """

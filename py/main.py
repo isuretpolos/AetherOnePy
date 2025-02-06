@@ -28,6 +28,7 @@ from services.rateImporter import RateImporter
 from services.hotbitsService import HotbitsService, HotbitsSource
 from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict, checkGeneralVitality
 from domains.aetherOneDomains import Analysis, Session, Case
+from services.broadcastService import BroadcastService
 
 
 # Get the absolute path to the AetherOnePy project root directory
@@ -85,6 +86,7 @@ def emitMessage(event: str, text: str):
 
 
 hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"), aetherOneDB, emitMessage)
+broadcastService = BroadcastService(hotbits)
 
 # Angular UI, serving static files
 # --------------------------------
@@ -395,6 +397,22 @@ def analyze():
 def checkGV():
     gv = checkGeneralVitality(hotbits)
     return jsonify({'gv': gv}), 200
+
+
+@app.route('/broadcast', methods=['GET', 'POST', 'PUT', 'DELETE'])
+def broadcast():
+    if request.method == 'GET':
+        tasks = broadcastService.get_tasks()
+        return jsonify(tasks), 200
+    if request.method == 'POST':
+        broadcast_data = request.json
+        print(request.json)
+        print(broadcast_data)
+        # FIXME instantiate the correct objects
+        broadcastService.add_task(broadcast_data)
+        return jsonify({'message': 'broadcasted'}), 200
+
+    return "NOT IMPLEMENTED"
 
 
 @app.route('/rateCard', methods=['GET'])

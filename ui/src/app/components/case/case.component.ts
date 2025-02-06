@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Case, Session} from "../../domains/Case";
-import {Router} from "@angular/router";
+import {BroadCastData} from "../../domains/BroadCastData";
 import {Analysis, Catalog, RateObject} from "../../domains/Analysis";
 import {AetherOneService} from "../../services/aether-one.service";
 import {FolderStructure} from "../../domains/Files";
@@ -107,6 +107,19 @@ export class CaseComponent implements OnInit {
         this.analysis = persistedAnalysis
         this.aetherOne.analyze(this.analysis.id, this.session.id, this.selectedCatalog.id, this.analyzeNote.getRawValue()).subscribe(r => {
           this.analysisResult = r
+          // find the highest gv from the analysis result
+          this.analysis.hit_gv = this.analysisResult.reduce((max, p) => p.gv > max ? p.gv : max, 0)
+          this.analysis.lowest_gv = this.analysisResult.reduce((min, p) => p.gv < min ? p.gv : min, 1000)
+          this.analysis.highest_gv = this.analysis.target_gv
+          if (this.analysis.hit_gv > this.analysis.highest_gv) {
+            this.analysis.highest_gv = this.analysis.hit_gv
+          }
+          // calculate the percentage of the target gv that was hit
+          // the percentage of target, hit and lowest gv should be 100% in the sum, in order to represent them in a bootstrap progress bar
+          const total_gv = this.analysis.highest_gv;
+          this.analysis.lowest_gv_percent = (this.analysis.lowest_gv / total_gv) * 100;
+          this.analysis.target_gv_percent = (this.analysis.target_gv / total_gv) * 100;
+          this.analysis.hit_gv_percent = (this.analysis.hit_gv / total_gv) * 100;
           this.aetherOne.countHotbits().subscribe(c => this.countHotbits = c.count)
         })
       })
@@ -157,5 +170,10 @@ export class CaseComponent implements OnInit {
       rateClass = 'hit1000'
     }
     return rateClass
+  }
+
+  broadcast(rate: RateObject) {
+    let broadcastData = new BroadCastData(rate, this.analysis)
+    this.aetherOne.broadcast(broadcastData).subscribe( r => console.log(r))
   }
 }

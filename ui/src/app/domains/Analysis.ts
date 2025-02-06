@@ -5,6 +5,13 @@ export class Analysis {
   catalogId:number = -1
   rateObjects:RateObject[] = []
   target_gv:number = 0
+  hit_gv:number = 0
+  highest_gv:number = 0
+  lowest_gv:number = 0
+  highest_gv_percent:number = 0
+  lowest_gv_percent:number = 0
+  target_gv_percent:number = 0
+  hit_gv_percent:number = 0
 }
 
 export class RateObject {
