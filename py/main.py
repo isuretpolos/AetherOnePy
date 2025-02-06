@@ -19,6 +19,7 @@ from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 from PIL import ImageDraw, ImageFont
 from dateutil import parser
+import importlib 
 
 from services.rateCard import RadionicChart
 from services.databaseService import get_case_dao
@@ -28,10 +29,38 @@ from services.hotbitsService import HotbitsService, HotbitsSource
 from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict, checkGeneralVitality
 from domains.aetherOneDomains import Analysis, Session, Case
 
+
 # Get the absolute path to the AetherOnePy project root directory
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
 app = Flask(__name__)
+
+# --- Plugin Loading Logic ---
+PLUGINS_DIR = os.path.join(os.path.dirname(__file__), 'plugins') # plugins directory relative to main.py
+
+if os.path.exists(PLUGINS_DIR) and os.path.isdir(PLUGINS_DIR):
+    plugin_directories = [d for d in os.listdir(PLUGINS_DIR) if os.path.isdir(os.path.join(PLUGINS_DIR, d))]
+
+    for plugin_name in plugin_directories:
+        plugin_path = os.path.join(PLUGINS_DIR, plugin_name)
+        routes_module_name = f"plugins.{plugin_name}.routes" # Construct module path
+
+        try:
+            routes_module = importlib.import_module(routes_module_name) # Dynamically import routes.py
+            if hasattr(routes_module, 'create_blueprint'): # Expecting a function to create Blueprint
+                plugin_blueprint = routes_module.create_blueprint()
+                app.register_blueprint(plugin_blueprint, url_prefix=f"/{plugin_name.lower()}") # Register blueprint with prefix
+                print(f"Plugin '{plugin_name}' routes loaded and registered with prefix '/{plugin_name.lower()}'")
+            else:
+                print(f"Plugin '{plugin_name}' routes module (routes.py) missing 'create_blueprint' function.")
+
+        except ImportError as e:
+            print(f"Error importing routes for plugin '{plugin_name}': {e}")
+        except Exception as e: # Catch other potential errors during blueprint creation/registration
+            print(f"Error registering blueprint for plugin '{plugin_name}': {e}")
+else:
+    print(f"Plugins directory '{PLUGINS_DIR}' not found or is not a directory. Skipping plugin loading.")
+
 socketio = SocketIO(app, cors_allowed_origins="*")
 port = 80
 CORS(app)
