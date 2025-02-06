@@ -9,6 +9,7 @@ import socket
 import re
 import json
 import logging
+import urllib.request
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
@@ -91,6 +92,14 @@ def version():
     try:
         with open("version.txt", "r") as f:
             return f.read().strip()
+    except FileNotFoundError:
+        return "0.0.0"
+
+
+@app.route('/remoteVersion', methods=['GET'])
+def remoteVersion():
+    try:
+        return urllib.request.urlopen("https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/version.txt").read()
     except FileNotFoundError:
         return "0.0.0"
 

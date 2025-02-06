@@ -3,6 +3,10 @@
 
 AetherOnePy is a Web-based Desktop Application, which means the application runs on your computer but uses a web browser as its interface. You can run it on a Raspberry Pi or a PC (Windows, Linux or Mac).
 
+### Preconditions
+- **Python** version **3.10**.x or bigger
+- Git
+
 ## Install
 ### Linux
 For Linux I wrote a [script](https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/scripts/run_aetherone.sh) which does the following:
@@ -60,6 +64,7 @@ Some notes for users installing the application on the Raspberry Pi.
 Helpful commands
 ```shell
 sudo apt update
+# upgrading RPy on regular basis is necessary, especially for git (which could lead to problems)
 sudo apt upgrade
 # install pip for package management for python libraries
 sudo apt-get install python3-pip
