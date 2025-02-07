@@ -27,9 +27,8 @@ from services.updateRadionicsRates import update_or_clone_repo
 from services.rateImporter import RateImporter
 from services.hotbitsService import HotbitsService, HotbitsSource
 from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict, checkGeneralVitality
-from domains.aetherOneDomains import Analysis, Session, Case
-from services.broadcastService import BroadcastService
-
+from domains.aetherOneDomains import Analysis, Session, Case, BroadCastData
+from services.broadcastService import BroadcastService, BroadcastTask
 
 # Get the absolute path to the AetherOnePy project root directory
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -406,10 +405,13 @@ def broadcast():
         return jsonify(tasks), 200
     if request.method == 'POST':
         broadcast_data = request.json
-        print(request.json)
-        print(broadcast_data)
+        analysis = aetherOneDB.get_analysis(int(broadcast_data['analysis_id']))
+        rateObject = aetherOneDB.get_rate(int(broadcast_data['rate_id']))
+        print(rateObject)
+        print(analysis)
+        broadcastData = BroadcastTask(rateObject, analysis)
         # FIXME instantiate the correct objects
-        broadcastService.add_task(broadcast_data)
+        broadcastService.add_task(broadcastData)
         return jsonify({'message': 'broadcasted'}), 200
 
     return "NOT IMPLEMENTED"

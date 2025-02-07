@@ -3,6 +3,7 @@ import os
 import queue
 import sys
 import threading
+import time, hashlib
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from domains.aetherOneDomains import Analysis, BroadCastData
@@ -18,7 +19,7 @@ class BroadcastTask:
     # Check if the task is valid
     def is_valid(self, hotbits_service: HotbitsService) -> bool:
         gv = checkGeneralVitality(hotbits_service)
-        print(gv)
+        print(f"Signature: ${self.task.signature} Target GV: ${self.analysis.target_gv}, Current GV: ${gv}")
         if gv < self.analysis.target_gv:
             return False
         return True
@@ -40,9 +41,12 @@ class BroadcastService:
         while self.running:
             try:
                 task = self.task_queue.get(timeout=1)
+                hashedsignature = self.hashSignature(task.task.signature)
+                print(hashedsignature)
                 if self._condition_met(task):
                     self.task_queue.task_done()
                 else:
+                    time.sleep(1)
                     self.task_queue.put(task)
             except queue.Empty:
                 continue
@@ -59,3 +63,6 @@ class BroadcastService:
         while not self.task_queue.empty():
             tasks.append(self.task_queue.get())
         return tasks
+
+    def hashSignature(self, signature: str):
+        return hashlib.md5(signature.encode()).hexdigest()

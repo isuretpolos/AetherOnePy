@@ -15,6 +15,7 @@ export class Analysis {
 }
 
 export class RateObject {
+  id:number = 0
   signature:string = ""
   url:string = ""
   gv:number = 0

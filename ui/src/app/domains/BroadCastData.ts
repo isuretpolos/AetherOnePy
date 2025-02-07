@@ -2,6 +2,7 @@ import {Analysis, RateObject} from "./Analysis";
 
 export class BroadCastData {
   id: number;
+  rate_id: number = 0;
   clear: boolean = false;
   intention: string = '';
   signature: string = '';
@@ -14,6 +15,7 @@ export class BroadCastData {
   created: Date = new Date();
 
   constructor(rate: RateObject, analysis: Analysis) {
+    this.rate_id = rate.id
     this.signature = rate.signature;
     this.analysis_id = analysis.id;
     this.entering_with_general_vitality = 0;
