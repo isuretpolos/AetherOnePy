@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
   hotbitsCount: number = 0
   webCamRunning: boolean = false
   version: string = ''
+  remoteVersion: string = ''
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -56,8 +57,8 @@ export class AppComponent implements OnInit {
     }
 
     this.ping()
-    this.aetherOne.version().subscribe( v => this.version = v)
     this.initLinks()
+    this.checkVersion()
     this.navigationService.navigate.subscribe( (url:string) => {
       this.navigate(url);
     });
@@ -68,6 +69,20 @@ export class AppComponent implements OnInit {
     })
 
     this.countHotbits()
+  }
+
+  /**
+   * Checks the current version of the application and compares it with the remote version.
+   * It schedules another check after 60 seconds.
+   */
+  checkVersion() {
+    this.aetherOne.version().subscribe( v => {
+      this.version = v
+      this.aetherOne.remoteVersion().subscribe( v => {
+        this.remoteVersion = v
+        setTimeout(()=>{this.checkVersion()}, 60000)
+      })
+    })
   }
 
   countHotbits() {

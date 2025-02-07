@@ -26,6 +26,10 @@ export class AetherOneService {
     return this.http.get(`${this.baseUrl}version`, {responseType: 'text'})
   }
 
+  remoteVersion(): Observable<any> {
+    return this.http.get(`${this.baseUrl}remoteVersion`, {responseType: 'text'})
+  }
+
   loadSettings(): Observable<any> {
     return this.http.get<any>(`${this.baseUrl}settings`)
   }
