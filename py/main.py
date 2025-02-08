@@ -1,7 +1,7 @@
 # AetherOnyPy Main Application
-# Copyright Isuret Polos 2024
+# Copyright Isuret Polos 2025
 # Support me on https://www.patreon.com/aetherone
-import io,os,sys
+import io, os, sys
 import asyncio
 import argparse
 import qrcode
@@ -19,7 +19,7 @@ from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 from PIL import ImageDraw, ImageFont
 from dateutil import parser
-import importlib 
+import importlib
 
 from services.rateCard import RadionicChart
 from services.databaseService import get_case_dao
@@ -30,459 +30,403 @@ from services.analyzeService import analyze as analyzeService, transformAnalyzeL
 from domains.aetherOneDomains import Analysis, Session, Case, BroadCastData
 from services.broadcastService import BroadcastService, BroadcastTask
 
-# Get the absolute path to the AetherOnePy project root directory
-PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
 
-app = Flask(__name__)
+class AetherOnePy:
+    def __init__(self):
+        self.PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        self.app = Flask(__name__)
+        self.socketio = SocketIO(self.app, cors_allowed_origins="*")
+        self.port = 80
+        CORS(self.app)
+        self.aetherOneDB = get_case_dao(os.path.join(self.PROJECT_ROOT, 'data/aetherone.db'))
+        self.hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(self.PROJECT_ROOT, "hotbits"), self.aetherOneDB, self.emitMessage)
+        self.setup_logging()
+        self.setup_directories()
+        self.load_plugins()
+        self.setup_routes()
 
-# --- Plugin Loading Logic ---
-PLUGINS_DIR = os.path.join(os.path.dirname(__file__), 'plugins') # plugins directory relative to main.py
+    def setup_logging(self):
+        log = logging.getLogger('werkzeug')
+        log.setLevel(logging.ERROR)
 
-if os.path.exists(PLUGINS_DIR) and os.path.isdir(PLUGINS_DIR):
-    plugin_directories = [d for d in os.listdir(PLUGINS_DIR) if os.path.isdir(os.path.join(PLUGINS_DIR, d))]
+    def setup_directories(self):
+        if not os.path.isdir(os.path.join(self.PROJECT_ROOT, "data")):
+            os.makedirs(os.path.join(self.PROJECT_ROOT, "data"))
+        if not os.path.isdir(os.path.join(self.PROJECT_ROOT, "data/private")):
+            os.makedirs(os.path.join(self.PROJECT_ROOT, "data/private"))
+        if not os.path.isdir(os.path.join(self.PROJECT_ROOT, "hotbits")):
+            os.makedirs(os.path.join(self.PROJECT_ROOT, "hotbits"))
 
-    for plugin_name in plugin_directories:
-        plugin_path = os.path.join(PLUGINS_DIR, plugin_name)
-        routes_module_name = f"plugins.{plugin_name}.routes" # Construct module path
+    def load_plugins(self):
+        PLUGINS_DIR = os.path.join(os.path.dirname(__file__), 'plugins')
+        if os.path.exists(PLUGINS_DIR) and os.path.isdir(PLUGINS_DIR):
+            plugin_directories = [d for d in os.listdir(PLUGINS_DIR) if os.path.isdir(os.path.join(PLUGINS_DIR, d))]
+            for plugin_name in plugin_directories:
+                plugin_path = os.path.join(PLUGINS_DIR, plugin_name)
+                routes_module_name = f"plugins.{plugin_name}.routes"
+                try:
+                    routes_module = importlib.import_module(routes_module_name)
+                    if hasattr(routes_module, 'create_blueprint'):
+                        plugin_blueprint = routes_module.create_blueprint()
+                        self.app.register_blueprint(plugin_blueprint, url_prefix=f"/{plugin_name.lower()}")
+                        print(f"Plugin '{plugin_name}' routes loaded and registered with prefix '/{plugin_name.lower()}'")
+                    else:
+                        print(f"Plugin '{plugin_name}' routes module (routes.py) missing 'create_blueprint' function.")
+                except ImportError as e:
+                    print(f"Error importing routes for plugin '{plugin_name}': {e}")
+                except Exception as e:
+                    print(f"Error registering blueprint for plugin '{plugin_name}': {e}")
+        else:
+            print(f"Plugins directory '{PLUGINS_DIR}' not found or is not a directory. Skipping plugin loading.")
 
+    def emitMessage(self, event: str, text: str):
+        print(f"EMIT: {event} - {text}")
         try:
-            routes_module = importlib.import_module(routes_module_name) # Dynamically import routes.py
-            if hasattr(routes_module, 'create_blueprint'): # Expecting a function to create Blueprint
-                plugin_blueprint = routes_module.create_blueprint()
-                app.register_blueprint(plugin_blueprint, url_prefix=f"/{plugin_name.lower()}") # Register blueprint with prefix
-                print(f"Plugin '{plugin_name}' routes loaded and registered with prefix '/{plugin_name.lower()}'")
-            else:
-                print(f"Plugin '{plugin_name}' routes module (routes.py) missing 'create_blueprint' function.")
-
-        except ImportError as e:
-            print(f"Error importing routes for plugin '{plugin_name}': {e}")
-        except Exception as e: # Catch other potential errors during blueprint creation/registration
-            print(f"Error registering blueprint for plugin '{plugin_name}': {e}")
-else:
-    print(f"Plugins directory '{PLUGINS_DIR}' not found or is not a directory. Skipping plugin loading.")
-
-socketio = SocketIO(app, cors_allowed_origins="*")
-port = 80
-CORS(app)
-
-# Suppress logging
-log = logging.getLogger('werkzeug')
-log.setLevel(logging.ERROR)
-
-# Update paths to use PROJECT_ROOT
-if not os.path.isdir(os.path.join(PROJECT_ROOT, "data")):
-    os.makedirs(os.path.join(PROJECT_ROOT, "data"))
-if not os.path.isdir(os.path.join(PROJECT_ROOT, "data/private")):
-    os.makedirs(os.path.join(PROJECT_ROOT, "data/private"))
-if not os.path.isdir(os.path.join(PROJECT_ROOT, "hotbits")):
-    os.makedirs(os.path.join(PROJECT_ROOT, "hotbits"))
-
-aetherOneDB = get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db'))
-
-
-def emitMessage(event: str, text: str):
-    print(f"EMIT: {event} - {text}")
-    try:
-        socketio.emit(event, {'message': text})
-    except Exception as e:
-        logging.error(f"Error emitting message: {e}")
-
-
-hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"), aetherOneDB, emitMessage)
-broadcastService = BroadcastService(hotbits, self)
-
-# Angular UI, serving static files
-# --------------------------------
-@app.route('/')
-def index():
-    """
-    Static files handler, for the Angular UI
-    Returns: index.html
-    """
-    return send_from_directory('../ui/dist/ui/', 'index.html')
-
-
-@socketio.on('connect')
-def handle_connect():
-    emit('server_update', {'message': 'Welcome!'}, broadcast=True)
-    emit('broadcast_info', {'message': 'Broadcast ready!'}, broadcast=True)
-
-
-@app.route('/<path:path>')
-def static_files(path):
-    return send_from_directory('../ui/dist/ui/', path)
-
-
-# --------------------------------
-
-# API of AetherOnePy
-# HEALTH CHECKs
-@app.route('/ping', methods=['GET'])
-def ping():
-    return "pong"
-
-
-@app.route('/version', methods=['GET'])
-def version():
-    try:
-        with open(os.path.join(PROJECT_ROOT, 'py/version.txt'), "r") as f:
-            return f.read().strip()
-    except FileNotFoundError:
-        logging.error("Version file not found")
-        return "0.0.0"
-    except Exception as e:
-        logging.error(f"Error reading version file: {e}")
-        return "0.0.0"
-
-
-@app.route('/remoteVersion', methods=['GET'])
-def remoteVersion():
-    try:
-        return urllib.request.urlopen("https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/version.txt").read()
-    except FileNotFoundError:
-        return "0.0.0"
-
-
-@app.route('/qrcode', methods=['GET'])
-def get_qrcode():
-    data = f"http://{get_local_ip()}:{port}"
-    print(data)
-    socketio.emit('server_update', {'message': data})
-
-    qr = qrcode.QRCode(
-        version=1,
-        error_correction=qrcode.constants.ERROR_CORRECT_L,
-        box_size=10,
-        border=4,
-    )
-    qr.add_data(data)
-    qr.make(fit=True)
-
-    img = qr.make_image(fill="black", back_color="white")
-    draw = ImageDraw.Draw(img)
-
-    # Add text to the image
-    text = "AetherOnePy"
-    font = ImageFont.truetype("arial.ttf", 16)
-    text_width = font.getbbox(text)[2]
-    text_height = font.getbbox(text)[3]
-    text_position = ((img.size[0] - text_width) // 2, img.size[1] - text_height - 10)
-    draw.text(text_position, text, fill='black', font=font)
-
-    img_byte_arr = io.BytesIO()
-    img.save(img_byte_arr, format='PNG')
-    img_byte_arr.seek(0)
-
-    return send_file(img_byte_arr, mimetype='image/png')
-
-
-@app.route('/case', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def case():
-    if request.method == 'POST':
-        case_data = request.json
-
-        # Convert received JSON data into a Case object
-        new_case = Case(
-            name=case_data["name"],
-            email=case_data["email"],
-            color=case_data["color"],
-            description=case_data["description"],
-            created=parser.isoparse(case_data["created"]),
-            last_change=parser.isoparse(case_data["lastChange"])
-        )
-
-        # Insert the Case object into the database using aetherOneDB
-        user_id = aetherOneDB.insert_case(new_case)
-        case_data["id"] = user_id
-        response_data = json.dumps(case_data, ensure_ascii=False)
-        return Response(response_data, content_type='application/json; charset=utf-8')
-
-    if request.method == 'GET':
-        allCases = []
-        for caseObj in aetherOneDB.list_cases():
-            allCases.append(caseObj.to_dict())
-        response_data = json.dumps(allCases, ensure_ascii=False)
-        return Response(response_data, content_type='application/json; charset=utf-8')
-
-    return "NOT IMPLEMENTED"
-
-
-@app.route('/session', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def session():
-    if request.method == 'POST':
-        new_session = Session.from_dict(request.json)
-        if new_session is None:
-            return jsonify({'error': 'No active session found'}), 404
-
-        # Insert the Session object into the database using aetherOneDB and get the user_id
-        session_id = aetherOneDB.insert_session(new_session)
-
-        # Add the user_id to the session object or response data
-        session_data = new_session.to_dict()
-        session_data['session_id'] = session_id
-
-        response_data = json.dumps(new_session.to_dict(), ensure_ascii=False)
-        return Response(response_data, content_type='application/json; charset=utf-8')
-
-    if request.method == 'GET':
-        if request.args.get('id') is not None:
-            session = aetherOneDB.get_session(int(request.args.get('id')))
-            if session is None:
-                return jsonify({'error': 'No last session found'}), 404
-            response_data = json.dumps(session.to_dict(), ensure_ascii=False)
-            return Response(response_data, content_type='application/json; charset=utf-8')
-        if request.args.get('last') is not None:
-            session = aetherOneDB.get_last_session(int(request.args.get('caseId')))
-            if session is None:
-                return jsonify({'error': 'No last session found'}), 404
-            response_data = json.dumps(session.to_dict(), ensure_ascii=False)
-            return Response(response_data, content_type='application/json; charset=utf-8')
-        else:
-            allSessions = []
-            for session in aetherOneDB.list_sessions(int(request.args.get('caseId'))):
-                allSessions.append(session.to_dict())
-            response_data = json.dumps(allSessions, ensure_ascii=False)
-            return Response(response_data, content_type='application/json; charset=utf-8')
-
-    if request.method == 'DELETE':
-        aetherOneDB.delete_session(int(request.args.get('id')))
-        return jsonify({'message': 'Session deleted successfully'}), 200
-
-    return "NOT IMPLEMENTED"
-
-
-@app.route('/settings', methods=['GET', 'POST'])
-def settings():
-    json_file_path = os.path.join(PROJECT_ROOT, 'data', 'settings.json')
-
-    if request.method == 'POST':
-        settings = request.json
-        aetherOneDB.ensure_settings_defaults(settings)
-        with open(json_file_path, 'w') as f:
-            json.dump(settings, f, indent=4)
-        return jsonify(settings), 200
-
-    if request.method == 'GET':
-        return aetherOneDB.loadSettings(), 200
-
-
-@app.route('/catalog', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def catalog():
-    if request.method == 'GET':
-        allCatalogs = []
-        for catalog in aetherOneDB.list_catalogs():
-            allCatalogs.append(catalog.to_dict())
-        response_data = json.dumps(allCatalogs, ensure_ascii=False)
-        return Response(response_data, content_type='application/json; charset=utf-8')
-
-    return "NOT IMPLEMENTED"
-
-
-@app.route('/filesToImport', methods=['GET', 'POST'])
-def filesToImport():
-    rateImporter = RateImporter(aetherOneDB)
-
-    if request.method == 'GET':
-        json_result = rateImporter.generate_folder_file_json(os.path.join(PROJECT_ROOT, 'data/radionics-rates'))
-        return Response(json_result, content_type='application/json; charset=utf-8')
-
-    if request.method == 'POST':
-        rateImporter.import_file(os.path.join(PROJECT_ROOT, 'data/radionics-rates'), request.args.get('file'))
-        json_result = rateImporter.generate_folder_file_json(os.path.join(PROJECT_ROOT, 'data/radionics-rates'))
-        return Response(json_result, content_type='application/json; charset=utf-8')
-
-    return "NOT IMPLEMENTED"
-
-
-@app.route('/upload', methods=['POST'])
-def upload_file():
-    if 'file' not in request.files:
-        return jsonify({'error': 'No file part in the request'}), 400
-
-    file = request.files['file']
-    if file.filename == '':
-        return jsonify({'error': 'No selected file'}), 400
-
-    # Save the file
-    file.save(os.path.join(PROJECT_ROOT, 'data/private', file.filename))
-    rateImporter = RateImporter(aetherOneDB)
-    rateImporter.import_file(os.path.join(PROJECT_ROOT, 'data/private'), file.filename)
-    return jsonify({'message': 'File uploaded successfully'}), 200
-
-
-@app.route('/countHotbits', methods=['GET'])
-def countHotbits():
-    count = hotbits.countHotbits()
-    return jsonify({'count': count}), 200
-
-
-@app.route('/collectHotBits', methods=['POST'])
-def collectHotbits():
-    asyncio.run(hotbits.collectHotBits())
-    return jsonify({'message': 'collecting hotbits started'}), 200
-
-
-@app.route('/collectWebCamHotBits', methods=['GET', 'POST'])
-def collectWebCamHotBits():
-    if request.method == 'GET':
-        return jsonify({'running': hotbits.running}), 200
-    if request.method == 'POST':
-        if hotbits.collectWebCamHotBits():
-            return jsonify({'message': 'collecting hotbits with webCam started'}), 200
-        else:
-            return jsonify({'message': 'collecting hotbits with webCam failed'}), 500
-    return "NOT IMPLEMENTED"
-
-@app.route('/collectHotBits', methods=['DELETE'])
-def stopCollectingHotbits():
-    hotbits.stopCollectingHotbits()
-    return jsonify({'message': 'collecting hotbits stopped'}), 200
-
-
-@app.route('/analysis', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def analysis():
-    if request.method == 'GET':
-        if request.args.get('id') is not None:
-            analysis = aetherOneDB.get_analysis(int(request.args.get('id')))
-            response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
-            return Response(response_data, content_type='application/json; charset=utf-8')
-        elif request.args.get('last') is not None:
-            analysis = aetherOneDB.get_last_analysis(int(request.args.get('sessionId')))
-            response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
-            return Response(response_data, content_type='application/json; charset=utf-8')
-        else:
-            analysisList = []
-            for analysis in aetherOneDB.list_analysis(int(request.args.get('session_id'))):
-                analysisList.append(analysis.to_dict())
-            response_data = json.dumps(analysisList, ensure_ascii=False)
-            return Response(response_data, content_type='application/json; charset=utf-8')
-
-    if request.method == 'POST':
-        analyzeRequest = request.json
-        print(analyzeRequest)
-        analysis = Analysis(analyzeRequest['note'],analyzeRequest['sessionID'])
-        analysis.catalogId = analyzeRequest['catalogId']
-        if aetherOneDB.get_setting('analysisAlwaysCheckGV'):
-            analysis.target_gv = checkGeneralVitality(hotbits)
-        analysis = aetherOneDB.insert_analysis(analysis)
-        response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
-        return Response(response_data, content_type='application/json; charset=utf-8')
-
-    if request.method == 'PUT':
-        analyzeRequest = request.json
-        analysis = aetherOneDB.get_analysis(int(analyzeRequest['id']))
-        analysis.note = analyzeRequest['note']
-        aetherOneDB.update_analysis(analysis)
-        response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
-        return Response(response_data, content_type='application/json; charset=utf-8')
-
-    if request.method == 'DELETE':
-        aetherOneDB.delete_analysis(int(request.args.get('id')))
-        return jsonify({'message': 'Analysis deleted successfully'}), 200
-
-    return "NOT IMPLEMENTED"
-
-
-@app.route('/analyze', methods=['GET', 'POST'])
-def analyze():
-    if request.method == 'GET':
-        rates_list = aetherOneDB.list_rates_for_analysis(int(request.args.get('analysis_id')))
-        analyzeList = transformAnalyzeListToDict(rates_list)
-        return jsonify(analyzeList), 200
-    if request.method == 'POST':
-        analyzeRequest = request.json
-        analysis = aetherOneDB.get_analysis(int(analyzeRequest['analysis_id']))
-        rates_list = aetherOneDB.list_rates_from_catalog(analyzeRequest["catalog_id"])
-        enhanced_rates = analyzeService(analysis.id, rates_list, hotbits, aetherOneDB.get_setting('analysisAlwaysCheckGV'), aetherOneDB.get_setting('analysisAdvanced'))
-        aetherOneDB.insert_rates_for_analysis(enhanced_rates)
-        analyzeList = transformAnalyzeListToDict(enhanced_rates)
-        return jsonify(analyzeList), 200
-
-    return "NOT IMPLEMENTED"
-
-
-@app.route('/checkGV', methods=['GET'])
-def checkGV():
-    gv = checkGeneralVitality(hotbits)
-    return jsonify({'gv': gv}), 200
-
-
-@app.route('/broadcast', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def broadcast():
-    if request.method == 'GET':
-        tasks = broadcastService.get_tasks()
-        return jsonify(tasks), 200
-    if request.method == 'POST':
-        emitMessage("broadcast_info", "broadcasting started")
-        broadcast_data = request.json
-        analysis = aetherOneDB.get_analysis(int(broadcast_data['analysis_id']))
-        rateObject = aetherOneDB.get_rate(int(broadcast_data['rate_id']))
-        print(rateObject)
-        print(analysis)
-        broadcastData = BroadcastTask(rateObject, analysis)
-        # FIXME instantiate the correct objects
-        broadcastService.add_task(broadcastData)
-        return jsonify({'message': 'broadcasted'}), 200
-
-    return "NOT IMPLEMENTED"
-
-
-@app.route('/rateCard', methods=['GET'])
-def rateCard():
-    input_string = request.args.get('rates')
-    rates = RadionicChart.parse_input(input_string)
-    chart = RadionicChart(request.args.get('rateName'), request.args.get('base'))
-    image = chart.draw_chart(rates)
-    buffer = io.BytesIO()
-    image.save(buffer, format='PNG')
-    buffer.seek(0)
-    return send_file(buffer, mimetype='image/png')
-
-
-def get_local_ip():
-    """
-    Retrieves the local ip address for example QR code generation
-    :return:
-    IP ADDRESS
-    """
-    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-    try:
-        # doesn't even have to be reachable
-        s.connect(('10.254.254.254', 1))
-        local_ip = s.getsockname()[0]
-    except Exception:
-        local_ip = '127.0.0.1'
-    finally:
-        s.close()
-    return local_ip
-
-
-def sanitize_filename(filename: str) -> str:
-    """
-    Sanitize a given filename to make it safe for saving as a file.
-    Removes or replaces characters that are not allowed in filenames.
-    """
-    # Define a set of safe characters (alphanumeric, dash, underscore, dot)
-    safe_characters = re.compile(r'[^a-zA-Z0-9_\-\.]')
-
-    # Replace any unsafe characters with an underscore
-    sanitized = safe_characters.sub('_', filename)
-
-    # Ensure the filename does not start or end with a dot
-    sanitized = sanitized.strip('.')
-
-    # Truncate the filename to a reasonable length (e.g., 255 characters)
-    return sanitized[:255]
+            self.socketio.emit(event, {'message': text})
+        except Exception as e:
+            logging.error(f"Error emitting message: {e}")
+
+    def setup_routes(self):
+        @self.app.route('/')
+        def index():
+            return send_from_directory('../ui/dist/ui/', 'index.html')
+
+        @self.socketio.on('connect')
+        def handle_connect():
+            emit('server_update', {'message': 'Server connected to websockets!'}, broadcast=True)
+            emit('broadcast_info', {'message': 'Broadcast messaging ready!'}, broadcast=True)
+
+        @self.app.route('/<path:path>')
+        def static_files(path):
+            return send_from_directory('../ui/dist/ui/', path)
+
+        @self.app.route('/ping', methods=['GET'])
+        def ping():
+            return "pong"
+
+        @self.app.route('/version', methods=['GET'])
+        def version():
+            try:
+                with open(os.path.join(self.PROJECT_ROOT, 'py/version.txt'), "r") as f:
+                    return f.read().strip()
+            except FileNotFoundError:
+                logging.error("Version file not found")
+                return "0.0.0"
+            except Exception as e:
+                logging.error(f"Error reading version file: {e}")
+                return "0.0.0"
+
+        @self.app.route('/remoteVersion', methods=['GET'])
+        def remoteVersion():
+            try:
+                return urllib.request.urlopen("https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/version.txt").read()
+            except FileNotFoundError:
+                return "0.0.0"
+
+        @self.app.route('/qrcode', methods=['GET'])
+        def get_qrcode():
+            data = f"http://{self.get_local_ip()}:{self.port}"
+            print(data)
+            self.socketio.emit('server_update', {'message': data})
+
+            qr = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_L,
+                box_size=10,
+                border=4,
+            )
+            qr.add_data(data)
+            qr.make(fit=True)
+
+            img = qr.make_image(fill="black", back_color="white")
+            draw = ImageDraw.Draw(img)
+
+            text = "AetherOnePy"
+            font = ImageFont.truetype("arial.ttf", 16)
+            text_width = font.getbbox(text)[2]
+            text_height = font.getbbox(text)[3]
+            text_position = ((img.size[0] - text_width) // 2, img.size[1] - text_height - 10)
+            draw.text(text_position, text, fill='black', font=font)
+
+            img_byte_arr = io.BytesIO()
+            img.save(img_byte_arr, format='PNG')
+            img_byte_arr.seek(0)
+
+            return send_file(img_byte_arr, mimetype='image/png')
+
+        @self.app.route('/case', methods=['GET', 'POST', 'PUT', 'DELETE'])
+        def case():
+            if request.method == 'POST':
+                case_data = request.json
+                new_case = Case(
+                    name=case_data["name"],
+                    email=case_data["email"],
+                    color=case_data["color"],
+                    description=case_data["description"],
+                    created=parser.isoparse(case_data["created"]),
+                    last_change=parser.isoparse(case_data["lastChange"])
+                )
+                user_id = self.aetherOneDB.insert_case(new_case)
+                case_data["id"] = user_id
+                response_data = json.dumps(case_data, ensure_ascii=False)
+                return Response(response_data, content_type='application/json; charset=utf-8')
+
+            if request.method == 'GET':
+                allCases = []
+                for caseObj in self.aetherOneDB.list_cases():
+                    allCases.append(caseObj.to_dict())
+                response_data = json.dumps(allCases, ensure_ascii=False)
+                return Response(response_data, content_type='application/json; charset=utf-8')
+
+            return "NOT IMPLEMENTED"
+
+        @self.app.route('/session', methods=['GET', 'POST', 'PUT', 'DELETE'])
+        def session():
+            if request.method == 'POST':
+                new_session = Session.from_dict(request.json)
+                if new_session is None:
+                    return jsonify({'error': 'No active session found'}), 404
+                session_id = self.aetherOneDB.insert_session(new_session)
+                session_data = new_session.to_dict()
+                session_data['session_id'] = session_id
+                response_data = json.dumps(new_session.to_dict(), ensure_ascii=False)
+                return Response(response_data, content_type='application/json; charset=utf-8')
+
+            if request.method == 'GET':
+                if request.args.get('id') is not None:
+                    session = self.aetherOneDB.get_session(int(request.args.get('id')))
+                    if session is None:
+                        return jsonify({'error': 'No last session found'}), 404
+                    response_data = json.dumps(session.to_dict(), ensure_ascii=False)
+                    return Response(response_data, content_type='application/json; charset=utf-8')
+                if request.args.get('last') is not None:
+                    session = self.aetherOneDB.get_last_session(int(request.args.get('caseId')))
+                    if session is None:
+                        return jsonify({'error': 'No last session found'}), 404
+                    response_data = json.dumps(session.to_dict(), ensure_ascii=False)
+                    return Response(response_data, content_type='application/json; charset=utf-8')
+                else:
+                    allSessions = []
+                    for session in self.aetherOneDB.list_sessions(int(request.args.get('caseId'))):
+                        allSessions.append(session.to_dict())
+                    response_data = json.dumps(allSessions, ensure_ascii=False)
+                    return Response(response_data, content_type='application/json; charset=utf-8')
+
+            if request.method == 'DELETE':
+                self.aetherOneDB.delete_session(int(request.args.get('id')))
+                return jsonify({'message': 'Session deleted successfully'}), 200
+
+            return "NOT IMPLEMENTED"
+
+        @self.app.route('/settings', methods=['GET', 'POST'])
+        def settings():
+            json_file_path = os.path.join(self.PROJECT_ROOT, 'data', 'settings.json')
+
+            if request.method == 'POST':
+                settings = request.json
+                self.aetherOneDB.ensure_settings_defaults(settings)
+                with open(json_file_path, 'w') as f:
+                    json.dump(settings, f, indent=4)
+                return jsonify(settings), 200
+
+            if request.method == 'GET':
+                return self.aetherOneDB.loadSettings(), 200
+
+        @self.app.route('/catalog', methods=['GET', 'POST', 'PUT', 'DELETE'])
+        def catalog():
+            if request.method == 'GET':
+                allCatalogs = []
+                for catalog in self.aetherOneDB.list_catalogs():
+                    allCatalogs.append(catalog.to_dict())
+                response_data = json.dumps(allCatalogs, ensure_ascii=False)
+                return Response(response_data, content_type='application/json; charset=utf-8')
+
+            return "NOT IMPLEMENTED"
+
+        @self.app.route('/filesToImport', methods=['GET', 'POST'])
+        def filesToImport():
+            rateImporter = RateImporter(self.aetherOneDB)
+
+            if request.method == 'GET':
+                json_result = rateImporter.generate_folder_file_json(os.path.join(self.PROJECT_ROOT, 'data/radionics-rates'))
+                return Response(json_result, content_type='application/json; charset=utf-8')
+
+            if request.method == 'POST':
+                rateImporter.import_file(os.path.join(self.PROJECT_ROOT, 'data/radionics-rates'), request.args.get('file'))
+                json_result = rateImporter.generate_folder_file_json(os.path.join(self.PROJECT_ROOT, 'data/radionics-rates'))
+                return Response(json_result, content_type='application/json; charset=utf-8')
+
+            return "NOT IMPLEMENTED"
+
+        @self.app.route('/upload', methods=['POST'])
+        def upload_file():
+            if 'file' not in request.files:
+                return jsonify({'error': 'No file part in the request'}), 400
+
+            file = request.files['file']
+            if file.filename == '':
+                return jsonify({'error': 'No selected file'}), 400
+
+            file.save(os.path.join(self.PROJECT_ROOT, 'data/private', file.filename))
+            rateImporter = RateImporter(self.aetherOneDB)
+            rateImporter.import_file(os.path.join(self.PROJECT_ROOT, 'data/private'), file.filename)
+            return jsonify({'message': 'File uploaded successfully'}), 200
+
+        @self.app.route('/countHotbits', methods=['GET'])
+        def countHotbits():
+            count = self.hotbits.countHotbits()
+            return jsonify({'count': count}), 200
+
+        @self.app.route('/collectHotBits', methods=['POST'])
+        def collectHotbits():
+            asyncio.run(self.hotbits.collectHotBits())
+            return jsonify({'message': 'collecting hotbits started'}), 200
+
+        @self.app.route('/collectWebCamHotBits', methods=['GET', 'POST'])
+        def collectWebCamHotBits():
+            if request.method == 'GET':
+                return jsonify({'running': self.hotbits.running}), 200
+            if request.method == 'POST':
+                if self.hotbits.collectWebCamHotBits():
+                    return jsonify({'message': 'collecting hotbits with webCam started'}), 200
+                else:
+                    return jsonify({'message': 'collecting hotbits with webCam failed'}), 500
+            return "NOT IMPLEMENTED"
+
+        @self.app.route('/collectHotBits', methods=['DELETE'])
+        def stopCollectingHotbits():
+            self.hotbits.stopCollectingHotbits()
+            return jsonify({'message': 'collecting hotbits stopped'}), 200
+
+        @self.app.route('/analysis', methods=['GET', 'POST', 'PUT', 'DELETE'])
+        def analysis():
+            if request.method == 'GET':
+                if request.args.get('id') is not None:
+                    analysis = self.aetherOneDB.get_analysis(int(request.args.get('id')))
+                    response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+                    return Response(response_data, content_type='application/json; charset=utf-8')
+                elif request.args.get('last') is not None:
+                    analysis = self.aetherOneDB.get_last_analysis(int(request.args.get('sessionId')))
+                    response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+                    return Response(response_data, content_type='application/json; charset=utf-8')
+                else:
+                    analysisList = []
+                    for analysis in self.aetherOneDB.list_analysis(int(request.args.get('session_id'))):
+                        analysisList.append(analysis.to_dict())
+                    response_data = json.dumps(analysisList, ensure_ascii=False)
+                    return Response(response_data, content_type='application/json; charset=utf-8')
+
+            if request.method == 'POST':
+                analyzeRequest = request.json
+                print(analyzeRequest)
+                analysis = Analysis(analyzeRequest['note'], analyzeRequest['sessionID'])
+                analysis.catalogId = analyzeRequest['catalogId']
+                if self.aetherOneDB.get_setting('analysisAlwaysCheckGV'):
+                    analysis.target_gv = checkGeneralVitality(self.hotbits)
+                analysis = self.aetherOneDB.insert_analysis(analysis)
+                response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+                return Response(response_data, content_type='application/json; charset=utf-8')
+
+            if request.method == 'PUT':
+                analyzeRequest = request.json
+                analysis = self.aetherOneDB.get_analysis(int(analyzeRequest['id']))
+                analysis.note = analyzeRequest['note']
+                self.aetherOneDB.update_analysis(analysis)
+                response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+                return Response(response_data, content_type='application/json; charset=utf-8')
+
+            if request.method == 'DELETE':
+                self.aetherOneDB.delete_analysis(int(request.args.get('id')))
+                return jsonify({'message': 'Analysis deleted successfully'}), 200
+
+            return "NOT IMPLEMENTED"
+
+        @self.app.route('/analyze', methods=['GET', 'POST'])
+        def analyze():
+            if request.method == 'GET':
+                rates_list = self.aetherOneDB.list_rates_for_analysis(int(request.args.get('analysis_id')))
+                analyzeList = transformAnalyzeListToDict(rates_list)
+                return jsonify(analyzeList), 200
+            if request.method == 'POST':
+                analyzeRequest = request.json
+                analysis = self.aetherOneDB.get_analysis(int(analyzeRequest['analysis_id']))
+                rates_list = self.aetherOneDB.list_rates_from_catalog(analyzeRequest["catalog_id"])
+                enhanced_rates = analyzeService(analysis.id, rates_list, self.hotbits, self.aetherOneDB.get_setting('analysisAlwaysCheckGV'), self.aetherOneDB.get_setting('analysisAdvanced'))
+                self.aetherOneDB.insert_rates_for_analysis(enhanced_rates)
+                analyzeList = transformAnalyzeListToDict(enhanced_rates)
+                return jsonify(analyzeList), 200
+
+            return "NOT IMPLEMENTED"
+
+        @self.app.route('/checkGV', methods=['GET'])
+        def checkGV():
+            gv = checkGeneralVitality(self.hotbits)
+            return jsonify({'gv': gv}), 200
+
+        @self.app.route('/broadcast', methods=['GET', 'POST', 'PUT', 'DELETE'])
+        def broadcast():
+            if request.method == 'GET':
+                tasks = self.broadcastService.get_tasks()
+                return jsonify(tasks), 200
+            if request.method == 'POST':
+                #self.emitMessage("broadcast_info", "broadcasting started")
+                broadcast_data = request.json
+                analysis = self.aetherOneDB.get_analysis(int(broadcast_data['analysis_id']))
+                rateObject = self.aetherOneDB.get_rate(int(broadcast_data['rate_id']))
+                print(rateObject)
+                print(analysis)
+                broadcastData = BroadcastTask(rateObject, analysis)
+                self.broadcastService.add_task(broadcastData)
+                return jsonify({'message': 'broadcasted'}), 200
+
+            return "NOT IMPLEMENTED"
+
+        @self.app.route('/rateCard', methods=['GET'])
+        def rateCard():
+            input_string = request.args.get('rates')
+            rates = RadionicChart.parse_input(input_string)
+            chart = RadionicChart(request.args.get('rateName'), request.args.get('base'))
+            image = chart.draw_chart(rates)
+            buffer = io.BytesIO()
+            image.save(buffer, format='PNG')
+            buffer.seek(0)
+            return send_file(buffer, mimetype='image/png')
+
+    def get_local_ip(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        try:
+            s.connect(('10.254.254.254', 1))
+            local_ip = s.getsockname()[0]
+        except Exception:
+            local_ip = '127.0.0.1'
+        finally:
+            s.close()
+        return local_ip
+
+    def sanitize_filename(self, filename: str) -> str:
+        safe_characters = re.compile(r'[^a-zA-Z0-9_\-\.]')
+        sanitized = safe_characters.sub('_', filename)
+        sanitized = sanitized.strip('.')
+        return sanitized[:255]
+
+    def run(self, args):
+        update_or_clone_repo(os.path.join(self.PROJECT_ROOT, "data", "radionics-rates"),
+                         "https://github.com/isuretpolos/radionics-rates.git")
+        self.broadcastService = BroadcastService(self.hotbits, self)
+        try:
+            port = args['port']
+            self.socketio.run(self.app, host='0.0.0.0', port=port, debug=False)
+        except KeyboardInterrupt:
+            print("\nStopping AetherOnePy server ...")
+            self.aetherOneDB.close()
+            sys.exit(0)
 
 
 if __name__ == '__main__':
     """
     Main application, starts the webserver and provides services for digital radionics
     """
-
-    update_or_clone_repo(os.path.join(PROJECT_ROOT, "data", "radionics-rates"),
-                         "https://github.com/isuretpolos/radionics-rates.git")
-
+    port = 80
     argParser = argparse.ArgumentParser(
         prog='AetherOnePy',
         description='Open Source Digital Radionics',
@@ -491,13 +435,10 @@ if __name__ == '__main__':
     argParser.add_argument('-p', '--port', default='80')
     argParser.print_help()
     args = vars(argParser.parse_args())
-    port = args['port']
-
+    
     print("Starting AetherOnePy server ...")
+    aetherOnePy = AetherOnePy()
+    aetherOnePy.run(args)
+    
 
-    try:
-        socketio.run(app, host='0.0.0.0', port=port, debug=False)
-    except KeyboardInterrupt:
-        print("\nStopping AetherOnePy server ...")
-        aetherOneDB.close()
-        sys.exit(0)
+    

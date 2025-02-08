@@ -26,8 +26,9 @@ class BroadcastTask:
 
 
 class BroadcastService:
-    def __init__(self, hotbits_service: HotbitsService):
+    def __init__(self, hotbits_service: HotbitsService,main):
         self.hotbits_service = hotbits_service
+        self.main = main
         self.task_queue = queue.Queue()
         self.running = True
         self.worker_thread = threading.Thread(target=self._process_queue)
@@ -36,6 +37,7 @@ class BroadcastService:
     def add_task(self, task: BroadcastTask):
         if self.running:
             self.task_queue.put(task)
+            self.main.emitMessage("broadcast_info", f"broadcasting for {task.task.signature} started")
 
     def _process_queue(self):
         while self.running:
@@ -45,6 +47,7 @@ class BroadcastService:
                 print(hashedsignature)
                 if self._condition_met(task):
                     self.task_queue.task_done()
+                    self.main.emitMessage("broadcast_info",task.task.signature)
                 else:
                     time.sleep(1)
                     self.task_queue.put(task)

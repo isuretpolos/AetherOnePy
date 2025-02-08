@@ -37,12 +37,19 @@ class HotbitsService:
         thread.start()
 
     def initHotbits(self):
-        amount = 1000 - self.countHotbits()
+        count = self.countHotbits()
+        amount = 1000 - count
         for _ in range(amount):
+            if count > 500:
+                time.sleep(5)
+            elif count > 250:
+                time.sleep(2)
+            elif count > 20:
+                time.sleep(1)
+            
             timeLoopedHotbits: [int] = []
             for i in range(10000):
                 timeLoopedHotbits.append(self.generate_random_integer())
-            print("time loop generated random number ...")
             # Save the integers to a JSON file
             timestamp = int(time.time() * 1000)
             filename = f"{self.folder_path}/hotbits_{timestamp}.json"

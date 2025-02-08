@@ -11,4 +11,8 @@ export class SocketService {
   getServerUpdates() {
     return this.socket.fromEvent<{ message: string }>('server_update');
   }
+
+  getBroadcastInfo() {
+    return this.socket.fromEvent<{ message: string }>('broadcast_info');
+  }
 }

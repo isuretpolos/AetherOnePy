@@ -21,7 +21,6 @@ export class AppComponent implements OnInit {
   theme:string = "dark"
   searchText = new FormControl('');
   mobileMode:boolean = false
-  serverMessages: string[] = []
   hotbitsCount: number = 0
   webCamRunning: boolean = false
   version: string = ''
@@ -40,7 +39,12 @@ export class AppComponent implements OnInit {
     // Listen for server updates
     this.socketService.getServerUpdates().subscribe((data) => {
       console.log(data)
-      this.serverMessages.push(data.message);
+      this.toastr.info(data.message);
+    });
+
+    this.socketService.getBroadcastInfo().subscribe((data) => {
+      console.log(data)
+      this.toastr.info(data.message);
     });
 
     // this.theme = localStorage.getItem('theme') ?? 'light';
