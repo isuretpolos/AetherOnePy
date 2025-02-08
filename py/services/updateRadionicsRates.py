@@ -5,7 +5,7 @@ from git.exc import GitCommandError
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
-def update_or_clone_repo(target_dir, repo_url):
+async def update_or_clone_repo(target_dir, repo_url):
     # Check if the target directory exists
     if os.path.exists(target_dir):
         print(f"Repository exists at {target_dir}. Pulling the latest changes...")

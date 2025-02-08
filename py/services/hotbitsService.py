@@ -20,14 +20,14 @@ class HotbitsSource(Enum):
 
 class HotbitsService:
 
-    def __init__(self, hotbitsSource: HotbitsSource, folder_path: str, aetherOneDB: CaseDAO, emitMessage):
+    def __init__(self, hotbitsSource: HotbitsSource, folder_path: str, aetherOneDB: CaseDAO, main):
         self.source = hotbitsSource
-        self.emitMessage = emitMessage
+        self.main = main
         self.running = False
         self.aetherOneDB = aetherOneDB
         self.hotbits: [int] = []
         self.folder_path = folder_path
-        self.webCamCollector = WebCamCollector(self.emitMessage, self.countHotbits)
+        self.webCamCollector = WebCamCollector(main, self.countHotbits)
         if self.is_raspberry_pi():
             print("This system is a Raspberry Pi.")
             self.source = HotbitsSource.RASPBERRY_PI
@@ -64,7 +64,7 @@ class HotbitsService:
         self.running = False
 
     def collectWebCamHotBits(self):
-        self.emitMessage('hotbits', 'running webCam')
+        self.main.emitMessage('server_update', 'running webCam')
         if self.webCamCollector.checkIfWebCamIsAvailable():
             self.running = True
             thread = threading.Thread(target=self.webCamCollector.generate_hotbits, args=[self.folder_path, 100])

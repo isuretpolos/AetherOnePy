@@ -8,9 +8,9 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
 
 class WebCamCollector:
-    def __init__(self, emitMessage, countHotbits):
+    def __init__(self, main, countHotbits):
         self.stopCollectingHotbits: bool = False
-        self.emitMessage = emitMessage
+        self.main = main
         self.countHotbits = countHotbits
 
     def bits_to_integer(self, bits):
@@ -55,11 +55,11 @@ class WebCamCollector:
         cap = cv2.VideoCapture(0)
         try:
             if not cap.isOpened():
-                self.emitMessage('hotbits', 'Failed to open the camera!')
+                self.main.emitMessage('hotbits', 'Failed to open the camera!')
                 return False
             ret, frame = cap.read()
             if not ret:
-                self.emitMessage('hotbits', 'Failed to open the camera!')
+                self.main.emitMessage('hotbits', 'Failed to open the camera!')
                 return False
         finally:
             cap.release()
@@ -72,15 +72,15 @@ class WebCamCollector:
 
         cap = cv2.VideoCapture(0)
         if not cap.isOpened():
-            self.emitMessage('hotbits', 'Failed to open the camera!')
+            self.main.emitMessage('hotbits', 'Failed to open the camera!')
             raise Exception("Failed to open the camera")
         ret, frame = cap.read()
         if not ret:
-            self.emitMessage('hotbits', 'Failed to open the camera!')
+            self.main.emitMessage('hotbits', 'Failed to open the camera!')
             raise Exception("Failed to capture image")
 
         try:
-            self.emitMessage('hotbits', 'Starting to collect ...')
+            self.main.emitMessage('hotbits', 'Starting to collect ...')
             for _ in range(amount):
                 integer_list = []
                 unique_integers = set()
@@ -124,7 +124,7 @@ class WebCamCollector:
                     json.dump({"integerList": integer_list, "source": "webCam"}, f)
 
 
-                self.emitMessage('server_update', str(self.countHotbits()))
+                self.main.emitMessage('server_update', str(self.countHotbits()))
                 print(f"Hotbits saved to {filename}")
         finally:
             cap.release()

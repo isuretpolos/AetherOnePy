@@ -39,7 +39,7 @@ class AetherOnePy:
         self.port = 80
         CORS(self.app)
         self.aetherOneDB = get_case_dao(os.path.join(self.PROJECT_ROOT, 'data/aetherone.db'))
-        self.hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(self.PROJECT_ROOT, "hotbits"), self.aetherOneDB, self.emitMessage)
+        self.hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(self.PROJECT_ROOT, "hotbits"), self.aetherOneDB, self)
         self.setup_logging()
         self.setup_directories()
         self.load_plugins()
@@ -410,8 +410,8 @@ class AetherOnePy:
         return sanitized[:255]
 
     def run(self, args):
-        update_or_clone_repo(os.path.join(self.PROJECT_ROOT, "data", "radionics-rates"),
-                         "https://github.com/isuretpolos/radionics-rates.git")
+        asyncio.run(update_or_clone_repo(os.path.join(self.PROJECT_ROOT, "data", "radionics-rates"),
+                 "https://github.com/isuretpolos/radionics-rates.git"))
         self.broadcastService = BroadcastService(self.hotbits, self)
         try:
             port = args['port']

@@ -27,7 +27,7 @@ export class HotbitsComponent implements OnInit {
   }
 
   countHotbits() {
-    this.aetherOne.countHotbits().subscribe( c => this.hotbitsCount = c.count)
+    this.aetherOne.countHotbits().subscribe( c => this.hotbitsCount = Number(c))
     this.aetherOne.isWebCamHotRunning().subscribe( r => this.webCamRunning = r['running'])
     setTimeout(()=>{this.countHotbits()}, 10000)
   }
