@@ -8,6 +8,11 @@ This is the open source implementation of the AetherOnePy. It runs on many diffe
 4) If not switch mode to "simulation" and let the operator know
 
 # Database
+## Cases, Sessions, Analysis and Rates
 ```sql
-- 0.1.0: First version of the server, analysis works
-- 0.1.1: Broadcast of Hashed Signatures
+select * from
+	cases c
+	join sessions s on c.id = s.case_id
+	left join analysis a on s.id = a.session_id
+	left join rate_analysis ra on a.id = ra.analysis_id 
+```
