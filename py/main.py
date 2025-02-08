@@ -81,11 +81,15 @@ aetherOneDB = get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db'))
 
 
 def emitMessage(event: str, text: str):
-    socketio.emit(event, {'message': text})
+    print(f"EMIT: {event} - {text}")
+    try:
+        socketio.emit(event, {'message': text})
+    except Exception as e:
+        logging.error(f"Error emitting message: {e}")
 
 
 hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"), aetherOneDB, emitMessage)
-broadcastService = BroadcastService(hotbits)
+broadcastService = BroadcastService(hotbits, self)
 
 # Angular UI, serving static files
 # --------------------------------
@@ -101,6 +105,7 @@ def index():
 @socketio.on('connect')
 def handle_connect():
     emit('server_update', {'message': 'Welcome!'}, broadcast=True)
+    emit('broadcast_info', {'message': 'Broadcast ready!'}, broadcast=True)
 
 
 @app.route('/<path:path>')
@@ -120,7 +125,6 @@ def ping():
 @app.route('/version', methods=['GET'])
 def version():
     try:
-        print(PROJECT_ROOT)
         with open(os.path.join(PROJECT_ROOT, 'py/version.txt'), "r") as f:
             return f.read().strip()
     except FileNotFoundError:
@@ -409,6 +413,7 @@ def broadcast():
         tasks = broadcastService.get_tasks()
         return jsonify(tasks), 200
     if request.method == 'POST':
+        emitMessage("broadcast_info", "broadcasting started")
         broadcast_data = request.json
         analysis = aetherOneDB.get_analysis(int(broadcast_data['analysis_id']))
         rateObject = aetherOneDB.get_rate(int(broadcast_data['rate_id']))
