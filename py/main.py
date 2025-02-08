@@ -120,9 +120,14 @@ def ping():
 @app.route('/version', methods=['GET'])
 def version():
     try:
-        with open("version.txt", "r") as f:
+        print(PROJECT_ROOT)
+        with open(os.path.join(PROJECT_ROOT, 'py/version.txt'), "r") as f:
             return f.read().strip()
     except FileNotFoundError:
+        logging.error("Version file not found")
+        return "0.0.0"
+    except Exception as e:
+        logging.error(f"Error reading version file: {e}")
         return "0.0.0"
 
 

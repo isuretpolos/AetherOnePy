@@ -77,6 +77,7 @@ alias ll='ls -la'
 ```
 
 # History
+- 2025-02-07 Broadcast of Hashed Signatures
 - 2025-01-04 Session handling and Analysis works
 - 2024-12-04 SQLlite Database Design
 - 2024-05-28 automatic dependency install
