@@ -1,6 +1,6 @@
 import sys, os, random, json
 import platform as sys_platform
-import threading, time
+import threading, time,multiprocessing
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from enum import Enum
@@ -32,9 +32,10 @@ class HotbitsService:
             print("This system is a Raspberry Pi.")
             self.source = HotbitsSource.RASPBERRY_PI
         # always start collecting some hotbits
-        thread = threading.Thread(target=self.initHotbits)
-        thread.daemon = True
-        thread.start()
+        #thread = threading.Thread(target=self.initHotbits)
+        #thread.daemon = True
+        #thread.start()
+
 
     def initHotbits(self):
         count = self.countHotbits()

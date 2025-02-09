@@ -1,7 +1,7 @@
 # AetherOnyPy Main Application
 # Copyright Isuret Polos 2025
 # Support me on https://www.patreon.com/aetherone
-import io, os, sys
+import io, os, sys, multiprocessing
 import asyncio
 import argparse
 import qrcode
@@ -31,6 +31,14 @@ from domains.aetherOneDomains import Analysis, Session, Case, BroadCastData
 from services.broadcastService import BroadcastService, BroadcastTask
 
 
+# Start the hotbits service in a separate process
+def start_hotbits_service():
+    PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    aetherOneDB = get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db'))
+    hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"),aetherOneDB,None)
+    hotbits.initHotbits()
+
+
 class AetherOnePy:
     def __init__(self):
         self.PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
@@ -40,6 +48,9 @@ class AetherOnePy:
         CORS(self.app)
         self.aetherOneDB = get_case_dao(os.path.join(self.PROJECT_ROOT, 'data/aetherone.db'))
         self.hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(self.PROJECT_ROOT, "hotbits"), self.aetherOneDB, self)
+        process = multiprocessing.Process(target=start_hotbits_service) # Start the hotbits service in a separate process
+        process.daemon = True
+        process.start()
         self.setup_logging()
         self.setup_directories()
         self.load_plugins()
@@ -426,6 +437,7 @@ if __name__ == '__main__':
     """
     Main application, starts the webserver and provides services for digital radionics
     """
+    multiprocessing.set_start_method("spawn")  # Ensures compatibility on Windows
     port = 80
     argParser = argparse.ArgumentParser(
         prog='AetherOnePy',
