@@ -10,7 +10,12 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
       <ul class="navbar-nav me-auto mb-2 mb-lg-0" *ngIf="serverOnline">
         <li class="nav-item" style="background-color: darkred; margin-left:0.1rem;margin-bottom:0.1rem">
-          <a class="nav-link active navigationButton" aria-current="page" href="#HOTBITS" style="color:white!important;" (click)="navigate('HOTBITS')">HOTBITS ({{hotbitsCount}}) <span *ngIf="webCamRunning"><i class="bi bi-webcam"></i></span></a>
+          <a class="nav-link active navigationButton position-relative" aria-current="page" href="#HOTBITS" style="color:white!important;" (click)="navigate('HOTBITS')">HOTBITS ({{hotbitsCount}}) <span *ngIf="webCamRunning"><i class="bi bi-webcam"></i></span>
+            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" title="CPUs">
+              {{cpuCount}}
+              <span class="visually-hidden">CPUs</span>
+            </span>
+          </a>
         </li>
         <li class="nav-item" *ngFor="let link of links" style="background-color: {{link.backgroundColor}}; margin-left:0.1rem;margin-bottom:0.1rem">
           <a class="nav-link active navigationButton" aria-current="page" href="#{{link.name}}" style="color:{{link.color}}!important;" (click)="navigate(link.name)"

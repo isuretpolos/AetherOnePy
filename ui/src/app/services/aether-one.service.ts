@@ -22,6 +22,10 @@ export class AetherOneService {
     return this.http.get(`${this.baseUrl}ping`, {responseType: 'text'})
   }
 
+  cpuCount(): Observable<any> {
+    return this.http.get(`${this.baseUrl}cpuCount`, {responseType: 'text'})
+  }
+
   version(): Observable<any> {
     return this.http.get(`${this.baseUrl}version`, {responseType: 'text'})
   }

@@ -1,20 +1,28 @@
 <p><strong>Hotbits</strong> (or true random numbers derived from a natural quantum process) are the
   <strong>fuel</strong> for analysis and broadcasting.</p>
-<p>Currently hotbits are <strong *ngIf="!settings['hotbits_collectAutomatically']">not </strong>collected automatically.
-  <strong *ngIf="!settings['hotbits_collectAutomatically']"> Therefore you need to trigger it manually.</strong></p>
+<div *ngIf="settings">
+  <p>Currently hotbits are <strong *ngIf="!settings['hotbits_collectAutomatically']">not </strong>collected
+    automatically.
+    <strong *ngIf="!settings['hotbits_collectAutomatically']"> Therefore you need to trigger it manually.</strong></p>
 
 
-<div class="card text-bg-primary" style="width: 20rem;">
-  <img
-    src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Lava_lamps_%2816136876840%29.jpg/320px-Lava_lamps_%2816136876840%29.jpg"
-    class="card-img-top" alt="...">
-  <div class="card-body">
-    <h5 class="card-title">WebCam Hotbits</h5>
-    <p class="card-text">Point you WebCam to the ceiling or a neutral background. Avoid flickering lights or lava lamps,
-      because the randomness should originate from the WebCam's own electronic noise. The quantum tunneling in the
-      sensor delivers perfect true random numbers, which are not determined even if stored on a hard drive. But they will be determined by you, while you observe the analysis result. This is mind over matter in action!</p>
-    <p *ngIf="!settings['hotbits_use_WebCam']" class="badge text-bg-danger">You have deactivated the WebCam in the Settings!</p>
-    <button class="btn btn-success" *ngIf="settings['hotbits_use_WebCam'] && !webCamRunning"  (click)="startCollectingWebCamHotbits()">Get Hotbits from your WebCam</button>
-    <button class="btn btn-danger" *ngIf="webCamRunning"  (click)="stopCollectingWebCamHotbits()">Stop WebCam</button>
+  <div class="card text-bg-primary" style="width: 20rem;">
+    <img
+      src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Lava_lamps_%2816136876840%29.jpg/320px-Lava_lamps_%2816136876840%29.jpg"
+      class="card-img-top" alt="...">
+    <div class="card-body">
+      <h5 class="card-title">WebCam Hotbits</h5>
+      <p class="card-text">Point you WebCam to the ceiling or a neutral background. Avoid flickering lights or lava
+        lamps,
+        because the randomness should originate from the WebCam's own electronic noise. The quantum tunneling in the
+        sensor delivers perfect true random numbers, which are not determined even if stored on a hard drive. But they
+        will be determined by you, while you observe the analysis result. This is mind over matter in action!</p>
+      <p *ngIf="!settings['hotbits_use_WebCam']" class="badge text-bg-danger">You have deactivated the WebCam in the
+        Settings!</p>
+      <button class="btn btn-success" *ngIf="settings['hotbits_use_WebCam'] && !webCamRunning"
+              (click)="startCollectingWebCamHotbits()">Get Hotbits from your WebCam
+      </button>
+      <button class="btn btn-danger" *ngIf="webCamRunning" (click)="stopCollectingWebCamHotbits()">Stop WebCam</button>
+    </div>
   </div>
 </div>

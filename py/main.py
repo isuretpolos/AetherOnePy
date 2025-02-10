@@ -115,6 +115,10 @@ class AetherOnePy:
         def ping():
             return "pong"
 
+        @self.app.route('/cpuCount', methods=['GET'])
+        def cpuCount():
+            return str(multiprocessing.cpu_count())
+
         @self.app.route('/version', methods=['GET'])
         def version():
             try:

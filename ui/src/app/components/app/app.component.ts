@@ -25,6 +25,7 @@ export class AppComponent implements OnInit {
   webCamRunning: boolean = false
   version: string = ''
   remoteVersion: string = ''
+  cpuCount:string = ''
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -46,6 +47,8 @@ export class AppComponent implements OnInit {
       console.log(data)
       this.toastr.info(data.message);
     });
+
+    this.aetherOne.cpuCount().subscribe( c => this.cpuCount = c)
 
     // this.theme = localStorage.getItem('theme') ?? 'light';
     // document.documentElement.setAttribute('data-bs-theme',this.theme)
