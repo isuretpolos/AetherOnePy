@@ -449,6 +449,8 @@ if __name__ == '__main__':
     args = vars(argParser.parse_args())
     
     print("Starting AetherOnePy server ...")
+    cpuCount = multiprocessing.cpu_count()
+    print("CPU Count: ", cpuCount)
     aetherOnePy = AetherOnePy()
     aetherOnePy.run(args)
     
