@@ -8,6 +8,7 @@ required_packages = [
     'flask_socketio',
     'waitress',
     'qrcode[pil]',
+    'pygame',
     'PIL',
     'python-dateutil',
     'gitpython',
