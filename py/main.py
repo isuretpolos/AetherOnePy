@@ -98,27 +98,33 @@ class AetherOnePy:
             logging.error(f"Error emitting message: {e}")
 
     def setup_routes(self):
+        # Serving the Angular UI
         @self.app.route('/')
         def index():
             return send_from_directory('../ui/dist/ui/', 'index.html')
 
+        # Serving static files, like images, css, js, etc.
+        @self.app.route('/<path:path>')
+        def static_files(path):
+            return send_from_directory('../ui/dist/ui/', path)
+
+        # Reacting to the websockets connect event, in order to get the UI know you are connected
         @self.socketio.on('connect')
         def handle_connect():
             emit('server_update', {'message': 'Server connected to websockets!'}, broadcast=True)
             emit('broadcast_info', {'message': 'Broadcast messaging ready!'}, broadcast=True)
 
-        @self.app.route('/<path:path>')
-        def static_files(path):
-            return send_from_directory('../ui/dist/ui/', path)
-
+        # Health check, you make a ping and get a pong
         @self.app.route('/ping', methods=['GET'])
         def ping():
             return "pong"
 
+        # CPU count, in order to know how many CPUs are available and how good is the performance
         @self.app.route('/cpuCount', methods=['GET'])
         def cpuCount():
             return str(multiprocessing.cpu_count())
 
+        # Version, in order to know which version of the software is running
         @self.app.route('/version', methods=['GET'])
         def version():
             try:
@@ -131,6 +137,7 @@ class AetherOnePy:
                 logging.error(f"Error reading version file: {e}")
                 return "0.0.0"
 
+        # Remote version, in order to know which version of the software is available on the remote repository
         @self.app.route('/remoteVersion', methods=['GET'])
         def remoteVersion():
             try:
@@ -138,6 +145,8 @@ class AetherOnePy:
             except FileNotFoundError:
                 return "0.0.0"
 
+        # QR code, in order to get the QR code for the current IP address and use it to connect to the server with a
+        # smartphone or tablet
         @self.app.route('/qrcode', methods=['GET'])
         def get_qrcode():
             data = f"http://{self.get_local_ip()}:{self.port}"
@@ -169,6 +178,7 @@ class AetherOnePy:
 
             return send_file(img_byte_arr, mimetype='image/png')
 
+        # CRUD operations for cases
         @self.app.route('/case', methods=['GET', 'POST', 'PUT', 'DELETE'])
         def case():
             if request.method == 'POST':
@@ -195,6 +205,7 @@ class AetherOnePy:
 
             return "NOT IMPLEMENTED"
 
+        # CRUD operations for sessions
         @self.app.route('/session', methods=['GET', 'POST', 'PUT', 'DELETE'])
         def session():
             if request.method == 'POST':
@@ -233,6 +244,7 @@ class AetherOnePy:
 
             return "NOT IMPLEMENTED"
 
+        # CRUD operations for settings
         @self.app.route('/settings', methods=['GET', 'POST'])
         def settings():
             json_file_path = os.path.join(self.PROJECT_ROOT, 'data', 'settings.json')
@@ -247,6 +259,7 @@ class AetherOnePy:
             if request.method == 'GET':
                 return self.aetherOneDB.loadSettings(), 200
 
+        # CRUD operations for rates
         @self.app.route('/catalog', methods=['GET', 'POST', 'PUT', 'DELETE'])
         def catalog():
             if request.method == 'GET':
@@ -258,6 +271,7 @@ class AetherOnePy:
 
             return "NOT IMPLEMENTED"
 
+        # Service operations for rates import from local files
         @self.app.route('/filesToImport', methods=['GET', 'POST'])
         def filesToImport():
             rateImporter = RateImporter(self.aetherOneDB)
@@ -273,6 +287,7 @@ class AetherOnePy:
 
             return "NOT IMPLEMENTED"
 
+        # Upload a file with rates
         @self.app.route('/upload', methods=['POST'])
         def upload_file():
             if 'file' not in request.files:
@@ -287,16 +302,19 @@ class AetherOnePy:
             rateImporter.import_file(os.path.join(self.PROJECT_ROOT, 'data/private'), file.filename)
             return jsonify({'message': 'File uploaded successfully'}), 200
 
+        # Count hotbits, which means the hotbits_<timestamp>.json files in the hotbits folder
         @self.app.route('/countHotbits', methods=['GET'])
         def countHotbits():
             count = self.hotbits.countHotbits()
             return jsonify({'count': count}), 200
 
+        # Trigger collection or generating of hotbits
         @self.app.route('/collectHotBits', methods=['POST'])
         def collectHotbits():
             asyncio.run(self.hotbits.collectHotBits())
             return jsonify({'message': 'collecting hotbits started'}), 200
 
+        # Collect hotbits from the webcam
         @self.app.route('/collectWebCamHotBits', methods=['GET', 'POST'])
         def collectWebCamHotBits():
             if request.method == 'GET':
@@ -308,11 +326,13 @@ class AetherOnePy:
                     return jsonify({'message': 'collecting hotbits with webCam failed'}), 500
             return "NOT IMPLEMENTED"
 
+        # Stop collecting hotbits (which means stop the webcam as well)
         @self.app.route('/collectHotBits', methods=['DELETE'])
         def stopCollectingHotbits():
             self.hotbits.stopCollectingHotbits()
             return jsonify({'message': 'collecting hotbits stopped'}), 200
 
+        # CRUD operations for analysis
         @self.app.route('/analysis', methods=['GET', 'POST', 'PUT', 'DELETE'])
         def analysis():
             if request.method == 'GET':
@@ -356,6 +376,7 @@ class AetherOnePy:
 
             return "NOT IMPLEMENTED"
 
+        # Trigger analysis using the rates from the catalog
         @self.app.route('/analyze', methods=['GET', 'POST'])
         def analyze():
             if request.method == 'GET':
@@ -373,11 +394,13 @@ class AetherOnePy:
 
             return "NOT IMPLEMENTED"
 
+        # Check the general vitality
         @self.app.route('/checkGV', methods=['GET'])
         def checkGV():
             gv = checkGeneralVitality(self.hotbits)
             return jsonify({'gv': gv}), 200
 
+        # Trigger broadcast of a rate
         @self.app.route('/broadcast', methods=['GET', 'POST', 'PUT', 'DELETE'])
         def broadcast():
             if request.method == 'GET':
@@ -396,6 +419,7 @@ class AetherOnePy:
 
             return "NOT IMPLEMENTED"
 
+        # Generate a rate card image
         @self.app.route('/rateCard', methods=['GET'])
         def rateCard():
             input_string = request.args.get('rates')
