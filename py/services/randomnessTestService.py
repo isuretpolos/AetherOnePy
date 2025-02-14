@@ -1,7 +1,12 @@
 import math
 import numpy as np
-from collections import Counter
+import random,sys,os
+import matplotlib.pyplot as plt
 
+
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+from collections import Counter
+from hotbitsService import generate_random_integer
 
 class RandomnessTests:
     def __init__(self):
@@ -69,6 +74,12 @@ class RandomnessTests:
     def run_all_tests(self, bit_stream):
         """
         Run all the randomness tests and return the results as a dictionary.
+
+        Chi-Square Test: This test checks if the distribution of bits in the stream matches the expected distribution. A low p-value (typically less than 0.05) indicates that the bit stream significantly deviates from the expected distribution, suggesting it may not be random. A high p-value suggests the bit stream is likely random.
+        Entropy: Entropy measures the unpredictability or randomness of the bit stream. Higher entropy values indicate higher randomness. For a truly random bit stream, the entropy should be close to the maximum possible value for the given length.
+        Autocorrelation: This test checks for patterns or correlations within the bit stream. A low autocorrelation value indicates that the bits are not correlated and are likely random. High autocorrelation suggests patterns, indicating non-randomness.
+        Monte Carlo Simulation: This test uses random sampling to estimate mathematical properties. In the context of randomness tests, it might be used to estimate the value of π or other constants. If the estimated value is close to the actual value, it suggests the bit stream is random.
+        Uniqueness Check: This test checks if each integer in the bit stream appears only once. If all integers are unique, it suggests randomness. If there are duplicates, it indicates non-randomness.
         """
         results = {
             'Chi-Square Test': self.chi_square_test(bit_stream),
@@ -84,15 +95,27 @@ class RandomnessTests:
 
 if __name__ == "__main__":
     # Example random bitstream (you can replace this with your generated hotbits)
-    bit_stream = [np.random.randint(0, 2) for _ in range(10000)]
+    #bit_stream = [np.random.randint(0, 2) for _ in range(10000)]
+    bit_stream = []
+    for _ in range(10000):
+        random.seed(generate_random_integer(32,100))
+        bit_stream.append(random.randint(0, 1))
 
     # Instantiate the RandomnessTests class
     tester = RandomnessTests()
 
     # Run all tests
     results = tester.run_all_tests(bit_stream)
+    print(f"Chi-Square Test: {results['Chi-Square Test']} # Expected: Low p-value for randomness")
+    print(f"Entropy: {results['Entropy']} # Expected: High entropy for randomness") 
+    #print(f"Autocorrelation: {results['Autocorrelation']} # Expected: Low autocorrelation for randomness")
+    print(f"Monte Carlo Simulation: {results['Monte Carlo Simulation']}# Expected: Low Chi-Square for randomness")  
+    print(f"Uniqueness Check: {results['Uniqueness Check']} # Expected: True for randomness") 
+    # Make a PNG image of the bitstream
+    bit_array = np.array(bit_stream).reshape((100, 100))  # Reshape to 100x100 for visualization
+    plt.figure(figsize=(10, 10))
+    plt.imshow(bit_array, cmap='gray', aspect='auto')
+    plt.axis('off')
+    plt.savefig('bitstream.png', bbox_inches='tight', pad_inches=0)
+    plt.close()
 
-    # Print the results
-    print("Randomness Test Results:")
-    for test, result in results.items():
-        print(f"{test}: {result}")

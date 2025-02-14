@@ -38,7 +38,7 @@ class DigitalBroadcaster:
 
     def _deepen_sigilization(self, sigil_part: str):
         """ Applies additional transformations to the sigil part. """
-        random.seed(generate_random_integer())
+        random.seed(generate_random_integer(32,1))
         operations = [
             lambda x: x[::-1],
             lambda x: "-".join(x),
@@ -68,7 +68,7 @@ class DigitalBroadcaster:
 
     def coagulate_intent(self):
         """ Finalizes the intent through quantum entropy & digital artifacts. """
-        random.seed(generate_random_integer())
+        random.seed(generate_random_integer(32,1))
         final_state = hashlib.sha256((self.signature + str(random.randint(0, 1000000))).encode()).hexdigest()
 
         print(f"Finalized Quantum-Coagulated Intent: {final_state[:16]}")
@@ -86,7 +86,7 @@ class DigitalBroadcaster:
 
         for i in range(num_shapes):
             shape_type = (quantum_value + i) % 3  # 0 = rectangle, 1 = circle, 2 = triangle
-            random.seed(generate_random_integer())
+            random.seed(generate_random_integer(32,1))
             x1, y1 = random.randint(50, 350), random.randint(50, 350)
             x2, y2 = x1 + random.randint(10, 100), y1 + random.randint(10, 100)
 

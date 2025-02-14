@@ -18,14 +18,13 @@ class HotbitsSource(Enum):
     ESP = 'ESP'
 
 
-def generate_random_integer(bit_count: int = 32):
+def generate_random_integer(bit_count: int = 32, maxCount: int = 50):
     """
     Generates a random integer using time differences in loop execution.
 
     :param bit_count: The number of bits to generate for the random integer.
     :return: A randomly generated integer.
     """
-    maxCount = 50
     bits = []
 
     while len(bits) < bit_count:
@@ -198,13 +197,5 @@ class HotbitsService:
         return random.randint(min, max)
 
 if __name__ == "__main__":
-    aetherOneDB = get_case_dao(os.path.join(PROJECT_ROOT, 'data/aetherone.db'))
-    hotbitsService = HotbitsService(HotbitsSource.WEBCAM, os.path.join(PROJECT_ROOT, "hotbits"),aetherOneDB)
-    if hotbitsService.is_raspberry_pi():
-        print("Working from inside a RaspberryPi, great!")
-    # hotbitsService.collectHotBits()
-    hotbits = hotbitsService.getHotbits()
-    print(hotbits)
-    print(len(hotbits))
-    print(hotbits[1])
-    print(hotbits[2])
+    for i in range(50):
+        print(f"max {1} = {generate_random_integer(32,1)}")

@@ -55,6 +55,17 @@ class AetherOnePy:
         self.setup_directories()
         self.load_plugins()
         self.setup_routes()
+        self.cleanup_broadcast_folder()
+
+    def cleanup_broadcast_folder(self):
+        broadcast_folder = os.path.join(self.PROJECT_ROOT, "broadcasts")
+        for filename in os.listdir(broadcast_folder):
+            if filename.endswith(".png") or filename.endswith(".wav"):
+                file_path = os.path.join(broadcast_folder, filename)
+                try:
+                    os.remove(file_path)
+                except Exception as e:
+                    print(f"Error deleting file {file_path}: {e}")
 
     def setup_logging(self):
         log = logging.getLogger('werkzeug')
