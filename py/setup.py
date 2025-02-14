@@ -15,6 +15,7 @@ required_packages = [
     'opencv-python',
     'matplotlib',
     'eventlet',
+    'scipy',
     'sphinx',
     'sphinx_rtd_theme'
 ]

@@ -18,6 +18,39 @@ class HotbitsSource(Enum):
     ESP = 'ESP'
 
 
+def generate_random_integer(bit_count: int = 32):
+    """
+    Generates a random integer using time differences in loop execution.
+
+    :param bit_count: The number of bits to generate for the random integer.
+    :return: A randomly generated integer.
+    """
+    maxCount = 50
+    bits = []
+
+    while len(bits) < bit_count:
+        # Define two identical loops for timing comparison
+        start_time_1 = time.perf_counter()
+        for _ in range(maxCount):
+            _ = random.randint(1, 10) * random.randint(1, 10)
+        end_time_1 = time.perf_counter()
+
+        start_time_2 = time.perf_counter()
+        for _ in range(maxCount):
+            _ = random.randint(1, 10) * random.randint(1, 10)
+        end_time_2 = time.perf_counter()
+
+        # Compare the durations and store a bit based on the result
+        if (end_time_1 - start_time_1) < (end_time_2 - start_time_2):
+            bits.append(1)
+        else:
+            bits.append(0)
+
+    # Convert the collected bits into an integer
+    random_integer = int("".join(map(str, bits)), 2)
+    return random_integer
+
+
 class HotbitsService:
 
     def __init__(self, hotbitsSource: HotbitsSource, folder_path: str, aetherOneDB: CaseDAO, main):
@@ -50,7 +83,7 @@ class HotbitsService:
             
             timeLoopedHotbits: [int] = []
             for i in range(10000):
-                timeLoopedHotbits.append(self.generate_random_integer())
+                timeLoopedHotbits.append(generate_random_integer())
             # Save the integers to a JSON file
             timestamp = int(time.time() * 1000)
             filename = f"{self.folder_path}/hotbits_{timestamp}.json"
@@ -119,38 +152,6 @@ class HotbitsService:
             print(f"Error while checking Raspberry Pi: {e}")
         return False
 
-    def generate_random_integer(self, bit_count: int = 32):
-        """
-        Generates a random integer using time differences in loop execution.
-
-        :param bit_count: The number of bits to generate for the random integer.
-        :return: A randomly generated integer.
-        """
-        maxCount = 50
-        bits = []
-
-        while len(bits) < bit_count:
-            # Define two identical loops for timing comparison
-            start_time_1 = time.perf_counter()
-            for _ in range(maxCount):
-                _ = random.randint(1, 10) * random.randint(1, 10)
-            end_time_1 = time.perf_counter()
-
-            start_time_2 = time.perf_counter()
-            for _ in range(maxCount):
-                _ = random.randint(1, 10) * random.randint(1, 10)
-            end_time_2 = time.perf_counter()
-
-            # Compare the durations and store a bit based on the result
-            if (end_time_1 - start_time_1) < (end_time_2 - start_time_2):
-                bits.append(1)
-            else:
-                bits.append(0)
-
-        # Convert the collected bits into an integer
-        random_integer = int("".join(map(str, bits)), 2)
-        return random_integer
-
     def getHotbits(self):
         if self.source == HotbitsSource.RASPBERRY_PI:
             rng = RandomNumberGenerator()
@@ -169,7 +170,7 @@ class HotbitsService:
                 # SIMULATION MODE
                 timeLoopedHotbits: [int] = []
                 for i in range(250):
-                    timeLoopedHotbits.append(self.generate_random_integer())
+                    timeLoopedHotbits.append(generate_random_integer())
                 print("time loop generated random number ...")
                 return timeLoopedHotbits
             """Load integers from a random JSON file in a folder into an array."""
@@ -189,6 +190,10 @@ class HotbitsService:
     def getInt(self, min: int = 0, max: int = 1):
         if len(self.hotbits) < 1:
             self.hotbits = self.getHotbits()
+        # BUGFIX: IndexError: pop from empty list
+        if len(self.hotbits) < 1:
+            print("Hotbits list is empty, generating a pseudo random number.")
+            return random.randint(min, max)
         random.seed(self.hotbits.pop(0))
         return random.randint(min, max)
 

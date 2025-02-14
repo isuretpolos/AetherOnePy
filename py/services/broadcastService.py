@@ -1,4 +1,5 @@
 # Broadcast service for sending messages to all connected clients, using a queue.
+# The Queue repeats the task until the condition is met
 import os
 import queue
 import sys
@@ -9,6 +10,7 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from domains.aetherOneDomains import Analysis, BroadCastData
 from services.hotbitsService import HotbitsService
 from services.analyzeService import checkGeneralVitality
+from services.broadcaster import DigitalBroadcaster
 
 
 class BroadcastTask:
@@ -26,7 +28,8 @@ class BroadcastTask:
 
 
 class BroadcastService:
-    def __init__(self, hotbits_service: HotbitsService,main):
+    def __init__(self, hotbits_service: HotbitsService, main):
+        self.PROJECT_ROOT = main.PROJECT_ROOT
         self.hotbits_service = hotbits_service
         self.main = main
         self.task_queue = queue.Queue()
@@ -43,8 +46,8 @@ class BroadcastService:
         while self.running:
             try:
                 task = self.task_queue.get(timeout=1)
-                hashedsignature = self.hashSignature(task.task.signature)
-                print(hashedsignature)
+                broadcaster = DigitalBroadcaster(task.task.signature, self.PROJECT_ROOT, duration=10)
+                broadcaster.start_broadcasting()
                 if self._condition_met(task):
                     self.task_queue.task_done()
                     self.main.emitMessage("broadcast_info",task.task.signature)
@@ -66,6 +69,3 @@ class BroadcastService:
         while not self.task_queue.empty():
             tasks.append(self.task_queue.get())
         return tasks
-
-    def hashSignature(self, signature: str):
-        return hashlib.md5(signature.encode()).hexdigest()

@@ -67,6 +67,8 @@ class AetherOnePy:
             os.makedirs(os.path.join(self.PROJECT_ROOT, "data/private"))
         if not os.path.isdir(os.path.join(self.PROJECT_ROOT, "hotbits")):
             os.makedirs(os.path.join(self.PROJECT_ROOT, "hotbits"))
+        if not os.path.isdir(os.path.join(self.PROJECT_ROOT, "broadcasts")):
+            os.makedirs(os.path.join(self.PROJECT_ROOT, "broadcasts"))
 
     def load_plugins(self):
         PLUGINS_DIR = os.path.join(os.path.dirname(__file__), 'plugins')
