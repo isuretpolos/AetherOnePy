@@ -426,8 +426,10 @@ class AetherOnePy:
                 rateObject = self.aetherOneDB.get_rate(int(broadcast_data['rate_id']))
                 print(rateObject)
                 print(analysis)
-                broadcastData = BroadcastTask(rateObject, analysis)
-                self.broadcastService.add_task(broadcastData)
+
+                broadcastData = BroadCastData(False,None, rateObject.signature, 0, 0, broadcast_data['analysis_id'], None,None,broadcast_data['sessionID'],None)
+                broadcastTask = BroadcastTask(broadcastData, analysis)
+                self.broadcastService.add_task(broadcastTask)
                 return jsonify({'message': 'broadcasted'}), 200
 
             return "NOT IMPLEMENTED"

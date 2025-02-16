@@ -10,7 +10,7 @@ from flask import jsonify
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from domains.aetherOneDomains import Case, Session, MapDesign, Feature, Analysis, Catalog, Rate, AnalysisRate
+from domains.aetherOneDomains import Case, Session, MapDesign, Feature, Analysis, Catalog, Rate, AnalysisRate, BroadCastData
 
 
 class CaseDAO:
@@ -382,6 +382,18 @@ class CaseDAO:
             rate.id = row[0]
             rates.append(rate)
         return rates
+    
+    def insert_broadcast(self, broadcast: BroadCastData):
+        print(broadcast)
+        query = '''
+        INSERT INTO broadcast (clear, intention, signature, delay, repeat, analysis_id, entering_with_general_vitality,
+        leaving_with_general_vitality, session_id, created)
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, datetime('now'))
+        '''
+        self.conn.execute(query, (broadcast.clear, broadcast.intention, broadcast.signature, broadcast.delay,
+                                  broadcast.repeat, broadcast.analysis_id, broadcast.entering_with_general_vitality,
+                                  broadcast.leaving_with_general_vitality, broadcast.sessionID))
+        self.conn.commit()
 
     def insert_map_design(self, map_design: MapDesign):
         query = '''

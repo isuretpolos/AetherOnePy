@@ -119,7 +119,7 @@ class BroadCastData:
         self.signature = signature
         self.delay = delay
         self.repeat = repeat
-        self.analysis_id = 0
+        self.analysis_id = analysis_id
         self.entering_with_general_vitality = entering_with_general_vitality
         self.leaving_with_general_vitality = leaving_with_general_vitality
         self.sessionID = sessionID

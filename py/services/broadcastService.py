@@ -14,14 +14,17 @@ from services.broadcaster import DigitalBroadcaster
 
 
 class BroadcastTask:
-    def __init__(self, task: BroadCastData, analysis: Analysis):
-        self.task = task
+    def __init__(self, broadcastData: BroadCastData, analysis: Analysis):
+        self.broadcastData = broadcastData
         self.analysis = analysis
 
     # Check if the task is valid
     def is_valid(self, hotbits_service: HotbitsService) -> bool:
         gv = checkGeneralVitality(hotbits_service)
-        print(f"Signature: ${self.task.signature} Target GV: ${self.analysis.target_gv}, Current GV: ${gv}")
+        if self.broadcastData.entering_with_general_vitality is None:
+            self.broadcastData.entering_with_general_vitality = gv
+        self.broadcastData.leaving_with_general_vitality = gv
+        print(f"Signature: ${self.broadcastData.signature} Target GV: ${self.analysis.target_gv}, Current GV: ${gv}")
         if gv < self.analysis.target_gv:
             return False
         return True
@@ -40,20 +43,22 @@ class BroadcastService:
     def add_task(self, task: BroadcastTask):
         if self.running:
             self.task_queue.put(task)
-            self.main.emitMessage("broadcast_info", f"broadcasting for {task.task.signature} started")
+            self.main.emitMessage("broadcast_info", f"broadcasting for {task.broadcastData.signature} started")
 
     def _process_queue(self):
         while self.running:
             try:
                 task = self.task_queue.get(timeout=1)
-                broadcaster = DigitalBroadcaster(task.task.signature, self.PROJECT_ROOT, duration=10)
+                task.broadcastData.repeat += 1
+                broadcaster = DigitalBroadcaster(task.broadcastData.signature, self.PROJECT_ROOT, duration=10)
                 broadcaster.start_broadcasting()
                 if self._condition_met(task):
                     self.task_queue.task_done()
-                    self.main.emitMessage("broadcast_info",task.task.signature)
+                    self.main.emitMessage("broadcast_info",task.broadcastData.signature)
                 else:
                     time.sleep(1)
                     self.task_queue.put(task)
+                self.main.aetherOneDB.insert_broadcast(task.broadcastData)
             except queue.Empty:
                 continue
 
