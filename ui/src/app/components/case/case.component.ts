@@ -176,4 +176,15 @@ export class CaseComponent implements OnInit {
     let broadcastData = new BroadCastData(rate, this.analysis)
     this.aetherOne.broadcast(broadcastData).subscribe( r => console.log(r))
   }
+
+  broadcastAll() {
+    this.analysisResult.forEach( rate => {
+      
+      if (rate.gv <= this.analysis.target_gv) {
+        let broadcastData = new BroadCastData(rate, this.analysis)
+        this.aetherOne.broadcast(broadcastData).subscribe( r => console.log(r))
+      }
+      
+    })
+  }
 }

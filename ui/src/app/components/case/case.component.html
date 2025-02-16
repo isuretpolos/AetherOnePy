@@ -70,7 +70,7 @@
       <br/>
       <p>
         <button *ngIf="analyzeNote.getRawValue().length > 0" (click)="saveAnalysisNote()" class="btn btn-sm btn-primary smallerButton">SAVE NOTE</button>
-        <button class="btn btn-sm btn-success smallerButton">BROADCAST MIX</button>
+        <button class="btn btn-sm btn-success smallerButton" (click)="broadcastAll()">BROADCAST MIX</button>
         <button class="btn btn-sm btn-success smallerButton">AUTO MODE ON</button>
       </p>
       <p>
