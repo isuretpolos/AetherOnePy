@@ -484,8 +484,7 @@ if __name__ == '__main__':
     port = 80
     argParser = argparse.ArgumentParser(
         prog='AetherOnePy',
-        description='Open Source Digital Radionics',
-        epilog=f"Click here http://localhost:{port} or open the URL in your favorite browser\nSupport me on Patreon https://www.patreon.com/aetherone"
+        description='Open Source Digital Radionics'
     )
     argParser.add_argument('-p', '--port', default='80')
     argParser.print_help()
@@ -494,8 +493,10 @@ if __name__ == '__main__':
     print("Starting AetherOnePy server ...")
     cpuCount = multiprocessing.cpu_count()
     print("CPU Count: ", cpuCount)
+    print(f"Click here http://localhost:{args['port']} or open the URL in your favorite browser\nSupport me on Patreon https://www.patreon.com/aetherone")
     aetherOnePy = AetherOnePy()
     aetherOnePy.run(args)
+
     
 
     
