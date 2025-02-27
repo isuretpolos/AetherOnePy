@@ -1,0 +1,16 @@
+<p>A collection of smaller applications</p>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-4" *ngFor="let app of apps">
+      <div class="card">
+        <img class="card-img-top" [src]="app.image" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ app.name }}</h5>
+          <p class="card-text">{{ app.description }}</p>
+          <a href="#/{{app.route}}" class="btn btn-primary">Go to app</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

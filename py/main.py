@@ -345,6 +345,11 @@ class AetherOnePy:
             self.hotbits.stopCollectingHotbits()
             return jsonify({'message': 'collecting hotbits stopped'}), 200
 
+        @self.app.route('/hotbits', methods=['GET'])
+        def hotbits():
+            hotbits = self.hotbits.getHotbits()
+            return jsonify({'hotbits': hotbits}), 200
+
         # CRUD operations for analysis
         @self.app.route('/analysis', methods=['GET', 'POST', 'PUT', 'DELETE'])
         def analysis():

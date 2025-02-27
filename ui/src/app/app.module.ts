@@ -15,6 +15,8 @@ import { RateCardsComponent } from './components/rate-cards/rate-cards.component
 import {SocketIoConfig, SocketIoModule} from "ngx-socket-io";
 import {ToastrModule} from "ngx-toastr";
 import { HotbitsComponent } from './components/hotbits/hotbits.component';
+import { RadionicsDeviceBase44Component } from './components/radionics-device-base44/radionics-device-base44.component';
+import { AppsComponent } from './components/apps/apps.component';
 
 const config: SocketIoConfig = {
   url: 'http://localhost:80', // Replace with your Flask server's URL
@@ -30,7 +32,9 @@ const config: SocketIoConfig = {
     MobileComponent,
     CaseComponent,
     RateCardsComponent,
-    HotbitsComponent
+    HotbitsComponent,
+    RadionicsDeviceBase44Component,
+    AppsComponent
   ],
   imports: [
     BrowserModule,

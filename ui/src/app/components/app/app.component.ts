@@ -119,7 +119,7 @@ export class AppComponent implements OnInit {
   }
 
   private initLinks() {
-    this.addLink("CARDS", false, "#282086", "#fff");
+    this.addLink("APPS", false, "#282086", "#fff");
     this.addLink("MANUAL", false, "#133185", "#fff");
     this.addLink("SETTINGS", false, "#ff9520", "#000");
   }
