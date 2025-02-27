@@ -8,6 +8,23 @@
     <div class="form-floating">{{session.created | date: 'short'}} | {{session.description}}</div>
     <div class="form-floating">{{session.intention}}</div>
     <div *ngIf="settings" style="margin: 0.8rem;padding: 0.8rem ">
+
+      <div *ngIf="averageRates && averageRates.data.length > 0">
+        <h4>Average Rates Broadcasted for this Session</h4>
+        <table class="table table-sm table-hover">
+          <thead class="table-light">
+          <tr>
+            <th *ngFor="let c of averageRates.columns">{{ c }}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let data of averageRates.data; let i = index">
+            <td *ngFor="let c of averageRates.columns">{{data[c]}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
       <h3>Analysis</h3>
       <h5 *ngIf="selectedCatalog">{{selectedCatalog.name}}</h5>
       <p>

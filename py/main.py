@@ -11,8 +11,6 @@ import json
 import logging
 import urllib.request
 
-from joblib.parallel import method
-
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
 

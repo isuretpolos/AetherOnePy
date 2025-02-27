@@ -30,6 +30,7 @@ export class CaseComponent implements OnInit {
   sessionIntention= new FormControl('', { nonNullable: true });
   analyzeNote= new FormControl('', { nonNullable: true });
   broadcastResult:SqlSelect|undefined
+  averageRates:SqlSelect|undefined
 
   constructor(private aetherOne:AetherOneService) {}
 
@@ -43,6 +44,10 @@ export class CaseComponent implements OnInit {
         this.session = s
         this.sessionDescription.setValue(s.description)
         this.sessionIntention.setValue(s.intention)
+
+        this.aetherOne.sqlSelect(`SELECT signature, count(*) as counter FROM broadcast WHERE session_id = ${this.session.id} and created > datetime('now','-21 days') GROUP BY signature ORDER BY counter DESC, signature LIMIT 10`).subscribe( a => {
+          this.averageRates = a
+        });
 
         this.aetherOne.loadAnalysisList(this.session.id).subscribe( a => {
           this.analysisList = a
