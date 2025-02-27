@@ -17,8 +17,13 @@ import {ToastrModule} from "ngx-toastr";
 import { HotbitsComponent } from './components/hotbits/hotbits.component';
 
 const config: SocketIoConfig = {
-  url: 'http://localhost:80', // Replace with your Flask server's URL
-  options: {}
+  url: 'http://localhost:80',
+  options: {
+    transports: ['websocket'],
+    reconnection: true,
+    reconnectionAttempts: 10, // Tries to reconnect 10 times
+    reconnectionDelay: 5000    // Wait 5 seconds before retrying
+  }
 };
 
 @NgModule({

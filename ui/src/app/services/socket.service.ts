@@ -31,4 +31,8 @@ export class SocketService {
   getBroadcastInfo() {
     return this.socket.fromEvent<{ message: string }>('broadcast_info');
   }
+
+  ping() {
+    this.socket.emit("ping", {})
+  }
 }

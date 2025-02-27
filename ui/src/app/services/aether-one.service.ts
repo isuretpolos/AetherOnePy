@@ -6,6 +6,7 @@ import {Case, Session} from "../domains/Case";
 import {Analysis, Catalog, CountHotbits, RateObject} from "../domains/Analysis";
 import {FolderStructure} from "../domains/Files";
 import {BroadCastData} from "../domains/BroadCastData";
+import {SqlSelect} from "../domains/SqlSelect";
 
 @Injectable({
   providedIn: 'root'
@@ -126,5 +127,13 @@ export class AetherOneService {
 
   broadcast(broadcastData:BroadCastData):Observable<any> {
     return this.http.post<any>(`${this.baseUrl}broadcast`,broadcastData)
+  }
+
+  stopAllBroadcasts():Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}broadcast`)
+  }
+
+  sqlSelect(sql:string):Observable<SqlSelect> {
+    return this.http.post<SqlSelect>(`${this.baseUrl}sqlSelect`, {"sql":sql})
   }
 }

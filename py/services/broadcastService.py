@@ -36,23 +36,24 @@ class BroadcastService:
         self.hotbits_service = hotbits_service
         self.main = main
         self.task_queue = queue.Queue()
-        self.running = True
         self.worker_thread = threading.Thread(target=self._process_queue)
         self.worker_thread.start()
 
     def add_task(self, task: BroadcastTask):
-        if self.running:
-            self.task_queue.put(task)
-            self.main.emitMessage("broadcast_info", f"broadcasting for {task.broadcastData.signature} started")
+        self.task_queue.put(task)
+        self.main.emitMessage("broadcast_info", f"broadcasting for {task.broadcastData.signature} started")
 
     def _process_queue(self):
-        while self.running:
+        while True:
             try:
+                if self.task_queue.empty():
+                    time.sleep(2)
+                    continue
                 task = self.task_queue.get(timeout=1)
                 task.broadcastData.repeat += 1
                 broadcaster = DigitalBroadcaster(task.broadcastData.signature, self.PROJECT_ROOT, duration=10)
                 broadcaster.start_broadcasting()
-                if self._condition_met(task):
+                if task.is_valid(self.hotbits_service):
                     self.task_queue.task_done()
                     self.main.emitMessage("broadcast_info",task.broadcastData.signature)
                 else:
@@ -62,11 +63,9 @@ class BroadcastService:
             except queue.Empty:
                 continue
 
-    def _condition_met(self, task):
-        return task.is_valid(self.hotbits_service)
-
     def stop(self):
-        self.running = False
+        print("Stopping broadcasts")
+        self.task_queue.queue.clear()
         self.worker_thread.join()
 
     def get_tasks(self):

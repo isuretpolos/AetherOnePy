@@ -5,6 +5,7 @@ import {Analysis, Catalog, RateObject} from "../../domains/Analysis";
 import {AetherOneService} from "../../services/aether-one.service";
 import {FolderStructure} from "../../domains/Files";
 import {FormControl} from "@angular/forms";
+import {SqlSelect} from "../../domains/SqlSelect";
 
 @Component({
   selector: 'app-case',
@@ -28,6 +29,7 @@ export class CaseComponent implements OnInit {
   sessionDescription= new FormControl('', { nonNullable: true });
   sessionIntention= new FormControl('', { nonNullable: true });
   analyzeNote= new FormControl('', { nonNullable: true });
+  broadcastResult:SqlSelect|undefined
 
   constructor(private aetherOne:AetherOneService) {}
 
@@ -179,12 +181,24 @@ export class CaseComponent implements OnInit {
 
   broadcastAll() {
     this.analysisResult.forEach( rate => {
-      
+
       if (rate.gv <= this.analysis.target_gv) {
         let broadcastData = new BroadCastData(rate, this.analysis)
         this.aetherOne.broadcast(broadcastData).subscribe( r => console.log(r))
       }
-      
+
     })
+  }
+
+  fetchBroadcastResult() {
+    this.aetherOne.sqlSelect(`SELECT signature, repeat, leaving_with_general_vitality, created FROM broadcast WHERE analysis_id = ${this.analysis.id}`).subscribe(r => {
+      console.log(r)
+      this.broadcastResult = r
+    })
+  }
+
+  stopAllBroadcasts() {
+    console.log("try to stop")
+    this.aetherOne.stopAllBroadcasts().subscribe( ()=> console.log("broadcasts stopped"))
   }
 }
