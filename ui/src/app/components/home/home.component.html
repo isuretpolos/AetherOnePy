@@ -7,6 +7,22 @@
   <button class="btn btn-primary caseButton" *ngFor="let caseObj of cases" style="background-color: {{caseObj.color}}!important" (click)="selectCase(caseObj)">{{caseObj.name}}</button>
 </div>
 
+<div *ngIf="averageRates && averageRates.data.length > 0">
+  <h4>Most broadcasted rates for the last 21 days</h4>
+  <table class="table table-sm table-hover">
+    <thead class="table-light">
+    <tr>
+      <th *ngFor="let c of averageRates.columns">{{ c }}</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let data of averageRates.data; let i = index">
+      <td *ngFor="let c of averageRates.columns">{{data[c]}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
 <!-- Modal CASE -->
 <div class="modal fade " id="caseModal" tabindex="-1" aria-labelledby="caseModalLabel" aria-hidden="true">
   <div class="modal-dialog ">

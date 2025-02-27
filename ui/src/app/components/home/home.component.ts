@@ -4,6 +4,7 @@ import {FormControl} from "@angular/forms"
 import {AetherOneService} from "../../services/aether-one.service";
 import {Title} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
+import {SqlSelect} from "../../domains/SqlSelect";
 
 @Component({
   selector: 'app-home',
@@ -18,6 +19,7 @@ export class HomeComponent implements OnInit {
   email = new FormControl('', { nonNullable: true });
   color = new FormControl('', { nonNullable: true });
   description= new FormControl('', { nonNullable: true });
+  averageRates:SqlSelect|undefined
 
   constructor(
     private aopyService:AetherOneService,
@@ -28,6 +30,10 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadCases()
+
+    this.aopyService.sqlSelect(`SELECT signature, count(*) as counter FROM broadcast WHERE created > datetime('now','-21 days') GROUP BY signature ORDER BY counter DESC, signature LIMIT 10`).subscribe( a => {
+      this.averageRates = a
+    });
   }
 
   loadCases(): void {
