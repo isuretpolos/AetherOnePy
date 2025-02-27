@@ -37,6 +37,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
+
     // Listen for server updates
     this.socketService.getServerUpdates().subscribe((data) => {
       console.log(data)
@@ -46,6 +47,10 @@ export class AppComponent implements OnInit {
     this.socketService.getBroadcastInfo().subscribe((data) => {
       console.log(data)
       this.toastr.info(data.message);
+
+      setInterval(() => {
+        this.socketService.ping();
+      }, 3000);
     });
 
     this.aetherOne.cpuCount().subscribe( c => this.cpuCount = c)

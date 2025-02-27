@@ -11,6 +11,8 @@ import json
 import logging
 import urllib.request
 
+from joblib.parallel import method
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
 
@@ -43,7 +45,7 @@ class AetherOnePy:
     def __init__(self):
         self.PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
         self.app = Flask(__name__)
-        self.socketio = SocketIO(self.app, cors_allowed_origins="*")
+        self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=25, ping_timeout=300)
         self.port = 80
         CORS(self.app)
         self.aetherOneDB = get_case_dao(os.path.join(self.PROJECT_ROOT, 'data/aetherone.db'))
@@ -425,17 +427,17 @@ class AetherOnePy:
                 tasks = self.broadcastService.get_tasks()
                 return jsonify(tasks), 200
             if request.method == 'POST':
-                #self.emitMessage("broadcast_info", "broadcasting started")
                 broadcast_data = request.json
                 analysis = self.aetherOneDB.get_analysis(int(broadcast_data['analysis_id']))
                 rateObject = self.aetherOneDB.get_rate(int(broadcast_data['rate_id']))
-                print(rateObject)
-                print(analysis)
-
                 broadcastData = BroadCastData(False,None, rateObject.signature, 0, 0, broadcast_data['analysis_id'], None,None,broadcast_data['sessionID'],None)
                 broadcastTask = BroadcastTask(broadcastData, analysis)
                 self.broadcastService.add_task(broadcastTask)
-                return jsonify({'message': 'broadcasted'}), 200
+                return jsonify({'message': 'in queue'}), 200
+            if request.method == 'DELETE':
+                self.broadcastService.stop()
+                self.emitMessage("broadcast_info", "All broadcasts stopped")
+                return jsonify({'message': 'all broadcasts stopped'}), 200
 
             return "NOT IMPLEMENTED"
 
@@ -450,6 +452,14 @@ class AetherOnePy:
             image.save(buffer, format='PNG')
             buffer.seek(0)
             return send_file(buffer, mimetype='image/png')
+
+        @self.app.route('/sqlSelect', methods=['POST'])
+        def sqlSelect():
+            sql = request.json['sql']
+            print(sql)
+            result = self.aetherOneDB.sqlSelect(sql)
+            return jsonify(result), 200
+
 
     def get_local_ip(self):
         s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)

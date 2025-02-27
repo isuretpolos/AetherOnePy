@@ -63,6 +63,24 @@
         </tr>
         </tbody>
       </table>
+
+      <div *ngIf="broadcastResult">
+        <h4>Broadcast Results</h4>
+        <span *ngIf="broadcastResult.data.length == 0">No data available yet. Try in a few seconds again!</span>
+        <table class="table table-sm table-hover" *ngIf="broadcastResult.data.length > 0">
+          <thead class="table-light">
+          <tr>
+            <th *ngFor="let c of broadcastResult.columns">{{ c }}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let data of broadcastResult.data; let i = index">
+            <td *ngFor="let c of broadcastResult.columns">{{data[c]}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+
       <div class="form-floating">
         <textarea class="form-control" id="analysisNotes" [formControl]="analyzeNote"></textarea>
         <label for="analysisNotes">Notes {{analyzeNote.getRawValue().length}}</label>
@@ -71,7 +89,9 @@
       <p>
         <button *ngIf="analyzeNote.getRawValue().length > 0" (click)="saveAnalysisNote()" class="btn btn-sm btn-primary smallerButton">SAVE NOTE</button>
         <button class="btn btn-sm btn-success smallerButton" (click)="broadcastAll()">BROADCAST MIX</button>
+        <button class="btn btn-sm btn-danger smallerButton" (click)="stopAllBroadcasts()">STOP ALL BROADCASTS</button>
         <button class="btn btn-sm btn-success smallerButton">AUTO MODE ON</button>
+        <button (click)="fetchBroadcastResult()">GET BROADCAST RESULTS</button>
       </p>
       <p>
         <button class="btn btn-sm btn-warning smallerButton">CLEAR</button>

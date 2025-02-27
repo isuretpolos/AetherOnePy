@@ -475,6 +475,20 @@ class CaseDAO:
             features.append(Feature(row[1], row[2], row[3], row[4], row[5], datetime.fromisoformat(row[6])))
         return features
 
+    def sqlSelect(self, sql:str):
+        cursor = self.conn.execute(sql)
+        # Get column names from cursor description
+        column_names = [desc[0] for desc in cursor.description]
+        # Fetch all rows as dictionaries
+        rows = [dict(zip(column_names, row)) for row in cursor.fetchall()]
+        # Prepare the final JSON structure
+        result = {
+            "sql": sql,
+            "columns": column_names,
+            "data": rows
+        }
+        return result
+
     def ensure_settings_defaults(self, settings: json):
         self.ensure_entry(settings,'hotbits_use_WebCam', False)
         self.ensure_entry(settings,'hotbits_use_Arduino', False)
