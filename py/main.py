@@ -27,7 +27,7 @@ from services.updateRadionicsRates import update_or_clone_repo
 from services.rateImporter import RateImporter
 from services.hotbitsService import HotbitsService, HotbitsSource
 from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict, checkGeneralVitality
-from domains.aetherOneDomains import Analysis, Session, Case, BroadCastData
+from domains.aetherOneDomains import Analysis, Session, Case, BroadCastData, AnalysisRate
 from services.broadcastService import BroadcastService, BroadcastTask
 
 
@@ -276,11 +276,16 @@ class AetherOnePy:
         @self.app.route('/catalog', methods=['GET', 'POST', 'PUT', 'DELETE'])
         def catalog():
             if request.method == 'GET':
-                allCatalogs = []
-                for catalog in self.aetherOneDB.list_catalogs():
-                    allCatalogs.append(catalog.to_dict())
-                response_data = json.dumps(allCatalogs, ensure_ascii=False)
-                return Response(response_data, content_type='application/json; charset=utf-8')
+                if request.args.get('id') is not None:
+                    catalog = self.aetherOneDB.get_catalog(int(request.args.get('id')))
+                    response_data = json.dumps(catalog.to_dict(), ensure_ascii=False)
+                    return Response(response_data, content_type='application/json; charset=utf-8')
+                else:
+                    allCatalogs = []
+                    for catalog in self.aetherOneDB.list_catalogs():
+                        allCatalogs.append(catalog.to_dict())
+                    response_data = json.dumps(allCatalogs, ensure_ascii=False)
+                    return Response(response_data, content_type='application/json; charset=utf-8')
 
             return "NOT IMPLEMENTED"
 
@@ -359,7 +364,7 @@ class AetherOnePy:
                     response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
                     return Response(response_data, content_type='application/json; charset=utf-8')
                 elif request.args.get('last') is not None:
-                    analysis = self.aetherOneDB.get_last_analysis(int(request.args.get('sessionId')))
+                    analysis = self.aetherOneDB.get_last_analysis(int(request.args.get('session_id')))
                     response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
                     return Response(response_data, content_type='application/json; charset=utf-8')
                 else:
@@ -398,9 +403,12 @@ class AetherOnePy:
         @self.app.route('/analyze', methods=['GET', 'POST'])
         def analyze():
             if request.method == 'GET':
-                rates_list = self.aetherOneDB.list_rates_for_analysis(int(request.args.get('analysis_id')))
-                analyzeList = transformAnalyzeListToDict(rates_list)
-                return jsonify(analyzeList), 200
+                analysis_id = int(request.args.get('analysis_id'))
+                rates_list = self.aetherOneDB.list_rates_for_analysis(analysis_id)
+                enhanced_rates = []
+                for rate in rates_list:
+                    enhanced_rates.append(AnalysisRate(rate.signature, rate.description, rate.catalog_id, analysis_id, rate.energetic_value, rate.gv, rate.level, rate.potency_type, rate.potency, rate.note))
+                return jsonify(transformAnalyzeListToDict(enhanced_rates)), 200
             if request.method == 'POST':
                 analyzeRequest = request.json
                 analysis = self.aetherOneDB.get_analysis(int(analyzeRequest['analysis_id']))

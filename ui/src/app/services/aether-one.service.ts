@@ -76,6 +76,10 @@ export class AetherOneService {
     return this.http.get<Catalog[]>(`${this.baseUrl}catalog`)
   }
 
+  loadCatalog(id:number):Observable<Catalog> {
+    return this.http.get<Catalog>(`${this.baseUrl}catalog?id=${id}`)
+  }
+
   loadAllFilesForImport():Observable<FolderStructure> {
     return this.http.get<FolderStructure>(`${this.baseUrl}filesToImport`)
   }
@@ -99,6 +103,10 @@ export class AetherOneService {
 
   loadAnalysisList(session_id:number):Observable<Analysis[]> {
     return this.http.get<Analysis[]>(`${this.baseUrl}analysis?session_id=${session_id}`)
+  }
+
+  loadLastAnalysis(session_id:number):Observable<Analysis> {
+    return this.http.get<Analysis>(`${this.baseUrl}analysis?session_id=${session_id}&last=true`)
   }
 
   analyze(analysis_id:number,session_id:number, catalogId:number, note:string):Observable<RateObject[]> {
