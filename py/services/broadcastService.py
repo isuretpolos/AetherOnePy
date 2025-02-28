@@ -48,6 +48,7 @@ class BroadcastService:
             try:
                 if self.task_queue.empty():
                     time.sleep(2)
+                    print("Broadcast queue is empty")
                     continue
                 task = self.task_queue.get(timeout=1)
                 task.broadcastData.repeat += 1
@@ -66,7 +67,6 @@ class BroadcastService:
     def stop(self):
         print("Stopping broadcasts")
         self.task_queue.queue.clear()
-        self.worker_thread.join()
 
     def get_tasks(self):
         tasks = []
