@@ -162,7 +162,7 @@ class AetherOnePy:
         # smartphone or tablet
         @self.app.route('/qrcode', methods=['GET'])
         def get_qrcode():
-            data = f"http://{self.get_local_ip()}:{self.port}"
+            data = f"http://{socket.gethostbyname(socket.getfqdn())}:{self.port}"
             print(data)
             self.socketio.emit('server_update', {'message': data})
 
@@ -472,17 +472,6 @@ class AetherOnePy:
             result = self.aetherOneDB.sqlSelect(sql)
             return jsonify(result), 200
 
-
-    def get_local_ip(self):
-        s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
-        try:
-            s.connect(('10.254.254.254', 1))
-            local_ip = s.getsockname()[0]
-        except Exception:
-            local_ip = '127.0.0.1'
-        finally:
-            s.close()
-        return local_ip
 
     def sanitize_filename(self, filename: str) -> str:
         safe_characters = re.compile(r'[^a-zA-Z0-9_\-\.]')
