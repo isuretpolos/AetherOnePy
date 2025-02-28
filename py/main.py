@@ -182,8 +182,14 @@ class AetherOnePy:
             font = ImageFont.truetype("arial.ttf", 16)
             text_width = font.getbbox(text)[2]
             text_height = font.getbbox(text)[3]
-            text_position = ((img.size[0] - text_width) // 2, img.size[1] - text_height - 10)
+            text_position = ((img.size[0] - text_width) // 2, img.size[1] - text_height - 15)
             draw.text(text_position, text, fill='black', font=font)
+
+            font = ImageFont.truetype("arial.ttf", 16)
+            text_width = font.getbbox(data)[2]
+            text_height = font.getbbox(data)[3]
+            text_position = ((img.size[0] - text_width) // 2, img.size[1] - text_height)
+            draw.text(text_position, data, fill='black', font=font)
 
             img_byte_arr = io.BytesIO()
             img.save(img_byte_arr, format='PNG')
