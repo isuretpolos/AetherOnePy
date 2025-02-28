@@ -28,15 +28,13 @@ def analyze(analysis_id: int, rates: list, hotbits_service: HotbitsService, auto
         # DEFAULT PRE-SELECTION
         countSelected = 0
         random.shuffle(rates)
-        while countSelected < 24:
+        while countSelected < 24 and len(rates) > 0:
             countSelected += 1
             rate = rates.pop(hotbits_service.getInt(0, len(rates)))  # random select 24 rates
             newRate = AnalysisRate(rate.signature, rate.description, rate.catalogID, analysis_id, 0, 0,
                                    0, "", 0, "")
             newRate.id = rate.id
             enhanced_rates.append(newRate)
-            if len(rates) == 0:
-                break
     else:
         # ADVANCED PRE-SELECTION
         for rate in rates:

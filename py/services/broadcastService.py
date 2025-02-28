@@ -48,7 +48,6 @@ class BroadcastService:
             try:
                 if self.task_queue.empty():
                     time.sleep(2)
-                    print("Broadcast queue is empty")
                     continue
                 task = self.task_queue.get(timeout=1)
                 task.broadcastData.repeat += 1
