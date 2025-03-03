@@ -10,6 +10,7 @@ required_packages = [
     'qrcode[pil]',
     'pygame',
     'PIL',
+    'pyperclip',
     'python-dateutil',
     'gitpython',
     'opencv-python',
