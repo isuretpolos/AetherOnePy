@@ -6,6 +6,7 @@ import {AetherOneService} from "../../services/aether-one.service";
 import {FolderStructure} from "../../domains/Files";
 import {FormControl} from "@angular/forms";
 import {SqlSelect} from "../../domains/SqlSelect";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
   selector: 'app-case',
@@ -32,7 +33,7 @@ export class CaseComponent implements OnInit {
   broadcastResult:SqlSelect|undefined
   averageRates:SqlSelect|undefined
 
-  constructor(private aetherOne:AetherOneService) {}
+  constructor(private aetherOne:AetherOneService,private toastr:ToastrService) {}
 
   ngOnInit(): void {
     this.aetherOne.loadSettings().subscribe(s => this.settings = s )
@@ -51,6 +52,7 @@ export class CaseComponent implements OnInit {
 
         this.aetherOne.loadLastAnalysis(this.session.id).subscribe( a => {
           this.analysis = a
+          this.analyzeNote.setValue(a.note)
           this.aetherOne.loadCatalog(a.catalogId).subscribe( c => {
             this.selectedCatalog = c
             this.aetherOne.loadRatesForAnalysis(a.id).subscribe(rates => {
@@ -175,7 +177,7 @@ export class CaseComponent implements OnInit {
 
   saveAnalysisNote() {
     this.analysis.note = this.analyzeNote.getRawValue()
-    this.aetherOne.updateAnalysis(this.analysis).subscribe( a=> console.log(a))
+    this.aetherOne.updateAnalysis(this.analysis).subscribe( a=> this.toastr.success("Analysis note saved"))
   }
 
   resetSessionData() {
