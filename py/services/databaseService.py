@@ -494,7 +494,7 @@ class CaseDAO:
         self.ensure_entry(settings,'hotbits_use_Arduino', False)
         self.ensure_entry(settings,'hotbits_use_ESP', False)
         self.ensure_entry(settings,'hotbits_use_RPi', False)
-        self.ensure_entry(settings,'hotbits_use_time_based_trng', True)
+        self.ensure_entry(settings,'hotbits_use_time_based_trng', False)
         self.ensure_entry(settings,'hotbits_collectAutomatically', False)
         self.ensure_entry(settings,'hotbits_mix_TRNG', False)
         self.ensure_entry(settings,'analysisAdvanced', False)
