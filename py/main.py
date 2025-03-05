@@ -4,12 +4,16 @@
 import io, os, sys, multiprocessing
 import asyncio
 import argparse
+from datetime import datetime
+
 import qrcode
 import socket
 import re
 import json
 import logging
 import urllib.request
+
+from py.services.planetaryInfluence import PlanetaryRulershipCalendarAPI, zodiac_monthly, daily_rulerships
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
@@ -56,6 +60,7 @@ class AetherOnePy:
         self.load_plugins()
         self.setup_routes()
         self.cleanup_broadcast_folder()
+        self.planetaryInfoApi = PlanetaryRulershipCalendarAPI()
 
     def cleanup_broadcast_folder(self):
         broadcast_folder = os.path.join(self.PROJECT_ROOT, "broadcasts")
@@ -471,6 +476,36 @@ class AetherOnePy:
             image.save(buffer, format='PNG')
             buffer.seek(0)
             return send_file(buffer, mimetype='image/png')
+
+        @self.app.route("/planetary_info", methods=["GET"])
+        def planetary_info():
+            now = datetime.now()
+            month_name = now.strftime("%B")
+            day_name = now.strftime("%A")
+            season_data = self.planetaryInfoApi.get_season(now)
+            planetary_hour_data = self.planetaryInfoApi.get_planetary_hour(now)
+
+            data = {
+                "SEASON": season_data,
+                "MONTH": {
+                    "month": month_name,
+                    "days": (datetime(now.year, now.month % 12 + 1, 1) - datetime(now.year, now.month, 1)).days,
+                    "currentDay": now.day,
+                    "zodiac": zodiac_monthly[month_name][0],
+                    "planet": zodiac_monthly[month_name][1]
+                },
+                "DAY": {
+                    "day": day_name,
+                    "planet": daily_rulerships[day_name]
+                },
+                "HOUR": planetary_hour_data
+            }
+            return jsonify(data)
+
+        @self.app.route("/planetary_calendar/<int:year>", methods=["GET"])
+        def planetary_calendar(year):
+            calendar_data = self.planetaryInfoApi.generate_calendar(year)
+            return jsonify(calendar_data)
 
         @self.app.route('/sqlSelect', methods=['POST'])
         def sqlSelect():

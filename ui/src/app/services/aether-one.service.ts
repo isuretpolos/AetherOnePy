@@ -145,6 +145,10 @@ export class AetherOneService {
     return this.http.delete<any>(`${this.baseUrl}broadcast`)
   }
 
+  planetaryInfo():Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}planetary_info`)
+  }
+
   sqlSelect(sql:string):Observable<SqlSelect> {
     return this.http.post<SqlSelect>(`${this.baseUrl}sqlSelect`, {"sql":sql})
   }

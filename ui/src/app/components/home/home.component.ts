@@ -20,9 +20,10 @@ export class HomeComponent implements OnInit {
   color = new FormControl('', { nonNullable: true });
   description= new FormControl('', { nonNullable: true });
   averageRates:SqlSelect|undefined
+  planetaryInfo:any
 
   constructor(
-    private aopyService:AetherOneService,
+    private aetherOne:AetherOneService,
     private titleService: Title,
     private router: Router,
     private route: ActivatedRoute,) {
@@ -31,13 +32,15 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.loadCases()
 
-    this.aopyService.sqlSelect(`SELECT signature, count(*) as counter FROM broadcast WHERE created > datetime('now','-21 days') GROUP BY signature ORDER BY counter DESC, signature LIMIT 10`).subscribe( a => {
+    this.aetherOne.sqlSelect(`SELECT signature, count(*) as counter FROM broadcast WHERE created > datetime('now','-21 days') GROUP BY signature ORDER BY counter DESC, signature LIMIT 10`).subscribe( a => {
       this.averageRates = a
     });
+
+    this.aetherOne.planetaryInfo().subscribe( p => this.planetaryInfo = p)
   }
 
   loadCases(): void {
-    this.aopyService.loadAllCases().subscribe( allCases => this.cases = allCases)
+    this.aetherOne.loadAllCases().subscribe( allCases => this.cases = allCases)
   }
 
   saveNewCase() {
@@ -47,7 +50,7 @@ export class HomeComponent implements OnInit {
     this.case.email = this.email?.value
     this.case.color = this.color?.value
     console.log(this.case)
-    this.aopyService.saveNewCase(this.case).subscribe(c => {
+    this.aetherOne.saveNewCase(this.case).subscribe(c => {
       this.case = c
       this.titleService.setTitle(c.name)
       this.loadCases()
