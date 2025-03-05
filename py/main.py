@@ -45,6 +45,7 @@ def start_hotbits_service():
 class AetherOnePy:
     def __init__(self):
         self.PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        self.setup_directories()
         self.app = Flask(__name__)
         self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=25, ping_timeout=300)
         self.port = 80
@@ -55,7 +56,6 @@ class AetherOnePy:
         process.daemon = True
         process.start()
         self.setup_logging()
-        self.setup_directories()
         self.load_plugins()
         self.setup_routes()
         self.cleanup_broadcast_folder()
