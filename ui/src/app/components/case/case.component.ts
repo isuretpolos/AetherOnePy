@@ -151,6 +151,8 @@ export class CaseComponent implements OnInit {
   }
 
   newSession() {
+    this.analysis = undefined
+    this.analysisResult = []
     this.session = new Session()
     this.session.caseID = this.case.id
     this.session.description = this.sessionDescription.getRawValue()

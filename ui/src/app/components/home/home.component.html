@@ -6,7 +6,7 @@
 <div style="margin-top: 1rem; padding: 1rem" class="neumorphEmbed">
   <button class="btn btn-primary caseButton" *ngFor="let caseObj of cases" style="background-color: {{caseObj.color}}!important" (click)="selectCase(caseObj)">{{caseObj.name}}</button>
 </div>
-
+<hr>
 <div *ngIf="averageRates && averageRates.data.length > 0">
   <h4>Most broadcasted rates for the last 21 days</h4>
   <table class="table table-sm table-hover">
