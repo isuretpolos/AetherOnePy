@@ -1,7 +1,6 @@
 <div style="text-align: left; width: 90%!important; margin: 0.3rem;" class="container-fluid">
   <h1 class="display-5 fw-bold">{{case.name}}</h1>
   <p>{{case.description }}</p>
-  <h2>Sessions</h2>
   <button data-bs-toggle="modal" data-bs-target="#sessionModal" class="btn btn-sm btn-primary" (click)="resetSessionData()">NEW SESSION</button>
   <hr>
   <div class="neumorph text-primary-emphasis rounded position-relative" *ngIf="session">
