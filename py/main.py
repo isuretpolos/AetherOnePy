@@ -548,8 +548,8 @@ if __name__ == '__main__':
     args = vars(argParser.parse_args())
     
     print("Starting AetherOnePy server ...")
-    cpuCount = multiprocessing.cpu_count()
-    print("CPU Count: ", cpuCount)
+    #cpuCount = multiprocessing.cpu_count()
+    #print("CPU Count: ", cpuCount)
     print(f"Click here http://localhost:{args['port']} or open the URL in your favorite browser\nSupport me on Patreon https://www.patreon.com/aetherone")
     aetherOnePy = AetherOnePy()
     aetherOnePy.run(args)
