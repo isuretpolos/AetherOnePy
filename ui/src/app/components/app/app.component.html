@@ -22,11 +22,16 @@
              [class.activeLink]="link.active" [class.inactiveLink]="!link.active">{{link.name}}</a>
         </li>
         <li class="nav-item" style="background-color: #008b0c; margin-left:0.1rem;margin-bottom:0.1rem">
-          <button *ngIf="broadcastingData" class="nav-link active navigationButton position-relative" aria-current="page" data-bs-toggle="modal" data-bs-target="#sessionBroadcasting" style="color:white!important;">BROADCASTING ({{broadcastingData.length}})</button>
+          <button *ngIf="broadcastingData" class="nav-link active navigationButton position-relative" aria-current="page" data-bs-toggle="modal" data-bs-target="#sessionBroadcasting" style="color:white!important;">BROADCASTING
+            <span *ngIf="broadcastingData.length > 0" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" title="CPUs">
+              {{broadcastingData.length}}
+              <span class="visually-hidden">QUEUE</span>
+            </span>
+          </button>
         </li>
       </ul>
 
-      <form class="d-flex" role="search" *ngIf="serverOnline" style="margin-left: 1rem">
+      <form class="d-flex" role="search" *ngIf="serverOnline" style="margin-left: 1rem;margin-right: 1rem">
         <input #weaverText [formControl]="searchText" (ngModelChange)="search()" type="text" class="form-control me-2" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
