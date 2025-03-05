@@ -125,6 +125,21 @@ class BroadCastData:
         self.sessionID = sessionID
         self.created = created
 
+    def to_dict(self):
+        return {
+            'id': self.id,
+            'clear': self.clear,
+            'intention': self.intention,
+            'signature': self.signature,
+            'delay': self.delay,
+            'repeat': self.repeat,
+            'analysis_id': self.analysis_id,
+            'entering_with_general_vitality': self.entering_with_general_vitality,
+            'leaving_with_general_vitality': self.leaving_with_general_vitality,
+            'sessionID': self.sessionID,
+            'created': self.created
+        }
+
 
 class AnalysisRate:
     def __init__(self, signature: str, description: str, catalog_id: int, analysis_id: int, energetic_value: int,

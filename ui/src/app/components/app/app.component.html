@@ -21,9 +21,12 @@
           <a class="nav-link active navigationButton" aria-current="page" href="#{{link.name}}" style="color:{{link.color}}!important;" (click)="navigate(link.name)"
              [class.activeLink]="link.active" [class.inactiveLink]="!link.active">{{link.name}}</a>
         </li>
+        <li class="nav-item" style="background-color: #008b0c; margin-left:0.1rem;margin-bottom:0.1rem">
+          <button *ngIf="broadcastingData" class="nav-link active navigationButton position-relative" aria-current="page" data-bs-toggle="modal" data-bs-target="#sessionBroadcasting" style="color:white!important;">BROADCASTING ({{broadcastingData.length}})</button>
+        </li>
       </ul>
 
-      <form class="d-flex" role="search" *ngIf="serverOnline">
+      <form class="d-flex" role="search" *ngIf="serverOnline" style="margin-left: 1rem">
         <input #weaverText [formControl]="searchText" (ngModelChange)="search()" type="text" class="form-control me-2" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
@@ -37,4 +40,35 @@
 <div class="container-fluid" *ngIf="!serverOnline">
   <h1 class="serverOffline" style="color:red">OFFLINE</h1>
   <p>This means the AetherOne application is not started. Just restart if you wish to use the application.</p>
+</div>
+
+<!-- Modal BROADCASTING -->
+<div class="modal fade " id="sessionBroadcasting" tabindex="-1" aria-labelledby="sessionBroadcastingLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="sessionBroadcastingLabel">Broadcasting</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <table class="table table-sm table-hover">
+          <thead class="table-light">
+          <tr>
+            <th>RATE</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let b of broadcastingData; let i = index">
+            <td>{{b.broadcastData.signature}}</td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
 </div>

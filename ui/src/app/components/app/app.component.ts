@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Link} from "../../domains/Link";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NavigationService} from "../../services/navigation.service";
@@ -13,7 +13,7 @@ import {ToastrService} from "ngx-toastr";
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy  {
 
   serverOnline:boolean = false;
   links: Link[] = [];
@@ -26,6 +26,9 @@ export class AppComponent implements OnInit {
   version: string = ''
   remoteVersion: string = ''
   cpuCount:string = ''
+  broadcastingData:any
+  intervalBroadcastingId: any;
+  intervalPing: any;
 
   constructor(private router: Router,
               private route: ActivatedRoute,
@@ -37,6 +40,8 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
+    if (this.intervalPing) clearInterval(this.intervalPing);
+    if (this.intervalBroadcastingId) clearInterval(this.intervalBroadcastingId);
 
     // Listen for server updates
     this.socketService.getServerUpdates().subscribe((data) => {
@@ -48,9 +53,18 @@ export class AppComponent implements OnInit {
       console.log(data)
       this.toastr.info(data.message);
 
-      setInterval(() => {
+      this.intervalPing = setInterval(() => {
         this.socketService.ping();
       }, 3000);
+
+      this.intervalBroadcastingId = setInterval(() => {
+        console.log("Calling get broadcasted data ... ")
+        this.aetherOne.getCurrentBroadcastTasks().subscribe(b => {
+          console.log(b)
+          this.broadcastingData = b
+        })
+      }, 3000)
+
     });
 
     this.aetherOne.cpuCount().subscribe( c => this.cpuCount = c)
@@ -178,4 +192,10 @@ export class AppComponent implements OnInit {
     }, 5000);
   }
 
+  protected readonly length = length;
+
+  ngOnDestroy(): void {
+    clearInterval(this.intervalPing);
+    clearInterval(this.intervalBroadcastingId);
+  }
 }

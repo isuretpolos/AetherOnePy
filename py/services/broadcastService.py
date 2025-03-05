@@ -18,6 +18,12 @@ class BroadcastTask:
         self.broadcastData = broadcastData
         self.analysis = analysis
 
+    def to_dict(self):
+        return {
+            'analysis': self.analysis.to_dict(),
+            'broadcastData': self.broadcastData.to_dict()
+        }
+
     # Check if the task is valid
     def is_valid(self, hotbits_service: HotbitsService) -> bool:
         gv = checkGeneralVitality(hotbits_service)
@@ -69,6 +75,6 @@ class BroadcastService:
 
     def get_tasks(self):
         tasks = []
-        while not self.task_queue.empty():
-            tasks.append(self.task_queue.get())
+        for q in self.task_queue.queue:
+            tasks.append(q.to_dict())
         return tasks

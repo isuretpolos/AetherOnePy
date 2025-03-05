@@ -137,6 +137,10 @@ export class AetherOneService {
     return this.http.post<any>(`${this.baseUrl}broadcast`,broadcastData)
   }
 
+  getCurrentBroadcastTasks():Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}broadcast`)
+  }
+
   stopAllBroadcasts():Observable<any> {
     return this.http.delete<any>(`${this.baseUrl}broadcast`)
   }
