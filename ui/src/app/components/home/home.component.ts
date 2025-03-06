@@ -5,6 +5,7 @@ import {AetherOneService} from "../../services/aether-one.service";
 import {Title} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SqlSelect} from "../../domains/SqlSelect";
+import {PlanetaryInfo} from "../../domains/Planetary";
 
 @Component({
   selector: 'app-home',
@@ -20,8 +21,8 @@ export class HomeComponent implements OnInit {
   color = new FormControl('', { nonNullable: true });
   description= new FormControl('', { nonNullable: true });
   averageRates:SqlSelect|undefined
-  planetaryInfo:any
-  planetaryCalendar:any
+  planetaryInfo:PlanetaryInfo|undefined
+  planetaryCalendar:any|undefined
 
   constructor(
     private aetherOne:AetherOneService,
@@ -39,7 +40,7 @@ export class HomeComponent implements OnInit {
 
     this.aetherOne.planetaryInfo().subscribe( p => {
       this.planetaryInfo = p
-      this.aetherOne.planetaryCalendar(new Date().getFullYear()).subscribe( c => this.planetaryInfo = c)
+      this.aetherOne.planetaryCalendar(new Date().getFullYear()).subscribe( c => this.planetaryCalendar = c)
     })
 
   }
@@ -67,4 +68,6 @@ export class HomeComponent implements OnInit {
     sessionStorage.setItem('caseData', JSON.stringify(caseObj));
     this.router.navigate(['CASE']);
    }
+
+  protected readonly length = length;
 }

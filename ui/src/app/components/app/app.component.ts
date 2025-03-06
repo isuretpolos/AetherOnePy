@@ -52,18 +52,17 @@ export class AppComponent implements OnInit, OnDestroy  {
     this.socketService.getBroadcastInfo().subscribe((data) => {
       console.log(data)
       this.toastr.info(data.message);
-
-      this.intervalPing = setInterval(() => {
-        this.socketService.ping();
-      }, 3000);
-
-      this.intervalBroadcastingId = setInterval(() => {
-        this.aetherOne.getCurrentBroadcastTasks().subscribe(b => {
-          this.broadcastingData = b
-        })
-      }, 3000)
-
     });
+
+    this.intervalPing = setInterval(() => {
+      this.socketService.ping();
+    }, 3000);
+
+    this.intervalBroadcastingId = setInterval(() => {
+      this.aetherOne.getCurrentBroadcastTasks().subscribe(b => {
+        this.broadcastingData = b
+      })
+    }, 3000)
 
     this.aetherOne.cpuCount().subscribe( c => this.cpuCount = c)
 

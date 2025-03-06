@@ -13,6 +13,8 @@ import json
 import logging
 import urllib.request
 
+from py.domains.planetaryDomains import PlanetaryInfo
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
 
@@ -478,28 +480,7 @@ class AetherOnePy:
 
         @self.app.route("/planetary_info", methods=["GET"])
         def planetary_info():
-            now = datetime.now()
-            month_name = now.strftime("%B")
-            day_name = now.strftime("%A")
-            season_data = self.planetaryInfoApi.get_season(now)
-            planetary_hour_data = self.planetaryInfoApi.get_planetary_hour(now)
-
-            data = {
-                "SEASON": season_data,
-                "MONTH": {
-                    "month": month_name,
-                    "days": (datetime(now.year, now.month % 12 + 1, 1) - datetime(now.year, now.month, 1)).days,
-                    "currentDay": now.day,
-                    "zodiac": zodiac_monthly[month_name][0],
-                    "planet": zodiac_monthly[month_name][1]
-                },
-                "DAY": {
-                    "day": day_name,
-                    "planet": daily_rulerships[day_name]
-                },
-                "HOUR": planetary_hour_data
-            }
-            return jsonify(data)
+            return jsonify(self.planetaryInfoApi.planetary_info().to_dict())
 
         @self.app.route("/planetary_calendar/<int:year>", methods=["GET"])
         def planetary_calendar(year):

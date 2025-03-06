@@ -38,28 +38,28 @@
         <tbody>
         <tr>
           <td>MONTH</td>
-          <td>{{ planetaryInfo['MONTH']['month'] }}
+          <td>{{ planetaryInfo.month.month }}
             <pre>
-              days: {{ planetaryInfo['MONTH']['days'] }}
-              currentDay: {{ planetaryInfo['MONTH']['currentDay'] }}
-              planet: {{ planetaryInfo['MONTH']['planet'] }}
-              zodiac: {{ planetaryInfo['MONTH']['zodiac'] }}
+              days: {{ planetaryInfo.month.days }}
+              currentDay: {{ planetaryInfo.month.currentDay }}
+              planet: {{ planetaryInfo.month.planet }}
+              zodiac: {{ planetaryInfo.month.zodiac }}
             </pre>
           </td>
         </tr>
         <tr>
           <td>DAY</td>
-          <td>{{ planetaryInfo['DAY']['day'] }}
+          <td>{{ planetaryInfo.day.day }}
             <pre>
-              planet: {{ planetaryInfo['DAY']['planet'] }}
+              planet: {{ planetaryInfo.day.planet }}
             </pre>
           </td>
         </tr>
         <tr>
           <td>HOUR</td>
-          <td>{{ planetaryInfo['HOUR']['hour'] }}
+          <td>{{ planetaryInfo.hour.hour }}
             <pre>
-              planet: {{ planetaryInfo['HOUR']['planet'] }}
+              planet: {{ planetaryInfo.hour.planet }}
             </pre>
           </td>
         </tr>
@@ -78,7 +78,7 @@
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let m of planetaryCalendar['months'][planetaryInfo['MONTH']['month']]">
+        <tr *ngFor="let m of planetaryCalendar">
           <td>{{ m }}
          </td>
         </tr>
