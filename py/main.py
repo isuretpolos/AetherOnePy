@@ -13,8 +13,6 @@ import json
 import logging
 import urllib.request
 
-from py.services.planetaryInfluence import PlanetaryRulershipCalendarAPI, zodiac_monthly, daily_rulerships
-
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
 
@@ -33,6 +31,7 @@ from services.hotbitsService import HotbitsService, HotbitsSource
 from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict, checkGeneralVitality
 from domains.aetherOneDomains import Analysis, Session, Case, BroadCastData, AnalysisRate
 from services.broadcastService import BroadcastService, BroadcastTask
+from services.planetaryInfluence import PlanetaryRulershipCalendarAPI, zodiac_monthly, daily_rulerships
 
 
 # Start the hotbits service in a separate process
@@ -46,6 +45,7 @@ def start_hotbits_service():
 class AetherOnePy:
     def __init__(self):
         self.PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        self.setup_directories()
         self.app = Flask(__name__)
         self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=25, ping_timeout=300)
         self.port = 80
@@ -56,7 +56,6 @@ class AetherOnePy:
         process.daemon = True
         process.start()
         self.setup_logging()
-        self.setup_directories()
         self.load_plugins()
         self.setup_routes()
         self.cleanup_broadcast_folder()
@@ -549,8 +548,8 @@ if __name__ == '__main__':
     args = vars(argParser.parse_args())
     
     print("Starting AetherOnePy server ...")
-    cpuCount = multiprocessing.cpu_count()
-    print("CPU Count: ", cpuCount)
+    #cpuCount = multiprocessing.cpu_count()
+    #print("CPU Count: ", cpuCount)
     print(f"Click here http://localhost:{args['port']} or open the URL in your favorite browser\nSupport me on Patreon https://www.patreon.com/aetherone")
     aetherOnePy = AetherOnePy()
     aetherOnePy.run(args)
