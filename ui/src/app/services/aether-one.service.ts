@@ -149,6 +149,11 @@ export class AetherOneService {
     return this.http.get<any>(`${this.baseUrl}planetary_info`)
   }
 
+  planetaryCalendar(year:number):Observable<any> {
+    console.log(year)
+    return this.http.get<any>(`${this.baseUrl}planetary_calendar/${year}`)
+  }
+
   sqlSelect(sql:string):Observable<SqlSelect> {
     return this.http.post<SqlSelect>(`${this.baseUrl}sqlSelect`, {"sql":sql})
   }

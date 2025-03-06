@@ -27,6 +27,7 @@
       </table>
     </div>
     <div class="col" *ngIf="planetaryInfo">
+
       <h4>Planetary Influence</h4>
       <table class="table table-sm table-hover">
         <thead class="table-light">
@@ -65,8 +66,25 @@
         </tr>
         </tbody>
       </table>
+
     </div>
-    <div class="col">
+    <div class="col" *ngIf="planetaryCalendar">
+
+      <h4>Planetary Calendar</h4>
+      <table class="table table-sm table-hover">
+        <thead class="table-light">
+        <tr>
+          <th>Month</th>
+          <th>Influence</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let m of planetaryCalendar['months'][planetaryInfo['MONTH']['month']]">
+          <td>{{ m }}
+         </td>
+        </tr>
+        </tbody>
+      </table>
 
     </div>
   </div>

@@ -58,9 +58,7 @@ export class AppComponent implements OnInit, OnDestroy  {
       }, 3000);
 
       this.intervalBroadcastingId = setInterval(() => {
-        console.log("Calling get broadcasted data ... ")
         this.aetherOne.getCurrentBroadcastTasks().subscribe(b => {
-          console.log(b)
           this.broadcastingData = b
         })
       }, 3000)

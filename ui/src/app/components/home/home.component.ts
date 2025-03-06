@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
   description= new FormControl('', { nonNullable: true });
   averageRates:SqlSelect|undefined
   planetaryInfo:any
+  planetaryCalendar:any
 
   constructor(
     private aetherOne:AetherOneService,
@@ -36,7 +37,11 @@ export class HomeComponent implements OnInit {
       this.averageRates = a
     });
 
-    this.aetherOne.planetaryInfo().subscribe( p => this.planetaryInfo = p)
+    this.aetherOne.planetaryInfo().subscribe( p => {
+      this.planetaryInfo = p
+      this.aetherOne.planetaryCalendar(new Date().getFullYear()).subscribe( c => this.planetaryInfo = c)
+    })
+
   }
 
   loadCases(): void {
