@@ -13,7 +13,7 @@ import json
 import logging
 import urllib.request
 
-from py.domains.planetaryDomains import PlanetaryInfo
+
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
@@ -34,6 +34,7 @@ from services.analyzeService import analyze as analyzeService, transformAnalyzeL
 from domains.aetherOneDomains import Analysis, Session, Case, BroadCastData, AnalysisRate
 from services.broadcastService import BroadcastService, BroadcastTask
 from services.planetaryInfluence import PlanetaryRulershipCalendarAPI, zodiac_monthly, daily_rulerships
+from domains.planetaryDomains import PlanetaryInfo
 
 
 # Start the hotbits service in a separate process

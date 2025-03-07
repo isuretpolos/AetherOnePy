@@ -2,7 +2,7 @@ import sys,os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from datetime import datetime, timedelta
-from py.domains.planetaryDomains import PlanetaryInfo
+from domains.planetaryDomains import PlanetaryInfo
 
 # Define planetary rulerships
 zodiac_monthly = {
