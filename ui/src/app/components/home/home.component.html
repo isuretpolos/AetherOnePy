@@ -37,10 +37,22 @@
         </thead>
         <tbody>
         <tr>
+          <td>SEASON</td>
+          <td>{{ planetaryInfo.season.season }}
+            <pre>
+              dominant planets: {{ planetaryInfo.season.dominantPlanets }}
+              duration in days: {{ planetaryInfo.season.duration_days }}
+              progress: {{ planetaryInfo.season.progress }}
+              element: {{ planetaryInfo.season.element }}
+              start: {{ planetaryInfo.season.start }}
+              end: {{ planetaryInfo.season.end }}
+            </pre>
+        </tr>
+        <tr>
           <td>MONTH</td>
           <td>{{ planetaryInfo.month.month }}
             <pre>
-              days: {{ planetaryInfo.month.days }}
+              days: {{ planetaryInfo.month.days_count }}
               currentDay: {{ planetaryInfo.month.currentDay }}
               planet: {{ planetaryInfo.month.planet }}
               zodiac: {{ planetaryInfo.month.zodiac }}
@@ -74,13 +86,19 @@
         <thead class="table-light">
         <tr>
           <th>Month</th>
-          <th>Influence</th>
+          <th>Days</th>
         </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let m of planetaryCalendar">
-          <td>{{ m }}
+        <tr *ngFor="let m of planetaryCalendar.months">
+          <td [class.monthToday]="m.month == monthName">{{ m.month }}
+            <pre>
+              days: {{ m.days_count }}
+              planet: {{ m.planet }}
+              zodiac: {{ m.zodiac }}
+            </pre>
          </td>
+         <td class="calendarTD"><button class="day day_{{d.planet}}" [class.today]="d.date == today" *ngFor="let d of m.days_array" title="{{d.date}} {{d.day}} - {{d.planet}}"></button></td>
         </tr>
         </tbody>
       </table>

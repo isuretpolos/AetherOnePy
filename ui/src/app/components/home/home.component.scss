@@ -1,3 +1,63 @@
 .caseButton {
   margin: 0.2rem;
 }
+
+.day {
+  width: 1rem;
+  height: 1rem;
+  border-radius: 50%;
+  background-color: #f0f0f0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: background-color 0.3s;
+  margin: 0.2rem;
+
+  &:hover {
+    border-color: #ffffff;
+  }
+}
+
+.today {
+  border-radius: 20%;
+}
+
+.monthToday {
+  background-color: #cefddb!important;
+}
+
+.day_Mercury {
+  background-color: #b22dff;
+}
+
+.day_Venus {
+  background-color: #30ff5d;
+}
+
+.day_Jupiter {
+  background-color: #5d9fff;
+}
+
+.day_Saturn {
+  background-color: #ffdf5d;
+}
+
+.day_Sun {
+  background-color: #fffc5d;
+}
+
+.day_Moon {
+  background-color: #ffffff;
+}
+
+.day_Mars {
+  background-color: #ff5d5d;
+}
+
+.calendarTD {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}

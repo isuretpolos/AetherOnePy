@@ -14,7 +14,6 @@ import logging
 import urllib.request
 
 
-
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
 
@@ -485,7 +484,7 @@ class AetherOnePy:
 
         @self.app.route("/planetary_calendar/<int:year>", methods=["GET"])
         def planetary_calendar(year):
-            calendar_data = self.planetaryInfoApi.generate_calendar(year)
+            calendar_data = self.planetaryInfoApi.generate_calendar(year).to_dict()
             return jsonify(calendar_data)
 
         @self.app.route('/sqlSelect', methods=['POST'])

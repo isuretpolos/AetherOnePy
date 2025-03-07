@@ -5,7 +5,7 @@ import {AetherOneService} from "../../services/aether-one.service";
 import {Title} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SqlSelect} from "../../domains/SqlSelect";
-import {PlanetaryInfo} from "../../domains/Planetary";
+import {PlanetaryCalendar, PlanetaryInfo} from "../../domains/Planetary";
 
 @Component({
   selector: 'app-home',
@@ -22,7 +22,9 @@ export class HomeComponent implements OnInit {
   description= new FormControl('', { nonNullable: true });
   averageRates:SqlSelect|undefined
   planetaryInfo:PlanetaryInfo|undefined
-  planetaryCalendar:any|undefined
+  planetaryCalendar:PlanetaryCalendar|undefined
+  today = new Date().toISOString().split('T')[0]
+  monthName = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'][new Date().getMonth()]
 
   constructor(
     private aetherOne:AetherOneService,
