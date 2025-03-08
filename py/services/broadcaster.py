@@ -23,6 +23,7 @@ class DigitalBroadcaster:
         self.duration = duration
         self.parsed_signature = self._sigilize(signature)
         self.num_workers = max(1, os.cpu_count() // 4)
+        self.resonance_events = []
 
     def _sigilize(self, text: str):
         """ Removes duplicate letters and spaces for sigilization. """
@@ -35,6 +36,17 @@ class DigitalBroadcaster:
         while time.time() - start_time < self.duration:
             transformation = self._deepen_sigilization(sigil_part)
             print(f"[Worker-{os.getpid()}] Broadcasting: {transformation}")
+
+    def _resonance_check_worker(self):
+        """ Checks for resonance events during broadcasting. """
+        start_time = time.time()
+        while time.time() - start_time < self.duration:
+            random.seed(generate_random_integer(32,1))
+            eventEnergy = random.randint(0, 6765)
+            if eventEnergy >= 6764:
+                msg = f"Resonance detected! Random Event Energy: {eventEnergy} at {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}"
+                print(msg)
+                self.resonance_events.append(msg)
 
     def _deepen_sigilization(self, sigil_part: str):
         """ Applies additional transformations to the sigil part. """
@@ -54,7 +66,11 @@ class DigitalBroadcaster:
         print(f"Sigilized Intent: {' '.join(self.parsed_signature)}")
 
         processes = []
-        for i in range(self.num_workers):
+        p = multiprocessing.Process(target=self._resonance_check_worker)
+        p.start()
+        processes.append(p)
+
+        for i in range(self.num_workers - 1):
             sigil_part = self.parsed_signature[i % len(self.parsed_signature)]
             p = multiprocessing.Process(target=self._broadcast_worker, args=(sigil_part,))
             p.start()
