@@ -13,6 +13,7 @@ import json
 import logging
 import urllib.request
 
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
 
@@ -32,6 +33,7 @@ from services.analyzeService import analyze as analyzeService, transformAnalyzeL
 from domains.aetherOneDomains import Analysis, Session, Case, BroadCastData, AnalysisRate
 from services.broadcastService import BroadcastService, BroadcastTask
 from services.planetaryInfluence import PlanetaryRulershipCalendarAPI, zodiac_monthly, daily_rulerships
+from domains.planetaryDomains import PlanetaryInfo
 
 
 # Start the hotbits service in a separate process
@@ -478,32 +480,11 @@ class AetherOnePy:
 
         @self.app.route("/planetary_info", methods=["GET"])
         def planetary_info():
-            now = datetime.now()
-            month_name = now.strftime("%B")
-            day_name = now.strftime("%A")
-            season_data = self.planetaryInfoApi.get_season(now)
-            planetary_hour_data = self.planetaryInfoApi.get_planetary_hour(now)
-
-            data = {
-                "SEASON": season_data,
-                "MONTH": {
-                    "month": month_name,
-                    "days": (datetime(now.year, now.month % 12 + 1, 1) - datetime(now.year, now.month, 1)).days,
-                    "currentDay": now.day,
-                    "zodiac": zodiac_monthly[month_name][0],
-                    "planet": zodiac_monthly[month_name][1]
-                },
-                "DAY": {
-                    "day": day_name,
-                    "planet": daily_rulerships[day_name]
-                },
-                "HOUR": planetary_hour_data
-            }
-            return jsonify(data)
+            return jsonify(self.planetaryInfoApi.planetary_info().to_dict())
 
         @self.app.route("/planetary_calendar/<int:year>", methods=["GET"])
         def planetary_calendar(year):
-            calendar_data = self.planetaryInfoApi.generate_calendar(year)
+            calendar_data = self.planetaryInfoApi.generate_calendar(year).to_dict()
             return jsonify(calendar_data)
 
         @self.app.route('/sqlSelect', methods=['POST'])

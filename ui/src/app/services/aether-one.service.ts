@@ -7,6 +7,7 @@ import {Analysis, Catalog, CountHotbits, RateObject} from "../domains/Analysis";
 import {FolderStructure} from "../domains/Files";
 import {BroadCastData} from "../domains/BroadCastData";
 import {SqlSelect} from "../domains/SqlSelect";
+import {PlanetaryCalendar, PlanetaryInfo} from "../domains/Planetary";
 
 @Injectable({
   providedIn: 'root'
@@ -145,8 +146,12 @@ export class AetherOneService {
     return this.http.delete<any>(`${this.baseUrl}broadcast`)
   }
 
-  planetaryInfo():Observable<any> {
-    return this.http.get<any>(`${this.baseUrl}planetary_info`)
+  planetaryInfo():Observable<PlanetaryInfo> {
+    return this.http.get<PlanetaryInfo>(`${this.baseUrl}planetary_info`)
+  }
+
+  planetaryCalendar(year:number):Observable<PlanetaryCalendar> {
+    return this.http.get<PlanetaryCalendar>(`${this.baseUrl}planetary_calendar/${year}`)
   }
 
   sqlSelect(sql:string):Observable<SqlSelect> {

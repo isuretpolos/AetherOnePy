@@ -26,6 +26,7 @@
       </table>
     </div>
     <div class="col" *ngIf="planetaryInfo">
+
       <h4>Planetary Influence</h4>
       <table class="table table-sm table-hover">
         <thead class="table-light">
@@ -36,36 +37,71 @@
         </thead>
         <tbody>
         <tr>
-          <td>MONTH</td>
-          <td>{{ planetaryInfo['MONTH']['month'] }}
+          <td>SEASON</td>
+          <td>{{ planetaryInfo.season.season }}
             <pre>
-              days: {{ planetaryInfo['MONTH']['days'] }}
-              currentDay: {{ planetaryInfo['MONTH']['currentDay'] }}
-              planet: {{ planetaryInfo['MONTH']['planet'] }}
-              zodiac: {{ planetaryInfo['MONTH']['zodiac'] }}
+              dominant planets: {{ planetaryInfo.season.dominantPlanets }}
+              duration in days: {{ planetaryInfo.season.duration_days }}
+              progress: {{ planetaryInfo.season.progress }}
+              element: {{ planetaryInfo.season.element }}
+              start: {{ planetaryInfo.season.start }}
+              end: {{ planetaryInfo.season.end }}
+            </pre>
+        </tr>
+        <tr>
+          <td>MONTH</td>
+          <td>{{ planetaryInfo.month.month }}
+            <pre>
+              days: {{ planetaryInfo.month.days_count }}
+              currentDay: {{ planetaryInfo.month.currentDay }}
+              planet: {{ planetaryInfo.month.planet }}
+              zodiac: {{ planetaryInfo.month.zodiac }}
             </pre>
           </td>
         </tr>
         <tr>
           <td>DAY</td>
-          <td>{{ planetaryInfo['DAY']['day'] }}
+          <td>{{ planetaryInfo.day.day }}
             <pre>
-              planet: {{ planetaryInfo['DAY']['planet'] }}
+              planet: {{ planetaryInfo.day.planet }}
             </pre>
           </td>
         </tr>
         <tr>
           <td>HOUR</td>
-          <td>{{ planetaryInfo['HOUR']['hour'] }}
+          <td>{{ planetaryInfo.hour.hour }}
             <pre>
-              planet: {{ planetaryInfo['HOUR']['planet'] }}
+              planet: {{ planetaryInfo.hour.planet }}
             </pre>
           </td>
         </tr>
         </tbody>
       </table>
+
     </div>
-    <div class="col">
+    <div class="col" *ngIf="planetaryCalendar">
+
+      <h4>Planetary Calendar</h4>
+      <table class="table table-sm table-hover">
+        <thead class="table-light">
+        <tr>
+          <th>Month</th>
+          <th>Days</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let m of planetaryCalendar.months">
+          <td [class.monthToday]="m.month == monthName">{{ m.month }}
+            <pre>
+              days: {{ m.days_count }}
+              planet: {{ m.planet }}
+              zodiac: {{ m.zodiac }}
+            </pre>
+         </td>
+         <td class="calendarTD"><button class="day day_{{d.planet}}" [class.today]="d.date == today" *ngFor="let d of m.days_array" title="{{d.date}} {{d.day}} - {{d.planet}}"></button></td>
+        </tr>
+        </tbody>
+      </table>
 
     </div>
   </div>
