@@ -5,6 +5,7 @@ import io, os, sys, multiprocessing, subprocess
 import asyncio
 import argparse
 from datetime import datetime
+from pathlib import Path
 
 import qrcode
 import socket
@@ -34,6 +35,7 @@ from domains.aetherOneDomains import Analysis, Session, Case, BroadCastData, Ana
 from services.broadcastService import BroadcastService, BroadcastTask
 from services.planetaryInfluence import PlanetaryRulershipCalendarAPI, zodiac_monthly, daily_rulerships
 from domains.planetaryDomains import PlanetaryInfo
+from setup import check_and_install_packages
 
 
 # Start the hotbits service in a separate process
@@ -139,6 +141,9 @@ class AetherOnePy:
         @self.app.route('/restart', methods=['POST'])
         def restart():
             subprocess.run(["git", "pull"])
+            check_and_install_packages()
+            python = sys.executable
+            os.execl(python, python, * sys.argv)
             return jsonify({'message': 'Restarting server ...'}), 200
 
         # Health check, you make a ping and get a pong
