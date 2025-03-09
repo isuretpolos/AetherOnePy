@@ -64,4 +64,8 @@ export class SettingsComponent implements OnInit {
         this.analysisAdvanced.setValue(false);
   }
 
+  restart() {
+    this.aetherOne.restart().subscribe()
+  }
+
 }

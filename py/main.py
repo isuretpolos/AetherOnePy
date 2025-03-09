@@ -1,7 +1,7 @@
 # AetherOnyPy Main Application
 # Copyright Isuret Polos 2025
 # Support me on https://www.patreon.com/aetherone
-import io, os, sys, multiprocessing
+import io, os, sys, multiprocessing, subprocess
 import asyncio
 import argparse
 from datetime import datetime
@@ -49,7 +49,7 @@ class AetherOnePy:
         self.PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
         self.setup_directories()
         self.app = Flask(__name__)
-        self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=25, ping_timeout=300)
+        self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=10, ping_timeout=300)
         self.port = 80
         CORS(self.app)
         self.aetherOneDB = get_case_dao(os.path.join(self.PROJECT_ROOT, 'data/aetherone.db'))
@@ -132,6 +132,14 @@ class AetherOnePy:
         def handle_connect():
             emit('server_update', {'message': 'Server connected to websockets!'}, broadcast=True)
             emit('broadcast_info', {'message': 'Broadcast messaging ready!'}, broadcast=True)
+
+        # Restart application
+        # First get the new code from the repository
+        # Then restart the application
+        @self.app.route('/restart', methods=['POST'])
+        def restart():
+            subprocess.run(["git", "pull"])
+            return jsonify({'message': 'Restarting server ...'}), 200
 
         # Health check, you make a ping and get a pong
         @self.app.route('/ping', methods=['GET'])

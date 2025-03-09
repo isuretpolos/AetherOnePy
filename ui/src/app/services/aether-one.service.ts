@@ -20,6 +20,10 @@ export class AetherOneService {
   constructor(private http: HttpClient) {
   }
 
+  restart(): Observable<any> {
+    return this.http.post(`${this.baseUrl}restart`, undefined)
+  }
+
   ping(): Observable<any> {
     return this.http.get(`${this.baseUrl}ping`, {responseType: 'text'})
   }
