@@ -49,7 +49,7 @@ class PlanetaryRulershipCalendarAPI:
         season_data = Season()
 
         for season, (element, planets, (start_month, start_day), (end_month, end_day)) in seasonal_rulerships.items():
-            print(season)
+            
             start = datetime(date.year, start_month, start_day)
             end = datetime(date.year, end_month, end_day)
             if start <= date <= end:

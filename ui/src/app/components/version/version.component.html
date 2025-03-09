@@ -1,0 +1,5 @@
+<p>You are now using version <b>{{version}}</b>. The version on Github is <b>{{remoteVersion}}</b>. 
+    <span *ngIf="version && remoteVersion && !version.trim().includes(remoteVersion.trim())">Click here for upgrading now: 
+    <button class="btn btn-success" (click)="restart()">Upgrade and restart</button></span>
+    <span *ngIf="version && remoteVersion && version.trim().includes(remoteVersion.trim())" class="text-success fw-bolder">Perfect! You have now the most current version!</span>
+</p>

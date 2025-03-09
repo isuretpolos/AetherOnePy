@@ -137,7 +137,8 @@ class AetherOnePy:
 
         # Restart application
         # First get the new code from the repository
-        # Then restart the application
+        # Second check and install the required packages
+        # Finally restart the application
         @self.app.route('/restart', methods=['POST'])
         def restart():
             subprocess.run(["git", "pull"])
@@ -184,12 +185,9 @@ class AetherOnePy:
 
             s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
             s.connect(('8.8.8.8', 1))  # connect() for UDP doesn't send packets
-            for ip in s.getsockname():
-                print(ip)
 
             myip = (([ip for ip in socket.gethostbyname_ex(socket.gethostname())[2] if not ip.startswith("127.")] or [[(s.connect(("8.8.8.8", 53)), s.getsockname()[0], s.close()) for s in [socket.socket(socket.AF_INET, socket.SOCK_DGRAM)]][0][1]]) + ["no IP found"])[0]
             data = f"http://{myip}:{self.port}"
-            print(data)
             self.socketio.emit('server_update', {'message': data})
 
             qr = qrcode.QRCode(
@@ -503,7 +501,6 @@ class AetherOnePy:
         @self.app.route('/sqlSelect', methods=['POST'])
         def sqlSelect():
             sql = request.json['sql']
-            print(sql)
             result = self.aetherOneDB.sqlSelect(sql)
             return jsonify(result), 200
 
@@ -542,7 +539,7 @@ if __name__ == '__main__':
     args = vars(argParser.parse_args())
     
     print("Starting AetherOnePy server ...")
-    #cpuCount = multiprocessing.cpu_count()
+    #cpuCount = multiprocessing.cpu_count() --> on Ubuntu Windows Subsystem it produces an endless loop of stupidity
     #print("CPU Count: ", cpuCount)
     print(f"Click here http://localhost:{args['port']} or open the URL in your favorite browser\nSupport me on Patreon https://www.patreon.com/aetherone")
     aetherOnePy = AetherOnePy()

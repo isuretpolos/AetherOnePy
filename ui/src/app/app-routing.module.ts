@@ -10,6 +10,7 @@ import {RateCardsComponent} from "./components/rate-cards/rate-cards.component";
 import {HotbitsComponent} from "./components/hotbits/hotbits.component";
 import {AppsComponent} from "./components/apps/apps.component";
 import {RadionicsDeviceBase44Component} from "./components/radionics-device-base44/radionics-device-base44.component";
+import { VersionComponent } from './components/version/version.component';
 
 const routes: Routes = [
   {path: '', redirectTo: 'HOME', pathMatch: 'full'},
@@ -21,7 +22,8 @@ const routes: Routes = [
   {path: 'CASE', component: CaseComponent},
   {path: 'APPS', component: AppsComponent},
   {path: 'HOTBITS', component: HotbitsComponent},
-  {path: 'RADIONICS_DEVICE_BASE44', component: RadionicsDeviceBase44Component}
+  {path: 'RADIONICS_DEVICE_BASE44', component: RadionicsDeviceBase44Component},
+  {path: 'VERSION', component: VersionComponent},
 ];
 
 @NgModule({
