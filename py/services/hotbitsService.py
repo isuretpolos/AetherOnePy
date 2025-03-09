@@ -80,8 +80,9 @@ class HotbitsService:
             elif count > 20:
                 time.sleep(1)
             
-            timeLoopedHotbits: [int] = []
+            timeLoopedHotbits = []
             for i in range(10000):
+                print(i)
                 timeLoopedHotbits.append(generate_random_integer())
             # Save the integers to a JSON file
             timestamp = int(time.time() * 1000)
