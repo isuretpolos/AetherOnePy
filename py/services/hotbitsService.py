@@ -44,6 +44,7 @@ def generate_random_integer(bit_count: int = 32, maxCount: int = 50):
             bits.append(1)
         else:
             bits.append(0)
+        time.sleep(0.001)
 
     # Convert the collected bits into an integer
     random_integer = int("".join(map(str, bits)), 2)
