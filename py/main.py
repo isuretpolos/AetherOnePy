@@ -459,7 +459,7 @@ class AetherOnePy:
                 tasks = self.broadcastService.get_tasks()
                 current_task = self.broadcastService.get_current_task()
                 if current_task:
-                    tasks.append(current_task)
+                    tasks.insert(0,current_task)
                 return jsonify(tasks), 200
             if request.method == 'POST':
                 broadcast_data = request.json
