@@ -43,6 +43,7 @@ class DigitalBroadcaster:
         while time.time() - start_time < self.duration:
             random.seed(generate_random_integer(32,1))
             eventEnergy = random.randint(0, 6765)
+            time.sleep(0.001)
             if eventEnergy >= 6764:
                 msg = f"Resonance detected! Random Event Energy: {eventEnergy} at {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}"
                 print(msg)
