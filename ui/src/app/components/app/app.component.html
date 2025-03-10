@@ -63,11 +63,15 @@
           <thead class="table-light">
           <tr>
             <th>RATE</th>
+            <th>ENERGY</th>
+            <th>REPEAT</th>
           </tr>
           </thead>
           <tbody>
           <tr *ngFor="let b of broadcastingData; let i = index">
-            <td>{{b.broadcastData.signature}}</td>
+            <td [class.broadcasted]="b.broadcastData.leaving_with_general_vitality">{{b.broadcastData.signature}}</td>
+            <td>{{b.broadcastData.leaving_with_general_vitality}}</td>
+            <td>{{b.broadcastData.repeat}}</td>
           </tr>
           </tbody>
         </table>

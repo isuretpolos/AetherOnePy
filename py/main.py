@@ -50,15 +50,15 @@ class AetherOnePy:
     def __init__(self):
         self.PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
         self.setup_directories()
-        self.app = Flask(__name__)
-        self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=10, ping_timeout=300)
-        self.port = 80
-        CORS(self.app)
         self.aetherOneDB = get_case_dao(os.path.join(self.PROJECT_ROOT, 'data/aetherone.db'))
         self.hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(self.PROJECT_ROOT, "hotbits"), self.aetherOneDB, self)
         process = multiprocessing.Process(target=start_hotbits_service) # Start the hotbits service in a separate process
         process.daemon = True
         process.start()
+        self.app = Flask(__name__)
+        self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=10, ping_timeout=300)
+        self.port = 80
+        CORS(self.app)
         self.setup_logging()
         self.load_plugins()
         self.setup_routes()
@@ -112,7 +112,6 @@ class AetherOnePy:
             print(f"Plugins directory '{PLUGINS_DIR}' not found or is not a directory. Skipping plugin loading.")
 
     def emitMessage(self, event: str, text: str):
-        print(f"EMIT: {event} - {text}")
         try:
             self.socketio.emit(event, {'message': text})
         except Exception as e:
@@ -461,6 +460,7 @@ class AetherOnePy:
         def broadcast():
             if request.method == 'GET':
                 tasks = self.broadcastService.get_tasks()
+                tasks.append(self.broadcastService.get_current_task())
                 return jsonify(tasks), 200
             if request.method == 'POST':
                 broadcast_data = request.json
