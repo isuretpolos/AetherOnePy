@@ -4,8 +4,6 @@
 import io, os, sys, multiprocessing, subprocess
 import asyncio
 import argparse
-from datetime import datetime
-from pathlib import Path
 
 import qrcode
 import socket
@@ -33,8 +31,7 @@ from services.hotbitsService import HotbitsService, HotbitsSource
 from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict, checkGeneralVitality
 from domains.aetherOneDomains import Analysis, Session, Case, BroadCastData, AnalysisRate
 from services.broadcastService import BroadcastService, BroadcastTask
-from services.planetaryInfluence import PlanetaryRulershipCalendarAPI, zodiac_monthly, daily_rulerships
-from domains.planetaryDomains import PlanetaryInfo
+from services.planetaryInfluence import PlanetaryRulershipCalendarAPI
 from setup import check_and_install_packages
 
 
@@ -56,7 +53,7 @@ class AetherOnePy:
         process.daemon = True
         process.start()
         self.app = Flask(__name__)
-        self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=10, ping_timeout=300)
+        self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=10, ping_timeout=300, debug=False)
         self.port = 80
         CORS(self.app)
         self.setup_logging()
@@ -460,7 +457,9 @@ class AetherOnePy:
         def broadcast():
             if request.method == 'GET':
                 tasks = self.broadcastService.get_tasks()
-                tasks.append(self.broadcastService.get_current_task())
+                current_task = self.broadcastService.get_current_task()
+                if current_task:
+                    tasks.append(current_task)
                 return jsonify(tasks), 200
             if request.method == 'POST':
                 broadcast_data = request.json

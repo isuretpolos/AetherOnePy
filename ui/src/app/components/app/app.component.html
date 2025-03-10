@@ -69,7 +69,7 @@
           </thead>
           <tbody>
           <tr *ngFor="let b of broadcastingData; let i = index">
-            <td [class.broadcasted]="b.broadcastData.leaving_with_general_vitality">{{b.broadcastData.signature}}</td>
+            <td [class.broadcasting]="!b.broadcastData.leaving_with_general_vitality && b.broadcastData.repeat" [class.broadcasted]="b.broadcastData.leaving_with_general_vitality || b.broadcastData.repeat">{{b.broadcastData.signature}}</td>
             <td>{{b.broadcastData.leaving_with_general_vitality}}</td>
             <td>{{b.broadcastData.repeat}}</td>
           </tr>
@@ -78,7 +78,7 @@
 
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button class="btn btn-danger" style="margin-right: 1rem" (click)="stopAllBroadcasting()">Stop all</button> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>

@@ -195,4 +195,8 @@ export class AppComponent implements OnInit, OnDestroy  {
     clearInterval(this.intervalPing);
     clearInterval(this.intervalBroadcastingId);
   }
+
+  stopAllBroadcasting() {
+    this.aetherOne.stopAllBroadcasts().subscribe(()=>this.toastr.info("All broadcasts stopped!"))
+  }
 }

@@ -77,6 +77,7 @@ class BroadcastService:
     def stop(self):
         print("Stopping broadcasts")
         self.task_queue.queue.clear()
+        self.current_task = None
 
     def get_tasks(self):
         tasks = []
@@ -85,4 +86,6 @@ class BroadcastService:
         return tasks
 
     def get_current_task(self):
-        return self.current_task.to_dict()
+        if self.current_task:
+            return self.current_task.to_dict()
+        return None
