@@ -6,8 +6,6 @@ import sys
 import threading
 import time, hashlib
 
-from win32comext.shell.demos.servers.folder_view import tasks
-
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from domains.aetherOneDomains import Analysis, BroadCastData
 from services.hotbitsService import HotbitsService
