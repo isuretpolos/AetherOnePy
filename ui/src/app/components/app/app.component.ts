@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ElementRef} from '@angular/core';
 import {Link} from "../../domains/Link";
 import {ActivatedRoute, Router} from "@angular/router";
 import {NavigationService} from "../../services/navigation.service";
@@ -7,11 +7,13 @@ import {AetherOneService} from "../../services/aether-one.service";
 import {FormControl} from "@angular/forms";
 import {SocketService} from "../../services/socket.service";
 import {ToastrService} from "ngx-toastr";
+import * as THREE from 'three'
 
 @Component({
-  selector: 'app-root',
-  templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+    selector: 'app-root',
+    templateUrl: './app.component.html',
+    styleUrls: ['./app.component.scss'],
+    standalone: false
 })
 export class AppComponent implements OnInit, OnDestroy  {
 
@@ -30,15 +32,25 @@ export class AppComponent implements OnInit, OnDestroy  {
   intervalBroadcastingId: any;
   intervalPing: any;
 
+  private renderer!: THREE.WebGLRenderer;
+  private scene!: THREE.Scene;
+  private camera!: THREE.PerspectiveCamera;
+  private cube!: THREE.Mesh;
+  private animationFrameId!: number;
+
   constructor(private router: Router,
               private route: ActivatedRoute,
               private navigationService:NavigationService,
               private aetherOne: AetherOneService,
               private socketService: SocketService,
-              private toastr: ToastrService) {
+              private toastr: ToastrService,
+              private el: ElementRef) {
   }
 
   ngOnInit() {
+
+    this.initThreeJs();
+    this.animate();
 
     if (this.intervalPing) clearInterval(this.intervalPing);
     if (this.intervalBroadcastingId) clearInterval(this.intervalBroadcastingId);
@@ -194,5 +206,47 @@ export class AppComponent implements OnInit, OnDestroy  {
   ngOnDestroy(): void {
     clearInterval(this.intervalPing);
     clearInterval(this.intervalBroadcastingId);
+    // Cancel the animation frame on destroy
+    cancelAnimationFrame(this.animationFrameId);
+    this.renderer.dispose();
   }
+
+  stopAllBroadcasting() {
+    this.aetherOne.stopAllBroadcasts().subscribe(()=>this.toastr.info("All broadcasts stopped!"))
+  }
+
+  private initThreeJs(): void {
+    // Create the scene
+    this.scene = new THREE.Scene();
+
+    // Create the camera
+    this.camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+    this.camera.position.z = 5;
+
+    // Create the renderer
+    this.renderer = new THREE.WebGLRenderer();
+    //this.renderer.setSize(window.innerWidth, window.innerHeight);
+    this.renderer.setSize(300, 200);
+    this.el.nativeElement.querySelector('#broadcastingGraphic').appendChild(this.renderer.domElement);
+
+    // Create a cube
+    const geometry = new THREE.BoxGeometry();
+    const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+    this.cube = new THREE.Mesh(geometry, material);
+
+    // Add the cube to the scene
+    this.scene.add(this.cube);
+  }
+
+  private animate = (): void => {
+    // Rotation logic
+    this.cube.rotation.x += 0.01;
+    this.cube.rotation.y += 0.01;
+
+    // Render the scene
+    this.renderer.render(this.scene, this.camera);
+
+    // Request the next frame
+    this.animationFrameId = requestAnimationFrame(this.animate);
+  };
 }

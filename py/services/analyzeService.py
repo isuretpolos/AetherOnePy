@@ -33,7 +33,6 @@ def analyze(analysis_id: int, rates: list, hotbits_service: HotbitsService, auto
             #if len(rates) == 0:
              #   break
             pos = hotbits_service.getInt(0, len(rates)) - 1
-            print(f"pos: {pos}, len(rates): {len(rates)}")
             rate = rates.pop(pos)  # random select 24 rates
             newRate = AnalysisRate(rate.signature, rate.description, rate.catalogID, analysis_id, 0, 0,
                                    0, "", 0, "")

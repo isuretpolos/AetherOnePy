@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {environment} from "../../environments/environment";
 import {BehaviorSubject, Observable} from "rxjs";
-import {HttpClient} from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import {Case, Session} from "../domains/Case";
 import {Analysis, Catalog, CountHotbits, RateObject} from "../domains/Analysis";
 import {FolderStructure} from "../domains/Files";

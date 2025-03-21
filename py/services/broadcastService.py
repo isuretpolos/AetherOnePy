@@ -44,6 +44,7 @@ class BroadcastService:
         self.task_queue = queue.Queue()
         self.worker_thread = threading.Thread(target=self._process_queue)
         self.worker_thread.start()
+        self.current_task = None
 
     def add_task(self, task: BroadcastTask):
         self.task_queue.put(task)
@@ -56,6 +57,7 @@ class BroadcastService:
                     time.sleep(2)
                     continue
                 task = self.task_queue.get(timeout=1)
+                self.current_task = task
                 task.broadcastData.repeat += 1
                 broadcaster = DigitalBroadcaster(task.broadcastData.signature, self.PROJECT_ROOT, duration=10)
                 broadcaster.start_broadcasting()
@@ -66,15 +68,22 @@ class BroadcastService:
                     time.sleep(1)
                     self.task_queue.put(task)
                 self.main.aetherOneDB.insert_broadcast(task.broadcastData)
+                self.current_task = None
             except queue.Empty:
                 continue
 
     def stop(self):
         print("Stopping broadcasts")
         self.task_queue.queue.clear()
+        self.current_task = None
 
     def get_tasks(self):
         tasks = []
         for q in self.task_queue.queue:
             tasks.append(q.to_dict())
         return tasks
+
+    def get_current_task(self):
+        if self.current_task:
+            return self.current_task.to_dict()
+        return None

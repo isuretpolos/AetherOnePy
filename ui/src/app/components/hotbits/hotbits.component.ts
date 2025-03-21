@@ -4,9 +4,10 @@ import {SocketService} from "../../services/socket.service";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-hotbits',
-  templateUrl: './hotbits.component.html',
-  styleUrls: ['./hotbits.component.scss']
+    selector: 'app-hotbits',
+    templateUrl: './hotbits.component.html',
+    styleUrls: ['./hotbits.component.scss'],
+    standalone: false
 })
 export class HotbitsComponent implements OnInit {
 

@@ -35,7 +35,7 @@ class DigitalBroadcaster:
         start_time = time.time()
         while time.time() - start_time < self.duration:
             transformation = self._deepen_sigilization(sigil_part)
-            print(f"[Worker-{os.getpid()}] Broadcasting: {transformation}")
+            #print(f"[Worker-{os.getpid()}] Broadcasting: {transformation}")
 
     def _resonance_check_worker(self):
         """ Checks for resonance events during broadcasting. """
@@ -43,6 +43,7 @@ class DigitalBroadcaster:
         while time.time() - start_time < self.duration:
             random.seed(generate_random_integer(32,1))
             eventEnergy = random.randint(0, 6765)
+            time.sleep(0.001)
             if eventEnergy >= 6764:
                 msg = f"Resonance detected! Random Event Energy: {eventEnergy} at {time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())}"
                 print(msg)
@@ -67,6 +68,7 @@ class DigitalBroadcaster:
 
         processes = []
         p = multiprocessing.Process(target=self._resonance_check_worker)
+        p.daemon = True
         p.start()
         processes.append(p)
 

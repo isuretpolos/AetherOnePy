@@ -4,8 +4,6 @@
 import io, os, sys, multiprocessing, subprocess
 import asyncio
 import argparse
-from datetime import datetime
-from pathlib import Path
 
 import qrcode
 import socket
@@ -33,8 +31,7 @@ from services.hotbitsService import HotbitsService, HotbitsSource
 from services.analyzeService import analyze as analyzeService, transformAnalyzeListToDict, checkGeneralVitality
 from domains.aetherOneDomains import Analysis, Session, Case, BroadCastData, AnalysisRate
 from services.broadcastService import BroadcastService, BroadcastTask
-from services.planetaryInfluence import PlanetaryRulershipCalendarAPI, zodiac_monthly, daily_rulerships
-from domains.planetaryDomains import PlanetaryInfo
+from services.planetaryInfluence import PlanetaryRulershipCalendarAPI
 from setup import check_and_install_packages
 
 
@@ -50,15 +47,15 @@ class AetherOnePy:
     def __init__(self):
         self.PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
         self.setup_directories()
-        self.app = Flask(__name__)
-        self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=10, ping_timeout=300)
-        self.port = 80
-        CORS(self.app)
         self.aetherOneDB = get_case_dao(os.path.join(self.PROJECT_ROOT, 'data/aetherone.db'))
         self.hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(self.PROJECT_ROOT, "hotbits"), self.aetherOneDB, self)
         process = multiprocessing.Process(target=start_hotbits_service) # Start the hotbits service in a separate process
         process.daemon = True
         process.start()
+        self.app = Flask(__name__)
+        self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=10, ping_timeout=300, debug=False)
+        self.port = 80
+        CORS(self.app)
         self.setup_logging()
         self.load_plugins()
         self.setup_routes()
@@ -112,7 +109,6 @@ class AetherOnePy:
             print(f"Plugins directory '{PLUGINS_DIR}' not found or is not a directory. Skipping plugin loading.")
 
     def emitMessage(self, event: str, text: str):
-        print(f"EMIT: {event} - {text}")
         try:
             self.socketio.emit(event, {'message': text})
         except Exception as e:
@@ -122,12 +118,12 @@ class AetherOnePy:
         # Serving the Angular UI
         @self.app.route('/')
         def index():
-            return send_from_directory('../ui/dist/ui/', 'index.html')
+            return send_from_directory('../ui/dist/ui/browser/', 'index.html')
 
         # Serving static files, like images, css, js, etc.
         @self.app.route('/<path:path>')
         def static_files(path):
-            return send_from_directory('../ui/dist/ui/', path)
+            return send_from_directory('../ui/dist/ui/browser/', path)
 
         # Reacting to the websockets connect event, in order to get the UI know you are connected
         @self.socketio.on('connect')
@@ -461,6 +457,9 @@ class AetherOnePy:
         def broadcast():
             if request.method == 'GET':
                 tasks = self.broadcastService.get_tasks()
+                current_task = self.broadcastService.get_current_task()
+                if current_task:
+                    tasks.insert(0,current_task)
                 return jsonify(tasks), 200
             if request.method == 'POST':
                 broadcast_data = request.json

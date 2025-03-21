@@ -2,9 +2,10 @@ import {Component, OnInit} from '@angular/core';
 import {AetherOneService} from "../../services/aether-one.service";
 
 @Component({
-  selector: 'app-documentation',
-  templateUrl: './documentation.component.html',
-  styleUrls: ['./documentation.component.scss']
+    selector: 'app-documentation',
+    templateUrl: './documentation.component.html',
+    styleUrls: ['./documentation.component.scss'],
+    standalone: false
 })
 export class DocumentationComponent implements OnInit {
 

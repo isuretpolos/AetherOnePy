@@ -1,9 +1,10 @@
 import { Component, ElementRef, ViewChild, AfterViewInit } from '@angular/core';
 
 @Component({
-  selector: 'app-radionics-device-base44',
-  templateUrl: './radionics-device-base44.component.html',
-  styleUrls: ['./radionics-device-base44.component.scss']
+    selector: 'app-radionics-device-base44',
+    templateUrl: './radionics-device-base44.component.html',
+    styleUrls: ['./radionics-device-base44.component.scss'],
+    standalone: false
 })
 export class RadionicsDeviceBase44Component implements AfterViewInit {
   @ViewChild('rateDisplay', { static: false }) rateDisplay!: ElementRef;
