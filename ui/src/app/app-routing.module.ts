@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import {HttpClientModule} from "@angular/common/http";
+import { provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import {HomeComponent} from "./components/home/home.component";
 import {DocumentationComponent} from "./components/documentation/documentation.component";
 import {SettingsComponent} from "./components/settings/settings.component";
@@ -26,11 +26,5 @@ const routes: Routes = [
   {path: 'VERSION', component: VersionComponent},
 ];
 
-@NgModule({
-  imports: [
-    RouterModule.forRoot(routes),
-    HttpClientModule
-  ],
-  exports: [RouterModule]
-})
+@NgModule({ exports: [RouterModule], imports: [RouterModule.forRoot(routes)], providers: [provideHttpClient(withInterceptorsFromDi())] })
 export class AppRoutingModule { }
