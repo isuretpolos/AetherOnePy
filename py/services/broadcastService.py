@@ -4,7 +4,7 @@ import os
 import queue
 import sys
 import threading
-import time, hashlib
+import time
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from domains.aetherOneDomains import Analysis, BroadCastData

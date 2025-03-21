@@ -3,6 +3,7 @@
     <a class="navbar-brand text-light" style="margin-left: 1rem" href="#"
        [class.serverOnline]="serverOnline"
        [class.serverOffline]="!serverOnline">AetherOne<strong>Py</strong> {{version}}</a>
+
        <a *ngIf="version && remoteVersion && !version.trim().includes(remoteVersion.trim())" class="btn btn-sm btn-success" href="#VERSION">NEW VERSION AVAILABLE!</a>
        - <b style="margin-right: 1rem">{{case?.name}}</b> <span class="serverOfflineInfo" *ngIf="!serverOnline">is offline</span>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
