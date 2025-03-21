@@ -118,12 +118,12 @@ class AetherOnePy:
         # Serving the Angular UI
         @self.app.route('/')
         def index():
-            return send_from_directory('../ui/dist/ui/', 'index.html')
+            return send_from_directory('../ui/dist/ui/browser/', 'index.html')
 
         # Serving static files, like images, css, js, etc.
         @self.app.route('/<path:path>')
         def static_files(path):
-            return send_from_directory('../ui/dist/ui/', path)
+            return send_from_directory('../ui/dist/ui/browser/', path)
 
         # Reacting to the websockets connect event, in order to get the UI know you are connected
         @self.socketio.on('connect')
