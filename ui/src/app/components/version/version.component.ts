@@ -2,9 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { AetherOneService } from 'src/app/services/aether-one.service';
 
 @Component({
-  selector: 'app-version',
-  templateUrl: './version.component.html',
-  styleUrls: ['./version.component.scss']
+    selector: 'app-version',
+    templateUrl: './version.component.html',
+    styleUrls: ['./version.component.scss'],
+    standalone: false
 })
 export class VersionComponent implements OnInit {
 

@@ -3,9 +3,10 @@ import {FormControl} from "@angular/forms";
 import {environment} from "../../../environments/environment";
 
 @Component({
-  selector: 'app-rate-cards',
-  templateUrl: './rate-cards.component.html',
-  styleUrls: ['./rate-cards.component.scss']
+    selector: 'app-rate-cards',
+    templateUrl: './rate-cards.component.html',
+    styleUrls: ['./rate-cards.component.scss'],
+    standalone: false
 })
 export class RateCardsComponent implements OnInit {
 

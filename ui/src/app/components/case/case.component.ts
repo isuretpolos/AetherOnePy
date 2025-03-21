@@ -9,9 +9,10 @@ import {SqlSelect} from "../../domains/SqlSelect";
 import {ToastrService} from "ngx-toastr";
 
 @Component({
-  selector: 'app-case',
-  templateUrl: './case.component.html',
-  styleUrls: ['./case.component.scss']
+    selector: 'app-case',
+    templateUrl: './case.component.html',
+    styleUrls: ['./case.component.scss'],
+    standalone: false
 })
 export class CaseComponent implements OnInit {
   settings:any
