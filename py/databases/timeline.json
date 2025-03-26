@@ -1,0 +1,76 @@
+{
+      "title": {
+        "text": {
+          "headline": "Alchemists",
+          "text": "<p>This is a simple timeline with media and custom events.</p>"
+        }
+      },
+      "events": [
+        {
+          "start_date": {
+            "year": "1627",
+            "month": "1",
+            "day": "25"
+          },
+          "end_date": {
+            "year": "1691",
+            "month": "12",
+            "day": "1"
+          },
+          "text": {
+            "headline": "Robert Boyle",
+            "text": "<p>Anglo-Irish natural philosopher, chemist, physicist, alchemist and inventor</p>"
+          },
+          "media": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/The_Shannon_Portrait_of_the_Hon_Robert_Boyle.jpg/190px-The_Shannon_Portrait_of_the_Hon_Robert_Boyle.jpg",
+            "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a3/The_Shannon_Portrait_of_the_Hon_Robert_Boyle.jpg/190px-The_Shannon_Portrait_of_the_Hon_Robert_Boyle.jpg",
+            "caption": "<a href=\"https://en.wikipedia.org/wiki/Robert_Boyle\" target=\"new\">Robert Boyle</a>",
+            "credit": "Wikipedia"
+          }
+        },
+		{
+          "start_date": {
+            "year": "1643",
+            "month": "1",
+            "day": "4"
+          },
+          "end_date": {
+            "year": "1727",
+            "month": "3",
+            "day": "31"
+          },
+          "text": {
+            "headline": "Isaac Newton",
+            "text": "<p>English polymath active as a mathematician, physicist, astronomer, alchemist, theologian, and author</p>"
+          },
+          "media": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Portrait_of_Sir_Isaac_Newton%2C_1689_%28brightened%29.jpg/250px-Portrait_of_Sir_Isaac_Newton%2C_1689_%28brightened%29.jpg",
+            "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f7/Portrait_of_Sir_Isaac_Newton%2C_1689_%28brightened%29.jpg/250px-Portrait_of_Sir_Isaac_Newton%2C_1689_%28brightened%29.jpg",
+            "caption": "<a href=\"https://en.wikipedia.org/wiki/Isaac_Newton\" target=\"new\">Isaac Newton</a>",
+            "credit": "Wikipedia"
+          }
+        },
+		{
+          "start_date": {
+            "year": "1841",
+            "month": "11",
+            "day": "16"
+          },
+          "end_date": {
+            "year": "1923",
+            "month": "9",
+            "day": "12"
+          },
+          "text": {
+            "headline": "Fulcanelli",
+            "text": "<p>French alchemist and esoteric writer, whose identity is still debated</p>"
+          },
+          "media": {
+            "url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Frontispice_du_Myst%C3%A8re_des_cath%C3%A9drales.jpg/193px-Frontispice_du_Myst%C3%A8re_des_cath%C3%A9drales.jpg",
+            "thumbnail": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Frontispice_du_Myst%C3%A8re_des_cath%C3%A9drales.jpg/193px-Frontispice_du_Myst%C3%A8re_des_cath%C3%A9drales.jpg",
+            "caption": "<a href=\"https://en.wikipedia.org/wiki/Fulcanelli\" target=\"new\">Fulcanelli</a>",
+            "credit": "Wikipedia"
+          }
+        }
+      ]
+    }
