@@ -1,2144 +1,2152 @@
-[
-  {
-    "text": {
-      "headline": "Anqi Sheng",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Anqi_Sheng' target='new'>Anqi Sheng</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Hermes Trismegistus",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Hermes_Trismegistus' target='new'>Hermes Trismegistus</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Ostanes",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Ostanes' target='new'>Ostanes</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Nicolas Flamel",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Nicolas_Flamel' target='new'>Nicolas Flamel</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Perenelle Flamel",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Perenelle_Flamel' target='new'>Perenelle Flamel</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Christian Rosenkreuz",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Christian_Rosenkreuz' target='new'>Christian Rosenkreuz</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Abraham Eleazar",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Abraham_Eleazar' target='new'>Abraham Eleazar</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Agathodaemon",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Agathodaemon_(alchemist)' target='new'>Agathodaemon</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Chymes",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Chymes' target='new'>Chymes</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Cleopatra the Alchemist",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Cleopatra_the_Alchemist' target='new'>Cleopatra the Alchemist</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Mary the Jewess",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Mary_the_Jewess' target='new'>Mary the Jewess</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Moses of Alexandria",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Moses_of_Alexandria' target='new'>Moses of Alexandria</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Olympiodorus of Thebes",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Olympiodorus_of_Thebes' target='new'>Olympiodorus of Thebes</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Paphnutia the Virgin",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Paphnutia_the_Virgin' target='new'>Paphnutia the Virgin</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Pseudo-Aristotle",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Pseudo-Aristotle' target='new'>Pseudo-Aristotle</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Pseudo-Democritus",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Pseudo-Democritus' target='new'>Pseudo-Democritus</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Stephen of Alexandria",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Stephen_of_Alexandria' target='new'>Stephen of Alexandria</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Zosimos of Panopolis",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Zosimos_of_Panopolis' target='new'>Zosimos of Panopolis</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Kanada",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Kanada_(philosopher)' target='new'>Kanada</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Nagarjuna",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Nagarjuna_(metallurgist)' target='new'>Nagarjuna</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Yogi Vemana",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Vemana' target='new'>Yogi Vemana</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Siddhar",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Siddhar' target='new'>Siddhar</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Tamil",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Tamils' target='new'>Tamil</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Nayanmars",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Nayanmars' target='new'>Nayanmars</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Alvars",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Alvars' target='new'>Alvars</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Vallalar",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Vallalar' target='new'>Vallalar</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Arunagirinathar",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Arunagirinathar' target='new'>Arunagirinathar</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Agastiyar",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Agastiyar' target='new'>Agastiyar</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Korakkar",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Korakkar' target='new'>Korakkar</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Thirumoolar",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Thirumoolar' target='new'>Thirumoolar</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Bogar",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Bogar' target='new'>Bogar</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Kagapujandar",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Kagapujandar' target='new'>Kagapujandar</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Vaalmiki",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Vaalmiki' target='new'>Vaalmiki</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Pattinathar",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Pattinathar' target='new'>Pattinathar</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Kalangi Nathar",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Kalangi_Nathar' target='new'>Kalangi Nathar</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Pathanjali",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Pathanjali' target='new'>Pathanjali</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Naradhar",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Naradhar' target='new'>Naradhar</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Kong Anguo",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Kong_Anguo' target='new'>Kong Anguo</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Keng Hsien-Seng",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Keng_Hsien-Seng' target='new'>Keng Hsien-Seng</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Ge Hong",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Ge_Hong' target='new'>Ge Hong</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Jiajing Emperor",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Jiajing_Emperor' target='new'>Jiajing Emperor</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Liu Yiming",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Liu_Yiming' target='new'>Liu Yiming</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Pao Ku Ko",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Pao_Ku_Ko' target='new'>Pao Ku Ko</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Shen Yu Hsiu",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Shen_Yu_Hsiu' target='new'>Shen Yu Hsiu</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Sun Pu-Eh",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Sun_Pu-Eh' target='new'>Sun Pu-Eh</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Sun Simiao",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Sun_Simiao' target='new'>Sun Simiao</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Tao Hongjing",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Tao_Hongjing' target='new'>Tao Hongjing</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Wei Boyang",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Wei_Boyang' target='new'>Wei Boyang</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Xu Fu",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Xu_Fu' target='new'>Xu Fu</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Zhang Guo the Elder",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Elder_Zhang_Guo' target='new'>Zhang Guo the Elder</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Zou Yan",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Zou_Yan' target='new'>Zou Yan</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Khalid ibn Yazid",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Khalid_ibn_Yazid' target='new'>Khalid ibn Yazid</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Jabir ibn Hayyan",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Jabir_ibn_Hayyan' target='new'>Jabir ibn Hayyan</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Dhu al-Nun al-Misri",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Dhu_al-Nun_al-Misri' target='new'>Dhu al-Nun al-Misri</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Abu Bakr al-Razi",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Abu_Bakr_al-Razi' target='new'>Abu Bakr al-Razi</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Ibn Umayl",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Ibn_Umayl' target='new'>Ibn Umayl</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "al-Tughrai",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Al-Tughrai' target='new'>al-Tughrai</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Artephius",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Artephius' target='new'>Artephius</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "al-Jildaki",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Al-Jildaki' target='new'>al-Jildaki</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "edit",
-      "text": "<p><a href='https://en.wikipedia.org/w/index.php?title=List_of_alchemists&action=edit&section=6' target='new'>edit</a></p>"
-    }
-  },
-  {
-    "text": {
-      "headline": "Alain de Lille",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Alain_de_Lille' target='new'>Alain de Lille</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Albertus Magnus",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Albertus_Magnus' target='new'>Albertus Magnus</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Roger Bacon",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Roger_Bacon' target='new'>Roger Bacon</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Pseudo-Geber",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Pseudo-Geber' target='new'>Pseudo-Geber</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": " Ramon Llull (Raymond Lulli)",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Ramon_Llull' target='new'> Ramon Llull (Raymond Lulli)</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "John Dastin",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/John_Dastin' target='new'>John Dastin</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Arnold of Villanova",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Arnold_of_Villanova' target='new'>Arnold of Villanova</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Jean de Meung",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Jean_de_Meung' target='new'>Jean de Meung</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Petrus Bonus",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Petrus_Bonus' target='new'>Petrus Bonus</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Ortolanus",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Ortolanus' target='new'>Ortolanus</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Jean de Roquetaillade",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Jean_de_Roquetaillade' target='new'>Jean de Roquetaillade</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Gilles de Rais",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Gilles_de_Rais' target='new'>Gilles de Rais</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": " Bernard Trevisan (Bernard of Treves)",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Bernard_Trevisan' target='new'> Bernard Trevisan (Bernard of Treves)</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Nicholas Flamel",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Nicholas_Flamel' target='new'>Nicholas Flamel</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johann of Laz",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_of_Laz' target='new'>Johann of Laz</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "George Ripley",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/George_Ripley_(Alchemist)' target='new'>George Ripley</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "England",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/England' target='new'>England</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Thomas Norton",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Thomas_Norton_(alchemist)' target='new'>Thomas Norton</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johannes Trithemius",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johannes_Trithemius' target='new'>Johannes Trithemius</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johann Georg Faust",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Georg_Faust' target='new'>Johann Georg Faust</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Heinrich Cornelius Agrippa",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Heinrich_Cornelius_Agrippa' target='new'>Heinrich Cornelius Agrippa</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Paracelsus",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Paracelsus' target='new'>Paracelsus</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Thomas Charnock",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Thomas_Charnock' target='new'>Thomas Charnock</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "François Hotman",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Fran%C3%A7ois_Hotman' target='new'>François Hotman</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "John Dee",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/John_Dee' target='new'>John Dee</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Gerhard Dorn",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Gerhard_Dorn' target='new'>Gerhard Dorn</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Martin Ruland the Elder",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Martin_Ruland_the_Elder' target='new'>Martin Ruland the Elder</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Richard Stanihurst",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Richard_Stanihurst' target='new'>Richard Stanihurst</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Tycho Brahe",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Tycho_Brahe' target='new'>Tycho Brahe</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Samuel Norton",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Samuel_Norton_(alchemist)' target='new'>Samuel Norton</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Edward Kelley",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Edward_Kelley' target='new'>Edward Kelley</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": " Basilius Valentinus (Basil Valentine)",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Basilius_Valentinus' target='new'> Basilius Valentinus (Basil Valentine)</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Andreas Libavius",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Andreas_Libavius' target='new'>Andreas Libavius</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "François Béroalde de Verville",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Fran%C3%A7ois_B%C3%A9roalde_de_Verville' target='new'>François Béroalde de Verville</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Heinrich Khunrath",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Heinrich_Khunrath' target='new'>Heinrich Khunrath</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Oswald Croll",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Oswald_Croll' target='new'>Oswald Croll</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Melchior Cibinensis",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Melchior_Cibinensis' target='new'>Melchior Cibinensis</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Jean D'Espagnet",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Jean_D%27Espagnet' target='new'>Jean D'Espagnet</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Michael Sendivogius",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Michael_Sendivogius' target='new'>Michael Sendivogius</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Benedictus Figulus",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Benedictus_Figulus' target='new'>Benedictus Figulus</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Michael Maier",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Michael_Maier' target='new'>Michael Maier</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Martin Ruland the Younger",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Martin_Ruland_the_Younger' target='new'>Martin Ruland the Younger</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Jacob Boehme",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Jacob_Boehme' target='new'>Jacob Boehme</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Jan Baptist van Helmont",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Jan_Baptist_van_Helmont' target='new'>Jan Baptist van Helmont</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Arthur Dee",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Arthur_Dee' target='new'>Arthur Dee</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johann Daniel Mylius",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Daniel_Mylius' target='new'>Johann Daniel Mylius</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johannes Valentinus Andreae",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johannes_Valentinus_Andreae' target='new'>Johannes Valentinus Andreae</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johann Moriaen",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Moriaen' target='new'>Johann Moriaen</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "William Backhouse",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/William_Backhouse' target='new'>William Backhouse</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Baro Urbigerus",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Baro_Urbigerus' target='new'>Baro Urbigerus</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Ali Puli",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Ali_Puli' target='new'>Ali Puli</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Daniel Stolz von Stolzenberg",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Daniel_Stolz_von_Stolzenberg' target='new'>Daniel Stolz von Stolzenberg</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johannes Nicolaus Furichius",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johannes_Nicolaus_Furichius' target='new'>Johannes Nicolaus Furichius</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Edward Dyer",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Edward_Dyer' target='new'>Edward Dyer</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Basset Jhones",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Basset_Jhones' target='new'>Basset Jhones</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Elias Ashmole",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Elias_Ashmole' target='new'>Elias Ashmole</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Thomas Henshaw",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Thomas_Henshaw_(alchemist)' target='new'>Thomas Henshaw</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Thomas Vaughan",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Thomas_Vaughan_(philosopher)' target='new'>Thomas Vaughan</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Edmund Dickinson",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Edmund_Dickinson' target='new'>Edmund Dickinson</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johann Friedrich Schweitzer",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Friedrich_Schweitzer' target='new'>Johann Friedrich Schweitzer</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Frederick Clod",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Frederick_Clod' target='new'>Frederick Clod</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Giuseppe Francesco Borri",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Giuseppe_Francesco_Borri' target='new'>Giuseppe Francesco Borri</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Robert Boyle",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Robert_Boyle' target='new'>Robert Boyle</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "George Starkey (alchemist)",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/George_Starkey_(alchemist)' target='new'>George Starkey (alchemist)</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Hening Brand",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Hening_Brand' target='new'>Hening Brand</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johann Kunckel",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Kunckel' target='new'>Johann Kunckel</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johann Joachim Becher",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Joachim_Becher' target='new'>Johann Joachim Becher</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Isaac Newton",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Isaac_Newton' target='new'>Isaac Newton</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Claude Duval",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Claude_Duval' target='new'>Claude Duval</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Dionysius Andreas Freher",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Dionysius_Andreas_Freher' target='new'>Dionysius Andreas Freher</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Georg von Welling",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Georg_von_Welling' target='new'>Georg von Welling</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johann Konrad Dippel",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Konrad_Dippel' target='new'>Johann Konrad Dippel</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Comte de Saint Germain",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Comte_de_Saint_Germain' target='new'>Comte de Saint Germain</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Anton Josef Kirchweger",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Anton_Josef_Kirchweger' target='new'>Anton Josef Kirchweger</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Alessandro Cagliostro",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Alessandro_Cagliostro' target='new'>Alessandro Cagliostro</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "James Price",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/James_Price_(chemist)' target='new'>James Price</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johann Christoph von Wöllner",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Christoph_von_W%C3%B6llner' target='new'>Johann Christoph von Wöllner</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "August Nordenskiold",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/August_Nordenskiold' target='new'>August Nordenskiold</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "August Strindberg",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/August_Strindberg' target='new'>August Strindberg</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Giuliano Kremmerz",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Giuliano_Kremmerz' target='new'>Giuliano Kremmerz</a></p>"
-    },
-    "start_date": {
-      "year": "1128"
-    },
-    "end_date": {
-      "year": "1202"
-    }
-  },
-  {
-    "text": {
-      "headline": "Johann Georg Rapp",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Georg_Rapp' target='new'>Johann Georg Rapp</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Mary Anne Atwood",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Mary_Anne_Atwood' target='new'>Mary Anne Atwood</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Rudolf von Sebottendorf",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Rudolf_von_Sebottendorf' target='new'>Rudolf von Sebottendorf</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Oscar Vladislas de Lubicz Milosz",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Oscar_Vladislas_de_Lubicz-Milosz' target='new'>Oscar Vladislas de Lubicz Milosz</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "R.A. Schwaller de Lubicz",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/R.A._Schwaller_de_Lubicz' target='new'>R.A. Schwaller de Lubicz</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Eugène Canseliet",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Eug%C3%A8ne_Canseliet' target='new'>Eugène Canseliet</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Fulcanelli",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Fulcanelli' target='new'>Fulcanelli</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Franz Bardon",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Franz_Bardon' target='new'>Franz Bardon</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Frater Albertus",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Frater_Albertus' target='new'>Frater Albertus</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Jean Dubuis",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Jean_Dubuis' target='new'>Jean Dubuis</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Terrence McKenna",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Terrence_McKenna' target='new'>Terrence McKenna</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Franz Tausend",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Franz_Tausend' target='new'>Franz Tausend</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Robert of Chester",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Robert_of_Chester' target='new'>Robert of Chester</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Giambattista della Porta",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Giambattista_della_Porta' target='new'>Giambattista della Porta</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Ethan A. Hitchcock (general)",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Ethan_A._Hitchcock_(general)' target='new'>Ethan A. Hitchcock (general)</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Marcellin Berthelot",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Marcellin_Berthelot' target='new'>Marcellin Berthelot</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "M. M. Pattison Muir",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/M._M._Pattison_Muir' target='new'>M. M. Pattison Muir</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "F. Sherwood Taylor",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/F._Sherwood_Taylor' target='new'>F. Sherwood Taylor</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Edmund Oscar von Lippmann",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Edmund_Oscar_von_Lippmann' target='new'>Edmund Oscar von Lippmann</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Arthur Edward Waite",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Arthur_Edward_Waite' target='new'>Arthur Edward Waite</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Richard Wilhelm (sinologist)",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Richard_Wilhelm_(sinologist)' target='new'>Richard Wilhelm (sinologist)</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Carl Jung",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Carl_Jung' target='new'>Carl Jung</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Obed Simon Johnson",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Obed_Simon_Johnson' target='new'>Obed Simon Johnson</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Herbert Silberer",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Herbert_Silberer' target='new'>Herbert Silberer</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Manly P. Hall",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Manly_P._Hall' target='new'>Manly P. Hall</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Titus Burckhardt",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Titus_Burckhardt' target='new'>Titus Burckhardt</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Marie-Louise von Franz",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Marie-Louise_von_Franz' target='new'>Marie-Louise von Franz</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Serge Hutin",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Serge_Hutin' target='new'>Serge Hutin</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Antoine Faivre",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Antoine_Faivre' target='new'>Antoine Faivre</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Joost Ritman",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Joost_Ritman' target='new'>Joost Ritman</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Adam McLean",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Adam_McLean' target='new'>Adam McLean</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Nicholas Goodrick-Clarke",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Nicholas_Goodrick-Clarke' target='new'>Nicholas Goodrick-Clarke</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "William R. Newman",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/William_R._Newman' target='new'>William R. Newman</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Fabrizio Pregadio",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Fabrizio_Pregadio' target='new'>Fabrizio Pregadio</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Lawrence M. Principe",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Lawrence_M._Principe' target='new'>Lawrence M. Principe</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Wouter Hanegraaff",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Wouter_Hanegraaff' target='new'>Wouter Hanegraaff</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Rudolf II, Holy Roman Emperor",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Rudolf_II,_Holy_Roman_Emperor' target='new'>Rudolf II, Holy Roman Emperor</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Qin Shi Huang",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Qin_Shi_Huang' target='new'>Qin Shi Huang</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
-  },
-  {
-    "text": {
-      "headline": "Yongzheng Emperor",
-      "text": "<p><a href='https://en.wikipedia.org/wiki/Yongzheng_Emperor' target='new'>Yongzheng Emperor</a></p>"
-    },
-    "start_date": {
-      "year": "283"
-    },
-    "end_date": {
-      "year": "343"
-    }
+{
+    "title": {
+      "text": {
+        "headline": "Alchemists",
+        "text": "<p>This is a simple timeline with media and custom events.</p>"
+      }
+    },
+    "events": [
+        {
+          "text": {
+            "headline": "Anqi Sheng",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Anqi_Sheng' target='new'>Anqi Sheng</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Hermes Trismegistus",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Hermes_Trismegistus' target='new'>Hermes Trismegistus</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Ostanes",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Ostanes' target='new'>Ostanes</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Nicolas Flamel",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Nicolas_Flamel' target='new'>Nicolas Flamel</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Perenelle Flamel",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Perenelle_Flamel' target='new'>Perenelle Flamel</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Christian Rosenkreuz",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Christian_Rosenkreuz' target='new'>Christian Rosenkreuz</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Abraham Eleazar",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Abraham_Eleazar' target='new'>Abraham Eleazar</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Agathodaemon",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Agathodaemon_(alchemist)' target='new'>Agathodaemon</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Chymes",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Chymes' target='new'>Chymes</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Cleopatra the Alchemist",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Cleopatra_the_Alchemist' target='new'>Cleopatra the Alchemist</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Mary the Jewess",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Mary_the_Jewess' target='new'>Mary the Jewess</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Moses of Alexandria",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Moses_of_Alexandria' target='new'>Moses of Alexandria</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Olympiodorus of Thebes",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Olympiodorus_of_Thebes' target='new'>Olympiodorus of Thebes</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Paphnutia the Virgin",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Paphnutia_the_Virgin' target='new'>Paphnutia the Virgin</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Pseudo-Aristotle",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Pseudo-Aristotle' target='new'>Pseudo-Aristotle</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Pseudo-Democritus",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Pseudo-Democritus' target='new'>Pseudo-Democritus</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Stephen of Alexandria",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Stephen_of_Alexandria' target='new'>Stephen of Alexandria</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Zosimos of Panopolis",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Zosimos_of_Panopolis' target='new'>Zosimos of Panopolis</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Kanada",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Kanada_(philosopher)' target='new'>Kanada</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Nagarjuna",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Nagarjuna_(metallurgist)' target='new'>Nagarjuna</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Yogi Vemana",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Vemana' target='new'>Yogi Vemana</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Siddhar",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Siddhar' target='new'>Siddhar</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Tamil",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Tamils' target='new'>Tamil</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Nayanmars",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Nayanmars' target='new'>Nayanmars</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Alvars",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Alvars' target='new'>Alvars</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Vallalar",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Vallalar' target='new'>Vallalar</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Arunagirinathar",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Arunagirinathar' target='new'>Arunagirinathar</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Agastiyar",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Agastiyar' target='new'>Agastiyar</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Korakkar",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Korakkar' target='new'>Korakkar</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Thirumoolar",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Thirumoolar' target='new'>Thirumoolar</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Bogar",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Bogar' target='new'>Bogar</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Kagapujandar",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Kagapujandar' target='new'>Kagapujandar</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Vaalmiki",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Vaalmiki' target='new'>Vaalmiki</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Pattinathar",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Pattinathar' target='new'>Pattinathar</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Kalangi Nathar",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Kalangi_Nathar' target='new'>Kalangi Nathar</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Pathanjali",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Pathanjali' target='new'>Pathanjali</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Naradhar",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Naradhar' target='new'>Naradhar</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Kong Anguo",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Kong_Anguo' target='new'>Kong Anguo</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Keng Hsien-Seng",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Keng_Hsien-Seng' target='new'>Keng Hsien-Seng</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Ge Hong",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Ge_Hong' target='new'>Ge Hong</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Jiajing Emperor",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Jiajing_Emperor' target='new'>Jiajing Emperor</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Liu Yiming",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Liu_Yiming' target='new'>Liu Yiming</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Pao Ku Ko",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Pao_Ku_Ko' target='new'>Pao Ku Ko</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Shen Yu Hsiu",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Shen_Yu_Hsiu' target='new'>Shen Yu Hsiu</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Sun Pu-Eh",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Sun_Pu-Eh' target='new'>Sun Pu-Eh</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Sun Simiao",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Sun_Simiao' target='new'>Sun Simiao</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Tao Hongjing",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Tao_Hongjing' target='new'>Tao Hongjing</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Wei Boyang",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Wei_Boyang' target='new'>Wei Boyang</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Xu Fu",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Xu_Fu' target='new'>Xu Fu</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Zhang Guo the Elder",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Elder_Zhang_Guo' target='new'>Zhang Guo the Elder</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Zou Yan",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Zou_Yan' target='new'>Zou Yan</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Khalid ibn Yazid",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Khalid_ibn_Yazid' target='new'>Khalid ibn Yazid</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Jabir ibn Hayyan",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Jabir_ibn_Hayyan' target='new'>Jabir ibn Hayyan</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Dhu al-Nun al-Misri",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Dhu_al-Nun_al-Misri' target='new'>Dhu al-Nun al-Misri</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Abu Bakr al-Razi",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Abu_Bakr_al-Razi' target='new'>Abu Bakr al-Razi</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Ibn Umayl",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Ibn_Umayl' target='new'>Ibn Umayl</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "al-Tughrai",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Al-Tughrai' target='new'>al-Tughrai</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Artephius",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Artephius' target='new'>Artephius</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "al-Jildaki",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Al-Jildaki' target='new'>al-Jildaki</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "edit",
+            "text": "<p><a href='https://en.wikipedia.org/w/index.php?title=List_of_alchemists&action=edit&section=6' target='new'>edit</a></p>"
+          }
+        },
+        {
+          "text": {
+            "headline": "Alain de Lille",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Alain_de_Lille' target='new'>Alain de Lille</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Albertus Magnus",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Albertus_Magnus' target='new'>Albertus Magnus</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Roger Bacon",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Roger_Bacon' target='new'>Roger Bacon</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Pseudo-Geber",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Pseudo-Geber' target='new'>Pseudo-Geber</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": " Ramon Llull (Raymond Lulli)",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Ramon_Llull' target='new'> Ramon Llull (Raymond Lulli)</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "John Dastin",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/John_Dastin' target='new'>John Dastin</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Arnold of Villanova",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Arnold_of_Villanova' target='new'>Arnold of Villanova</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Jean de Meung",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Jean_de_Meung' target='new'>Jean de Meung</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Petrus Bonus",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Petrus_Bonus' target='new'>Petrus Bonus</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Ortolanus",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Ortolanus' target='new'>Ortolanus</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Jean de Roquetaillade",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Jean_de_Roquetaillade' target='new'>Jean de Roquetaillade</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Gilles de Rais",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Gilles_de_Rais' target='new'>Gilles de Rais</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": " Bernard Trevisan (Bernard of Treves)",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Bernard_Trevisan' target='new'> Bernard Trevisan (Bernard of Treves)</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Nicholas Flamel",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Nicholas_Flamel' target='new'>Nicholas Flamel</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johann of Laz",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_of_Laz' target='new'>Johann of Laz</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "George Ripley",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/George_Ripley_(Alchemist)' target='new'>George Ripley</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "England",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/England' target='new'>England</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Thomas Norton",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Thomas_Norton_(alchemist)' target='new'>Thomas Norton</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johannes Trithemius",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johannes_Trithemius' target='new'>Johannes Trithemius</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johann Georg Faust",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Georg_Faust' target='new'>Johann Georg Faust</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Heinrich Cornelius Agrippa",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Heinrich_Cornelius_Agrippa' target='new'>Heinrich Cornelius Agrippa</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Paracelsus",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Paracelsus' target='new'>Paracelsus</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Thomas Charnock",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Thomas_Charnock' target='new'>Thomas Charnock</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "François Hotman",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Fran%C3%A7ois_Hotman' target='new'>François Hotman</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "John Dee",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/John_Dee' target='new'>John Dee</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Gerhard Dorn",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Gerhard_Dorn' target='new'>Gerhard Dorn</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Martin Ruland the Elder",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Martin_Ruland_the_Elder' target='new'>Martin Ruland the Elder</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Richard Stanihurst",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Richard_Stanihurst' target='new'>Richard Stanihurst</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Tycho Brahe",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Tycho_Brahe' target='new'>Tycho Brahe</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Samuel Norton",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Samuel_Norton_(alchemist)' target='new'>Samuel Norton</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Edward Kelley",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Edward_Kelley' target='new'>Edward Kelley</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": " Basilius Valentinus (Basil Valentine)",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Basilius_Valentinus' target='new'> Basilius Valentinus (Basil Valentine)</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Andreas Libavius",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Andreas_Libavius' target='new'>Andreas Libavius</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "François Béroalde de Verville",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Fran%C3%A7ois_B%C3%A9roalde_de_Verville' target='new'>François Béroalde de Verville</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Heinrich Khunrath",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Heinrich_Khunrath' target='new'>Heinrich Khunrath</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Oswald Croll",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Oswald_Croll' target='new'>Oswald Croll</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Melchior Cibinensis",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Melchior_Cibinensis' target='new'>Melchior Cibinensis</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Jean D'Espagnet",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Jean_D%27Espagnet' target='new'>Jean D'Espagnet</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Michael Sendivogius",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Michael_Sendivogius' target='new'>Michael Sendivogius</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Benedictus Figulus",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Benedictus_Figulus' target='new'>Benedictus Figulus</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Michael Maier",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Michael_Maier' target='new'>Michael Maier</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Martin Ruland the Younger",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Martin_Ruland_the_Younger' target='new'>Martin Ruland the Younger</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Jacob Boehme",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Jacob_Boehme' target='new'>Jacob Boehme</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Jan Baptist van Helmont",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Jan_Baptist_van_Helmont' target='new'>Jan Baptist van Helmont</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Arthur Dee",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Arthur_Dee' target='new'>Arthur Dee</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johann Daniel Mylius",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Daniel_Mylius' target='new'>Johann Daniel Mylius</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johannes Valentinus Andreae",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johannes_Valentinus_Andreae' target='new'>Johannes Valentinus Andreae</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johann Moriaen",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Moriaen' target='new'>Johann Moriaen</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "William Backhouse",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/William_Backhouse' target='new'>William Backhouse</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Baro Urbigerus",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Baro_Urbigerus' target='new'>Baro Urbigerus</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Ali Puli",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Ali_Puli' target='new'>Ali Puli</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Daniel Stolz von Stolzenberg",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Daniel_Stolz_von_Stolzenberg' target='new'>Daniel Stolz von Stolzenberg</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johannes Nicolaus Furichius",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johannes_Nicolaus_Furichius' target='new'>Johannes Nicolaus Furichius</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Edward Dyer",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Edward_Dyer' target='new'>Edward Dyer</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Basset Jhones",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Basset_Jhones' target='new'>Basset Jhones</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Elias Ashmole",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Elias_Ashmole' target='new'>Elias Ashmole</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Thomas Henshaw",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Thomas_Henshaw_(alchemist)' target='new'>Thomas Henshaw</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Thomas Vaughan",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Thomas_Vaughan_(philosopher)' target='new'>Thomas Vaughan</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Edmund Dickinson",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Edmund_Dickinson' target='new'>Edmund Dickinson</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johann Friedrich Schweitzer",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Friedrich_Schweitzer' target='new'>Johann Friedrich Schweitzer</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Frederick Clod",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Frederick_Clod' target='new'>Frederick Clod</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Giuseppe Francesco Borri",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Giuseppe_Francesco_Borri' target='new'>Giuseppe Francesco Borri</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Robert Boyle",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Robert_Boyle' target='new'>Robert Boyle</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "George Starkey (alchemist)",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/George_Starkey_(alchemist)' target='new'>George Starkey (alchemist)</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Hening Brand",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Hening_Brand' target='new'>Hening Brand</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johann Kunckel",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Kunckel' target='new'>Johann Kunckel</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johann Joachim Becher",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Joachim_Becher' target='new'>Johann Joachim Becher</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Isaac Newton",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Isaac_Newton' target='new'>Isaac Newton</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Claude Duval",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Claude_Duval' target='new'>Claude Duval</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Dionysius Andreas Freher",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Dionysius_Andreas_Freher' target='new'>Dionysius Andreas Freher</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Georg von Welling",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Georg_von_Welling' target='new'>Georg von Welling</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johann Konrad Dippel",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Konrad_Dippel' target='new'>Johann Konrad Dippel</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Comte de Saint Germain",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Comte_de_Saint_Germain' target='new'>Comte de Saint Germain</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Anton Josef Kirchweger",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Anton_Josef_Kirchweger' target='new'>Anton Josef Kirchweger</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Alessandro Cagliostro",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Alessandro_Cagliostro' target='new'>Alessandro Cagliostro</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "James Price",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/James_Price_(chemist)' target='new'>James Price</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johann Christoph von Wöllner",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Christoph_von_W%C3%B6llner' target='new'>Johann Christoph von Wöllner</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "August Nordenskiold",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/August_Nordenskiold' target='new'>August Nordenskiold</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "August Strindberg",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/August_Strindberg' target='new'>August Strindberg</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Giuliano Kremmerz",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Giuliano_Kremmerz' target='new'>Giuliano Kremmerz</a></p>"
+          },
+          "start_date": {
+            "year": "1128"
+          },
+          "end_date": {
+            "year": "1202"
+          }
+        },
+        {
+          "text": {
+            "headline": "Johann Georg Rapp",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Johann_Georg_Rapp' target='new'>Johann Georg Rapp</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Mary Anne Atwood",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Mary_Anne_Atwood' target='new'>Mary Anne Atwood</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Rudolf von Sebottendorf",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Rudolf_von_Sebottendorf' target='new'>Rudolf von Sebottendorf</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Oscar Vladislas de Lubicz Milosz",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Oscar_Vladislas_de_Lubicz-Milosz' target='new'>Oscar Vladislas de Lubicz Milosz</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "R.A. Schwaller de Lubicz",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/R.A._Schwaller_de_Lubicz' target='new'>R.A. Schwaller de Lubicz</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Eugène Canseliet",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Eug%C3%A8ne_Canseliet' target='new'>Eugène Canseliet</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Fulcanelli",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Fulcanelli' target='new'>Fulcanelli</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Franz Bardon",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Franz_Bardon' target='new'>Franz Bardon</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Frater Albertus",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Frater_Albertus' target='new'>Frater Albertus</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Jean Dubuis",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Jean_Dubuis' target='new'>Jean Dubuis</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Terrence McKenna",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Terrence_McKenna' target='new'>Terrence McKenna</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Franz Tausend",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Franz_Tausend' target='new'>Franz Tausend</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Robert of Chester",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Robert_of_Chester' target='new'>Robert of Chester</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Giambattista della Porta",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Giambattista_della_Porta' target='new'>Giambattista della Porta</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Ethan A. Hitchcock (general)",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Ethan_A._Hitchcock_(general)' target='new'>Ethan A. Hitchcock (general)</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Marcellin Berthelot",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Marcellin_Berthelot' target='new'>Marcellin Berthelot</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "M. M. Pattison Muir",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/M._M._Pattison_Muir' target='new'>M. M. Pattison Muir</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "F. Sherwood Taylor",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/F._Sherwood_Taylor' target='new'>F. Sherwood Taylor</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Edmund Oscar von Lippmann",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Edmund_Oscar_von_Lippmann' target='new'>Edmund Oscar von Lippmann</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Arthur Edward Waite",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Arthur_Edward_Waite' target='new'>Arthur Edward Waite</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Richard Wilhelm (sinologist)",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Richard_Wilhelm_(sinologist)' target='new'>Richard Wilhelm (sinologist)</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Carl Jung",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Carl_Jung' target='new'>Carl Jung</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Obed Simon Johnson",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Obed_Simon_Johnson' target='new'>Obed Simon Johnson</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Herbert Silberer",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Herbert_Silberer' target='new'>Herbert Silberer</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Manly P. Hall",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Manly_P._Hall' target='new'>Manly P. Hall</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Titus Burckhardt",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Titus_Burckhardt' target='new'>Titus Burckhardt</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Marie-Louise von Franz",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Marie-Louise_von_Franz' target='new'>Marie-Louise von Franz</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Serge Hutin",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Serge_Hutin' target='new'>Serge Hutin</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Antoine Faivre",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Antoine_Faivre' target='new'>Antoine Faivre</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Joost Ritman",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Joost_Ritman' target='new'>Joost Ritman</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Adam McLean",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Adam_McLean' target='new'>Adam McLean</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Nicholas Goodrick-Clarke",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Nicholas_Goodrick-Clarke' target='new'>Nicholas Goodrick-Clarke</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "William R. Newman",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/William_R._Newman' target='new'>William R. Newman</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Fabrizio Pregadio",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Fabrizio_Pregadio' target='new'>Fabrizio Pregadio</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Lawrence M. Principe",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Lawrence_M._Principe' target='new'>Lawrence M. Principe</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Wouter Hanegraaff",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Wouter_Hanegraaff' target='new'>Wouter Hanegraaff</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Rudolf II, Holy Roman Emperor",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Rudolf_II,_Holy_Roman_Emperor' target='new'>Rudolf II, Holy Roman Emperor</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Qin Shi Huang",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Qin_Shi_Huang' target='new'>Qin Shi Huang</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        },
+        {
+          "text": {
+            "headline": "Yongzheng Emperor",
+            "text": "<p><a href='https://en.wikipedia.org/wiki/Yongzheng_Emperor' target='new'>Yongzheng Emperor</a></p>"
+          },
+          "start_date": {
+            "year": "283"
+          },
+          "end_date": {
+            "year": "343"
+          }
+        }
+      ]
   }
-]
