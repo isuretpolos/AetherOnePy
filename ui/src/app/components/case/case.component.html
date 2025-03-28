@@ -1,5 +1,5 @@
 <div style="text-align: left; width: 90%!important; margin: 0.3rem;" class="container-fluid">
-  <h1 class="display-5 fw-bold">{{case.name}}</h1>
+  <h1 class="display-5 fw-bold">{{case.name}}</h1><button class="btn btn-danger btn-sm" (click)="deleteCase(case.id)">DELETE</button>
   <p>{{case.description }}</p>
   <button data-bs-toggle="modal" data-bs-target="#sessionModal" class="btn btn-sm btn-primary" (click)="resetSessionData()">NEW SESSION</button>
   <hr>
@@ -144,7 +144,8 @@
   <div *ngFor="let session of sessions" class="text-primary-emphasis" id="sessionsCollapse">
     <span class="badge text-bg-primary">{{session.created | date: 'short'}}</span>
     <button (click)="showSessionDetails(session)" class="btn btn-success"
-            style="--bs-btn-padding-y: .012rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .625rem; margin-left: 0.25rem">
+            style="--bs-btn-padding-y: .012rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .625rem; margin-left: 0.25rem" data-bs-toggle="modal"
+            data-bs-target="#sessionModal">
       SHOW DETAILS
     </button>
     <button (click)="deleteSession(session.id)" class="btn btn-danger"
@@ -252,9 +253,34 @@
           <label for="sessionIntention">Intention</label>
         </div>
 
+        <div *ngIf="historicalAnalysisList.length > 0">
+          <div class="shadow" style="margin-top: 1rem" *ngFor="let analysis of historicalAnalysisList">
+            <p>{{analysis.note}}</p>
+            <p>General vitality: {{analysis.target_gv}}</p>
+            <table class="table table-sm table-hover">
+              <thead class="table-light">
+              <tr>
+                <th>POS</th>
+                <th>EV</th>
+                <th>RATE / SIGNATURE</th>
+                <th>GV</th>
+              </tr>
+              </thead>
+              <tbody>
+              <tr *ngFor="let rate of analysis.rateObjects; let i = index">
+                <td>{{i+1}}</td>
+                <td>{{rate.energetic_value}}</td>
+                <td>{{rate.signature}}</td>
+                <td class="{{getRateClass(analysis.target_gv, rate.gv)}}">{{rate.gv}}</td>
+              </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-success" (click)="newSession()" data-bs-dismiss="modal">SAVE</button>
+        <button *ngIf="historicalAnalysisList.length == 0" type="button" class="btn btn-success" (click)="newSession()" data-bs-dismiss="modal">SAVE</button>
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>

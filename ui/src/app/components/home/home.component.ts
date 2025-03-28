@@ -6,6 +6,7 @@ import {Title} from "@angular/platform-browser";
 import {ActivatedRoute, Router} from "@angular/router";
 import {SqlSelect} from "../../domains/SqlSelect";
 import {PlanetaryCalendar, PlanetaryInfo} from "../../domains/Planetary";
+import {ToastrService} from "ngx-toastr";
 
 @Component({
     selector: 'app-home',
@@ -31,7 +32,8 @@ export class HomeComponent implements OnInit {
     private aetherOne:AetherOneService,
     private titleService: Title,
     private router: Router,
-    private route: ActivatedRoute,) {
+    private route: ActivatedRoute,
+    private toastr: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -59,11 +61,11 @@ export class HomeComponent implements OnInit {
     this.case.email = this.email?.value
     this.case.color = this.color?.value
     console.log(this.case)
-    this.aetherOne.saveNewCase(this.case).subscribe(c => {
+    this.aetherOne.saveNewCase(this.case).subscribe( {next: c => {
       this.case = c
       this.titleService.setTitle(c.name)
       this.loadCases()
-  })
+  }, error: e => this.toastr.error(e.error.message)})
   }
 
   selectCase(caseObj: Case) {
@@ -73,4 +75,11 @@ export class HomeComponent implements OnInit {
    }
 
   protected readonly length = length;
+
+  resetNewCaseData() {
+    this.name.setValue('')
+    this.description.setValue('')
+    this.email.setValue('')
+    this.color.setValue('#000000')
+  }
 }

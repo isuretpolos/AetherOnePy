@@ -7,6 +7,7 @@ import {FolderStructure} from "../../domains/Files";
 import {FormControl} from "@angular/forms";
 import {SqlSelect} from "../../domains/SqlSelect";
 import {ToastrService} from "ngx-toastr";
+import {ActivatedRoute, Router} from "@angular/router";
 
 @Component({
     selector: 'app-case',
@@ -21,6 +22,7 @@ export class CaseComponent implements OnInit {
   session:Session|undefined
   analysis:Analysis|undefined
   analysisList:Analysis[] = []
+  historicalAnalysisList:Analysis[] = []
   catalogs:Catalog[] = []
   selectedCatalog:Catalog|undefined
   folderStructure: FolderStructure | null = null
@@ -34,7 +36,11 @@ export class CaseComponent implements OnInit {
   broadcastResult:SqlSelect|undefined
   averageRates:SqlSelect|undefined
 
-  constructor(private aetherOne:AetherOneService,private toastr:ToastrService) {}
+  constructor(
+    private aetherOne:AetherOneService,
+    private toastr:ToastrService,
+    private router: Router,
+    private route: ActivatedRoute) {}
 
   ngOnInit(): void {
     this.aetherOne.loadSettings().subscribe(s => this.settings = s )
@@ -176,7 +182,12 @@ export class CaseComponent implements OnInit {
   }
 
   showSessionDetails(session: Session) {
-    console.log("not yet implemented")
+    this.aetherOne.loadAnalysisList(session.id).subscribe( a => {
+      this.historicalAnalysisList = a
+      this.historicalAnalysisList.forEach( analysis => {
+        this.aetherOne.loadRatesForAnalysis(analysis.id).subscribe(rates => analysis.rateObjects = rates)
+      })
+    })
   }
 
   saveAnalysisNote() {
@@ -226,5 +237,14 @@ export class CaseComponent implements OnInit {
   stopAllBroadcasts() {
     console.log("try to stop")
     this.aetherOne.stopAllBroadcasts().subscribe( ()=> console.log("broadcasts stopped"))
+  }
+
+  deleteCase(id: number) {
+    if (confirm("Are you sure you want to delete this case?")) {
+      this.aetherOne.deleteCase(id).subscribe(() => {
+        this.toastr.success("Case deleted");
+        this.router.navigate(['HOME']);
+      })
+    }
   }
 }

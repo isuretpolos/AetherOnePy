@@ -44,7 +44,7 @@ class CaseDAO:
         case_query = '''
         CREATE TABLE IF NOT EXISTS cases (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT,
+            name TEXT UNIQUE,
             email TEXT,
             color TEXT,
             description TEXT,
@@ -206,6 +206,13 @@ class CaseDAO:
         return rates
 
     def insert_case(self, case: Case):
+
+        cursor = self.conn.cursor()
+        cursor.execute('SELECT id FROM cases WHERE name = ?', (case.name,))
+        row = cursor.fetchone()
+        if row:
+            return row[0]
+
         query = '''
         INSERT INTO cases (name, email, color, description, created, last_change)
         VALUES (?, ?, ?, ?, datetime('now'), datetime('now'))

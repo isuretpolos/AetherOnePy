@@ -242,6 +242,10 @@ class AetherOnePy:
                 response_data = json.dumps(allCases, ensure_ascii=False)
                 return Response(response_data, content_type='application/json; charset=utf-8')
 
+            if request.method == 'DELETE':
+                self.aetherOneDB.delete_case(int(request.args.get('id')))
+                return jsonify({'message': 'Case deleted successfully'}), 200
+
             return "NOT IMPLEMENTED"
 
         # CRUD operations for sessions

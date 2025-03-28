@@ -77,6 +77,7 @@ alias ll='ls -la'
 ```
 
 # History
+- 2025-03-28 Show historical session details
 - 2025-02-07 Broadcast of Hashed Signatures
 - 2025-01-04 Session handling and Analysis works
 - 2024-12-04 SQLlite Database Design
@@ -93,3 +94,4 @@ alias ll='ls -la'
 - https://modelviewer.dev/
 - https://neumorphism.io/#e0e0e0
 - https://uiverse.io/
+- https://threejs.org/

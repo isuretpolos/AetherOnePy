@@ -56,6 +56,10 @@ export class AetherOneService {
     return this.http.get<Case[]>(`${this.baseUrl}case`)
   }
 
+  deleteCase(id:number):Observable<any> {
+    return this.http.delete<any>(`${this.baseUrl}case?id=${id}`)
+  }
+
   loadAllSessions(caseId:number):Observable<Session[]> {
     return this.http.get<Session[]>(`${this.baseUrl}session?caseId=${caseId}`)
   }
