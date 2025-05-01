@@ -450,6 +450,20 @@ class AetherOnePy:
 
             return "NOT IMPLEMENTED"
 
+        @self.app.route('/openAiModels', methods=['GET'])
+        def openAiModels():
+            openAiKey = self.aetherOneDB.get_setting('openAiKey')
+            if openAiKey is None:
+                return jsonify({'error': 'No OpenAI key found'}), 500
+            client = OpenAI(api_key=openAiKey)
+            try:
+                models = client.models.list()
+                print(models)
+                model_names = [model.id for model in models.data]
+                return jsonify(model_names)
+            except Exception as e:
+                return jsonify({"error": str(e)}), 500
+
         @self.app.route('/openAiInterpretation', methods=['POST'])
         def openAiInterpretation():
             openAiKey = self.aetherOneDB.get_setting('openAiKey')
@@ -463,7 +477,7 @@ class AetherOnePy:
             try:
                 print(user_prompt)
                 response = client.chat.completions.create(
-                    model="gpt-4o",
+                    model="chatgpt-4o-latest",
                     messages=[
                         {"role": "system", "content": self.aetherOneDB.get_setting('openAiSystemContent')},
                         {"role": "user", "content": user_prompt}
