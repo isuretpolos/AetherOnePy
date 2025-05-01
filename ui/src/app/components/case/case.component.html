@@ -105,6 +105,8 @@
       <br/>
       <p>
         <button *ngIf="analyzeNote.getRawValue().length > 0" (click)="saveAnalysisNote()" class="btn btn-sm btn-primary smallerButton">SAVE NOTE</button>
+        <button *ngIf="analysis && settings['openAiKey']" class="btn btn-sm btn-primary smallerButton" (click)="openAiInterpretation()">OPENAI INTERPRETATION<span *ngIf="waitingForOpenAiInterpretation"> (please wait)</span> </button>
+        <button *ngIf="analysis" class="btn btn-sm btn-success smallerButton" (click)="aiInterpetationAsText()">COPY DATA TO CLIPBOARD</button>
         <button class="btn btn-sm btn-success smallerButton" (click)="broadcastAll()">BROADCAST MIX</button>
         <button class="btn btn-sm btn-danger smallerButton" (click)="stopAllBroadcasts()">STOP ALL BROADCASTS</button>
         <button class="btn btn-sm btn-success smallerButton">AUTO MODE ON</button>
@@ -117,7 +119,7 @@
       <hr>
       <h3 *ngIf="analysisList.length > 0">History of analysis</h3>
       <div class="shadow" style="margin-top: 1rem" *ngFor="let analysis of analysisList">
-        <p>{{analysis.note}}</p>
+        <pre>{{analysis.note}}</pre>
         <p>General vitality: {{analysis.target_gv}}</p>
         <table class="table table-sm table-hover">
           <thead class="table-light">

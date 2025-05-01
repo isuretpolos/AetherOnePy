@@ -18,7 +18,8 @@ required_packages = [
     'eventlet',
     'scipy',
     'sphinx',
-    'sphinx_rtd_theme'
+    'sphinx_rtd_theme',
+    'openai'
 ]
 
 # TODO: get the list for dependecies from the requirements.txt file

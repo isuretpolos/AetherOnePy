@@ -97,7 +97,25 @@
   </div>
 </div>
 
-<div class="card text-bg-success p-3" style="margin-top: 1rem">
+<div class="card text-bg-primary p-3" style="margin-top: 1rem; margin-bottom: 1rem">
+  <div class="card-body">
+    <h5 class="card-title">Interpretation of Analysis</h5>
+    <p class="card-text">You can use <strong><a href="https://www.youtube.com/watch?v=OB99E7Y1cMA" target="openAI">OpenAI API</a></strong>, but this requires a key and an account.</p>
+    <p class="card-text">The OpenAI system content description (general purpose).</p>
+    <p><textarea [formControl]="openAiSystemContent" class="form-control" id="openAiSystemContent"></textarea></p>
+    <div class="input-group mb-3">
+      <span class="input-group-text" id="basic-addon1">OpenAI KEY</span>
+      <input [formControl]="openAiKey" type="password" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+    </div>
+
+    <p>The <strong>user content description</strong> is attached to the analysis result for describing your intention to analyze the result in the context of a radionics analysis. Feel free to finetune the text and experiment.</p>
+    <p>This text is also used in the <button class="btn btn-sm btn-success smallerButton">COPY DATA TO CLIPBOARD</button> button, which allows you to insert it manually into different AI services.</p>
+    <p><textarea [formControl]="openAiUserContent" class="form-control" id="openAiUserContent" rows="8"></textarea></p>
+  </div>
+
+</div>
+
+<!--<div class="card text-bg-success p-3" style="margin-top: 1rem">
   <div class="card-body">
     <h5 class="card-title">Broadcasting</h5>
     <p class="card-text">Your intention is reinforced by repetition and pattern generation.</p>
@@ -105,6 +123,6 @@
 ...
 
   </div>
-</div>
+</div>-->
 
 

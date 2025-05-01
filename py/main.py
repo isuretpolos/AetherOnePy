@@ -12,7 +12,6 @@ import json
 import logging
 import urllib.request
 
-
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
 
@@ -32,6 +31,7 @@ from services.analyzeService import analyze as analyzeService, transformAnalyzeL
 from domains.aetherOneDomains import Analysis, Session, Case, BroadCastData, AnalysisRate
 from services.broadcastService import BroadcastService, BroadcastTask
 from services.planetaryInfluence import PlanetaryRulershipCalendarAPI
+from openai import OpenAI
 from setup import check_and_install_packages
 
 
@@ -449,6 +449,44 @@ class AetherOnePy:
                 return jsonify(analyzeList), 200
 
             return "NOT IMPLEMENTED"
+
+        @self.app.route('/openAiInterpretation', methods=['POST'])
+        def openAiInterpretation():
+            openAiKey = self.aetherOneDB.get_setting('openAiKey')
+            if openAiKey is None:
+                return jsonify({'error': 'No OpenAI key found'}), 500
+            client = OpenAI(api_key=openAiKey)
+            data = request.get_json()
+            userContent = self.aetherOneDB.get_setting('openAiSystemContent')
+            user_prompt = f"{userContent}\n\n{data}"
+
+            try:
+                print(user_prompt)
+                response = client.chat.completions.create(
+                    model="gpt-4o",
+                    messages=[
+                        {"role": "system", "content": self.aetherOneDB.get_setting('openAiSystemContent')},
+                        {"role": "user", "content": user_prompt}
+                    ],
+                    temperature=0.5
+                )
+                print(response)
+                # Structure a detailed response
+                detailed_output = {
+                    "id": response.id,
+                    "model": response.model,
+                    "usage": {
+                        "prompt_tokens": response.usage.prompt_tokens,
+                        "completion_tokens": response.usage.completion_tokens,
+                        "total_tokens": response.usage.total_tokens
+                    },
+                    "message": response.choices[0].message.content
+                }
+
+                return jsonify(detailed_output)
+
+            except Exception as e:
+                return jsonify({"error": str(e)}), 500
 
         # Check the general vitality
         @self.app.route('/checkGV', methods=['GET'])

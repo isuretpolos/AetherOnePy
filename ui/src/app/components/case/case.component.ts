@@ -35,6 +35,7 @@ export class CaseComponent implements OnInit {
   analyzeNote= new FormControl('', { nonNullable: true });
   broadcastResult:SqlSelect|undefined
   averageRates:SqlSelect|undefined
+  waitingForOpenAiInterpretation:boolean = false
 
   constructor(
     private aetherOne:AetherOneService,
@@ -134,6 +135,7 @@ export class CaseComponent implements OnInit {
         this.analysis = persistedAnalysis
         this.aetherOne.analyze(this.analysis.id, this.session.id, this.selectedCatalog.id, this.analyzeNote.getRawValue()).subscribe(r => {
           this.analysisResult = r
+          this.analyzeNote.setValue('')
           this.checkHitGv()
           this.aetherOne.countHotbits().subscribe(c => this.countHotbits = c.count)
         })
@@ -246,5 +248,62 @@ export class CaseComponent implements OnInit {
         this.router.navigate(['HOME']);
       })
     }
+  }
+
+  openAiInterpretation() {
+    let data = {"general_vitality": this.analysis.target_gv, "remedies": []}
+    data.remedies = this.analysisResult.map(r => ({ "name": r.signature, "gv": r.gv, "level": r.level }));
+    console.log(data)
+    this.waitingForOpenAiInterpretation = true
+    this.aetherOne.openAiInterpretation(data).subscribe( {next: (r) => {
+      console.log(r)
+      this.waitingForOpenAiInterpretation = false
+      this.analyzeNote.setValue(r.message)
+      this.saveAnalysisNote()
+      this.toastr.success("OpenAI interpretation received. Saved in notes for the analysis. Total tokens used: " + r.usage.total_tokens)
+    },
+    error: (error) => {
+      console.error('OpenAI interpretation failed!', error)
+      this.waitingForOpenAiInterpretation = false
+      this.toastr.error("OpenAI interpretation failed. Please try again later or check your API key.")
+    }})
+  }
+
+  aiInterpetationAsText() {
+    let data = {"general_vitality": this.analysis.target_gv, "remedies": []}
+    data.remedies = this.analysisResult.map(r => ({ "name": r.signature, "gv": r.gv, "level": r.level }));
+    console.log(data)
+    let msg = this.settings['openAiUserContent'] + "\n\n" + JSON.stringify(data, null, 2)
+    this.copyMessage(msg)
+  }
+
+  copyMessage(val: string) {
+    const selBox = document.createElement('textarea');
+    selBox.style.position = 'fixed';
+    selBox.style.left = '0';
+    selBox.style.top = '0';
+    selBox.style.opacity = '0';
+    selBox.value = val;
+    document.body.appendChild(selBox);
+    selBox.focus();
+    selBox.select();
+
+    let text_to_copy = document.getElementById("textarea")?.innerHTML;
+    let that = this;
+
+    if (!navigator.clipboard) {
+      document.execCommand('copy');
+    } else {
+      navigator.clipboard.writeText(val).then(
+        function () {
+          that.toastr.success(`Text copied to clipboard!`) // success
+        })
+        .catch(
+          function () {
+            that.toastr.error("Copy to clipboard failed!") // error
+          });
+    }
+
+    document.body.removeChild(selBox);
   }
 }

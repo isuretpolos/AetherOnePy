@@ -19,7 +19,10 @@ export class SettingsComponent implements OnInit {
   hotbits_use_ESP = new FormControl(false);
   hotbits_use_RPi = new FormControl(false);
   hotbits_use_WebCam = new FormControl(false);
-  hotbits_use_time_based_trng = new FormControl(true);
+  hotbits_use_time_based_trng = new FormControl(true)
+  openAiSystemContent = new FormControl('')
+  openAiUserContent = new FormControl('')
+  openAiKey = new FormControl('')
   savedSuccessShow:boolean = false
 
   constructor(private aetherOne:AetherOneService) {
@@ -39,6 +42,9 @@ export class SettingsComponent implements OnInit {
       this.hotbits_use_ESP.setValue(s['hotbits_use_ESP'])
       this.hotbits_use_RPi.setValue(s['hotbits_use_RPi'])
       this.hotbits_use_WebCam.setValue(s['hotbits_use_WebCam'])
+      this.openAiSystemContent.setValue(s['openAiSystemContent'])
+      this.openAiUserContent.setValue(s['openAiUserContent'])
+      this.openAiKey.setValue(s['openAiKey'])
     })
   }
 
@@ -51,18 +57,14 @@ export class SettingsComponent implements OnInit {
     this.settings['hotbits_use_ESP'] = this.hotbits_use_ESP.getRawValue()
     this.settings['hotbits_use_RPi'] = this.hotbits_use_RPi.getRawValue()
     this.settings['hotbits_use_WebCam'] = this.hotbits_use_WebCam.getRawValue()
+    this.settings['openAiSystemContent'] = this.openAiSystemContent.getRawValue()
+    this.settings['openAiUserContent'] = this.openAiUserContent.getRawValue()
+    this.settings['openAiKey'] = this.openAiKey.getRawValue()
 
     this.aetherOne.saveSettings(this.settings).subscribe(()=> {
       this.savedSuccessShow = true
       setTimeout(()=>{ this.savedSuccessShow = false }, 3000)
     })
-  }
-
-  setBooleanValueForForm(formControl:FormControl, setting:string) {
-      if ('true' == this.settings['analysisAdvanced'])
-        this.analysisAdvanced.setValue(true);
-      else
-        this.analysisAdvanced.setValue(false);
   }
 
   restart() {

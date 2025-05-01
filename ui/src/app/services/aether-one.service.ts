@@ -134,6 +134,10 @@ export class AetherOneService {
     return this.http.post<any>(`${this.baseUrl}collectWebCamHotBits`,undefined)
   }
 
+  openAiInterpretation(data:any):Observable<any> {
+    return this.http.post<any>(`${this.baseUrl}openAiInterpretation`,data)
+  }
+
   isWebCamHotRunning():Observable<any> {
     return this.http.get<any>(`${this.baseUrl}collectWebCamHotBits`)
   }

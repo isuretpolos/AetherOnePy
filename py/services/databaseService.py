@@ -506,6 +506,11 @@ class CaseDAO:
         self.ensure_entry(settings,'hotbits_mix_TRNG', False)
         self.ensure_entry(settings,'analysisAdvanced', False)
         self.ensure_entry(settings,'analysisAlwaysCheckGV', True)
+        self.ensure_entry(settings,'openAiKey', None)
+        self.ensure_entry(settings,'openAiModel', 'gpt-3.5-turbo')
+        self.ensure_entry(settings,'openAiTemperature', 0.7)
+        self.ensure_entry(settings,'openAiSystemContent', 'You are a user of the AetherOne digital radionics software. You are looking for advanced insights into your analysis and the use of the software. You are familiar with radionics, homeopathy, and subtle energy fields.')
+        self.ensure_entry(settings,'openAiUserContent', "The source of the following JSON is a radionics analysis. Please give me a an interpretation. Answer the following questions:\n- What have these remedies in common?\n- According to homeopathy, what could the main problem be?\n- And what is the common theme of all remedies?")
 
     def getHotbitsSourcePriority(self):
         settings = self.loadSettings()

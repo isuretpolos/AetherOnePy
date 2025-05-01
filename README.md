@@ -77,6 +77,7 @@ alias ll='ls -la'
 ```
 
 # History
+- 2025-05-01 [OpenAI API](https://www.youtube.com/watch?v=OB99E7Y1cMA) + Copy Result into Clipboard for manual analysis
 - 2025-03-28 Show historical session details
 - 2025-02-07 Broadcast of Hashed Signatures
 - 2025-01-04 Session handling and Analysis works
