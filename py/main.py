@@ -143,6 +143,20 @@ class AetherOnePy:
             os.execl(python, python, * sys.argv)
             return jsonify({'message': 'Restarting server ...'}), 200
 
+        @self.app.route('/shutdown', methods=['POST'])
+        def shutdown():
+            print("Shutting down server ...")
+            try:
+                self.aetherOneDB.close()
+                os._exit(0)
+                os.kill(os.getpid(), 9)
+            except Exception as e:
+                print(e)
+                logging.error(f"Error shutting down server: {e}")
+
+
+            return jsonify({'message': 'Shutting down server ...'}), 200
+
         # Health check, you make a ping and get a pong
         @self.app.route('/ping', methods=['GET'])
         def ping():

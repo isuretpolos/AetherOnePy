@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit {
     this.loadCases()
 
     this.aetherOne.sqlSelect(`SELECT signature, count(*) as counter FROM broadcast WHERE created > datetime('now','-21 days') GROUP BY signature ORDER BY counter DESC, signature LIMIT 10`).subscribe( a => {
+      console.log(a)
       this.averageRates = a
     });
 

@@ -249,4 +249,11 @@ export class AppComponent implements OnInit, OnDestroy  {
     // Request the next frame
     this.animationFrameId = requestAnimationFrame(this.animate);
   };
+
+  shutDown() {
+    if (!confirm('Are you sure you want to shutdown AetherOnePy?')) return
+    this.aetherOne.shutdown().subscribe( ()=> console.log("Shutting down AetherOnePy..."))
+  }
+
+  protected readonly confirm = confirm;
 }

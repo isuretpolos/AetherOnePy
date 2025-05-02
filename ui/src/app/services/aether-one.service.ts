@@ -24,6 +24,10 @@ export class AetherOneService {
     return this.http.post(`${this.baseUrl}restart`, undefined)
   }
 
+  shutdown(): Observable<any> {
+    return this.http.post(`${this.baseUrl}shutdown`, undefined)
+  }
+
   ping(): Observable<any> {
     return this.http.get(`${this.baseUrl}ping`, {responseType: 'text'})
   }

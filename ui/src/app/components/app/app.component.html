@@ -39,6 +39,8 @@
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
 
+      <button *ngIf="serverOnline" class="btn btn-danger" style="margin-left: 1rem; padding: 0.1rem" title="Shut down the server" (click)="shutDown()">OFF</button>
+
       <!--<button class="btn btn-sm" [class.btn-dark]="theme == 'light'" [class.btn-light]="theme == 'dark'" style="margin-left: 3rem; padding: 0.1rem" (click)="switchTheme()">{{theme}} Mode</button>-->
     </div>
 </nav>
