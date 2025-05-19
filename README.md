@@ -3,6 +3,8 @@
 
 AetherOnePy is a Web-based Desktop Application, which means the application runs on your computer but uses a web browser as its interface. You can run it on a Raspberry Pi or a PC (Windows, Linux or Mac).
 
+**Digital radionics** is based on [The RetroPsychoKinesis Project](https://www.fourmilab.ch/rpkp/) which used radioactive decay (Americanum, from smoke detectors) as a source for true random numbers (TRNG). Therefore the name "**hotbits**" used a lot in the AetherOne series. Later the quantum tunneling effect of zener diodes substituted the dangerous radioactive method.
+
 ### Preconditions
 - **Python** version **3.10**.x or bigger
 - Git
@@ -61,20 +63,7 @@ Some notes for users installing the application on the Raspberry Pi.
 - Raspberry Pi 5 needs extra cable for the Camera. For example the older ones has a broader cable, the new a slim one. Search for a camera cable extension.
 - Installation is a little bit more complex than on a Windows PC, but I will write a script taking care of the installation process
 
-Helpful commands
-```shell
-sudo apt update
-# upgrading RPy on regular basis is necessary, especially for git (which could lead to problems)
-sudo apt upgrade
-# install pip for package management for python libraries
-sudo apt-get install python3-pip
-# install vim for easier editing scripts
-sudo apt install vim
-# now you can edit the hidden file .bashrc and set the alias
-vim .bashrc
-# now enable the alias for ll (like DIR in Windows)
-alias ll='ls -la'
-```
+
 
 # History
 - 2025-05-01 [OpenAI API](https://www.youtube.com/watch?v=OB99E7Y1cMA) + Copy Result into Clipboard for manual analysis
@@ -96,3 +85,19 @@ alias ll='ls -la'
 - https://neumorphism.io/#e0e0e0
 - https://uiverse.io/
 - https://threejs.org/
+  
+# Helpful commands
+For advanced users, here are some helpful commands for the terminal.
+```shell
+sudo apt update
+# upgrading RPy on regular basis is necessary, especially for git (which could lead to problems)
+sudo apt upgrade
+# install pip for package management for python libraries
+sudo apt-get install python3-pip
+# install vim for easier editing scripts
+sudo apt install vim
+# now you can edit the hidden file .bashrc and set the alias
+vim .bashrc
+# now enable the alias for ll (like DIR in Windows)
+alias ll='ls -la'
+```

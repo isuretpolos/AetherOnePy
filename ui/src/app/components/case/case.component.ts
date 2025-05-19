@@ -273,7 +273,11 @@ export class CaseComponent implements OnInit {
     let data = {"general_vitality": this.analysis.target_gv, "remedies": []}
     data.remedies = this.analysisResult.map(r => ({ "name": r.signature, "gv": r.gv, "level": r.level }));
     console.log(data)
+
     let msg = this.settings['openAiUserContent'] + "\n\n" + JSON.stringify(data, null, 2)
+    msg = msg.replaceAll("#INTENTION#", this.session.intention)
+    msg = msg.replaceAll("#DESCRIPTION#", this.session.description)
+
     this.copyMessage(msg)
   }
 
@@ -305,5 +309,22 @@ export class CaseComponent implements OnInit {
     }
 
     document.body.removeChild(selBox);
+  }
+
+  checkGeneralVitality() {
+    this.aetherOne.checkGeneralVitality(this.analysis).subscribe( r => {
+      console.log(r)
+      this.analysis = r
+      this.aetherOne.loadRatesForAnalysis(this.analysis.id).subscribe(r => {
+        this.analysisResult = r
+        this.analyzeNote.setValue('')
+        this.checkHitGv()
+        this.aetherOne.countHotbits().subscribe(c => this.countHotbits = c.count)
+      })
+      this.toastr.success("General Vitality check completed. Results: " + r.result)
+    }, error => {
+      console.error('General Vitality check failed!', error)
+      this.toastr.error("General Vitality check failed. Please try again later.")
+    })
   }
 }

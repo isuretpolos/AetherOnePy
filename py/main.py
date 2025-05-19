@@ -419,6 +419,7 @@ class AetherOnePy:
                     return Response(response_data, content_type='application/json; charset=utf-8')
 
             if request.method == 'POST':
+                # Create a new analysis object, which later will be analyzed by the method analyze()
                 analyzeRequest = request.json
                 print(analyzeRequest)
                 analysis = Analysis(analyzeRequest['note'], analyzeRequest['sessionID'])
@@ -451,7 +452,9 @@ class AetherOnePy:
                 rates_list = self.aetherOneDB.list_rates_for_analysis(analysis_id)
                 enhanced_rates = []
                 for rate in rates_list:
-                    enhanced_rates.append(AnalysisRate(rate.signature, rate.description, rate.catalog_id, analysis_id, rate.energetic_value, rate.gv, rate.level, rate.potency_type, rate.potency, rate.note))
+                    enhanced_rate = AnalysisRate(rate.signature, rate.description, rate.catalog_id, analysis_id, rate.energetic_value, rate.gv, rate.level, rate.potency_type, rate.potency, rate.note)
+                    enhanced_rate.id = rate.id
+                    enhanced_rates.append(enhanced_rate)
                 return jsonify(transformAnalyzeListToDict(enhanced_rates)), 200
             if request.method == 'POST':
                 analyzeRequest = request.json
@@ -462,6 +465,27 @@ class AetherOnePy:
                 analyzeList = transformAnalyzeListToDict(enhanced_rates)
                 return jsonify(analyzeList), 200
 
+            return "NOT IMPLEMENTED"
+
+        @self.app.route('/checkGV', methods=['GET', 'POST'])
+        def checkGV():
+            # Single check
+            if request.method == 'GET':
+                gv = checkGeneralVitality(self.hotbits)
+                return jsonify({'gv': gv}), 200
+
+            # Check and update entire analysis
+            if request.method == 'POST':
+                analysis:Analysis = self.aetherOneDB.get_analysis(int(request.json['id']))
+                rates_list = self.aetherOneDB.list_rates_for_analysis(analysis.id)
+                analysis.target_gv = checkGeneralVitality(self.hotbits)
+                analysis = self.aetherOneDB.insert_analysis(analysis)
+                enhanced_rates = []
+                for rate in rates_list:
+                    enhanced_rates.append(AnalysisRate(rate.signature, rate.description, rate.catalog_id, analysis.id, rate.energetic_value, checkGeneralVitality(self.hotbits), rate.level, rate.potency_type, rate.potency, rate.note))
+                self.aetherOneDB.insert_rates_for_analysis(enhanced_rates)
+                response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
+                return Response(response_data, content_type='application/json; charset=utf-8')
             return "NOT IMPLEMENTED"
 
         @self.app.route('/openAiModels', methods=['GET'])
@@ -516,11 +540,6 @@ class AetherOnePy:
             except Exception as e:
                 return jsonify({"error": str(e)}), 500
 
-        # Check the general vitality
-        @self.app.route('/checkGV', methods=['GET'])
-        def checkGV():
-            gv = checkGeneralVitality(self.hotbits)
-            return jsonify({'gv': gv}), 200
 
         # Trigger broadcast of a rate
         @self.app.route('/broadcast', methods=['GET', 'POST', 'PUT', 'DELETE'])

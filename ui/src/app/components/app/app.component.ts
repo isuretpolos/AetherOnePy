@@ -252,8 +252,19 @@ export class AppComponent implements OnInit, OnDestroy  {
 
   shutDown() {
     if (!confirm('Are you sure you want to shutdown AetherOnePy?')) return
-    this.aetherOne.shutdown().subscribe( ()=> console.log("Shutting down AetherOnePy..."))
+    this.aetherOne.shutdown().subscribe( ()=> {
+      this.toastr.info("Shutting down AetherOnePy...")
+      console.log("Shutting down AetherOnePy...")
+    })
   }
 
   protected readonly confirm = confirm;
+
+  restartServer() {
+    if (!confirm('Are you sure you want to restart AetherOnePy?')) return
+    this.aetherOne.restart().subscribe( ()=> {
+      this.toastr.info("Restarting AetherOnePy...")
+      console.log("Restarting AetherOnePy...")
+    })
+  }
 }
