@@ -6,7 +6,10 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from services.databaseService import CaseDAO
 from gpiozero import LED
+from gpiozero import Device
+from gpiozero.pins.lgpio import LGPIOFactory
 
+Device.pin_factory = LGPIOFactory()
 
 class GPIOBroadcaster:
 
