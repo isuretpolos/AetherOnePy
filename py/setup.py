@@ -1,5 +1,12 @@
+"""
+This is a conditional setup script that checks if the system is a Raspberry Pi or a different system.
+It replaces the typical requirements.txt installation with a direct installation of packages using pip.
+The requirements.txt alone is not able to identify the system type.
+"""
+
 import subprocess
 import sys
+import platform
 
 required_packages = [
     'requests',
@@ -19,10 +26,20 @@ required_packages = [
     'scipy',
     'sphinx',
     'sphinx_rtd_theme',
-    'openai'
+    'openai',
+    'psutil'
 ]
 
-# TODO: get the list for dependecies from the requirements.txt file
+
+def is_raspberry_pi():
+    try:
+        with open('/proc/cpuinfo', 'r') as f:
+            content = f.read()
+            return 'BCM' in content or 'Raspberry Pi' in content
+    except:
+        return False
+
+
 def install_package(package):
     subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
 
@@ -33,6 +50,15 @@ def check_and_install_packages():
             __import__(package)
         except ImportError:
             install_package(package)
+
+    # Conditionally install GPIO support if on Raspberry Pi
+    if is_raspberry_pi():
+        try:
+            print("We are on a Raspberry Pi, importing RPi.GPIO...")
+            import RPi.GPIO
+        except ImportError:
+            print("Installing RPi.GPIO (Raspberry Pi detected)...")
+            install_package('RPi.GPIO')
 
 
 if __name__ == '__main__':

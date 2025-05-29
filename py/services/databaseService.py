@@ -511,6 +511,13 @@ class CaseDAO:
         self.ensure_entry(settings,'openAiTemperature', 0.7)
         self.ensure_entry(settings,'openAiSystemContent', 'You are a user of the AetherOne digital radionics software. You are looking for advanced insights into your analysis and the use of the software. You are familiar with radionics, homeopathy, and subtle energy fields.')
         self.ensure_entry(settings,'openAiUserContent', "The source of the following JSON is a radionics analysis. Please give me a an interpretation. Answer the following questions:\n- What have these remedies in common?\n- According to homeopathy, what could the main problem be?\n- And what is the common theme of all remedies?\n- Do you recognize groups of remedies, like plant families, minerals, elements of the same row or column?")
+        self.ensure_entry(settings,'gpioRED', 26)
+        self.ensure_entry(settings,'gpioBLUE', 19)
+        self.ensure_entry(settings,'gpioGREEN', 13)
+        self.ensure_entry(settings,'gpioLASER', 6)
+        self.ensure_entry(settings,'gpioUV', 5)
+        self.ensure_entry(settings,'gpioWHITE', 0)
+        self.ensure_entry(settings,'useGPIOforBroadcasting', False)
 
     def getHotbitsSourcePriority(self):
         settings = self.loadSettings()

@@ -6,6 +6,7 @@ import sys
 import threading
 import time
 
+
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 from domains.aetherOneDomains import Analysis, BroadCastData
 from services.hotbitsService import HotbitsService
@@ -59,8 +60,13 @@ class BroadcastService:
                 task = self.task_queue.get(timeout=1)
                 self.current_task = task
                 task.broadcastData.repeat += 1
-                broadcaster = DigitalBroadcaster(task.broadcastData.signature, self.PROJECT_ROOT, duration=10)
-                broadcaster.start_broadcasting()
+                if self.main.aetherOneDB.get_setting('useGPIOforBroadcasting'):
+                    from services.broadcasterGPIO import GPIOBroadcaster
+                    broadcaster = GPIOBroadcaster(self.main.aetherOneDB)
+                    broadcaster.broadcast(task.broadcastData.signature, 10)
+                else:
+                    broadcaster = DigitalBroadcaster(task.broadcastData.signature, self.PROJECT_ROOT, duration=10)
+                    broadcaster.start_broadcasting()
                 if task.is_valid(self.hotbits_service):
                     self.task_queue.task_done()
                     self.main.emitMessage("broadcast_info",task.broadcastData.signature)

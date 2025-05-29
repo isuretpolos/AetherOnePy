@@ -120,6 +120,22 @@ class AetherOnePy:
         def index():
             return send_from_directory('../ui/dist/ui/browser/', 'index.html')
 
+        @self.app.route('/systemInfo')
+        def system_info():
+            import platform
+            import psutil
+            system_info = {
+                'system': platform.system(),
+                'release': platform.release(),
+                'version': platform.version(),
+                'architecture': platform.architecture(),
+                'processor': platform.processor(),
+                'cpu_count': psutil.cpu_count(logical=True),
+                'memory': psutil.virtual_memory().total,
+                'disk': psutil.disk_usage('/').total,
+            }
+            return jsonify(system_info)
+
         # Serving static files, like images, css, js, etc.
         @self.app.route('/<path:path>')
         def static_files(path):

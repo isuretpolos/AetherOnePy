@@ -23,12 +23,20 @@ export class SettingsComponent implements OnInit {
   openAiSystemContent = new FormControl('')
   openAiUserContent = new FormControl('')
   openAiKey = new FormControl('')
+  gpioRED = new FormControl(26);
+  gpioBLUE = new FormControl(26);
+  gpioGREEN = new FormControl(26);
+  gpioLASER = new FormControl(26);
+  gpioUV = new FormControl(26);
+  gpioWHITE = new FormControl(26);
+  useGPIOforBroadcasting = new FormControl(false);
   savedSuccessShow:boolean = false
 
   constructor(private aetherOne:AetherOneService) {
   }
   ngOnInit(): void {
     this.loadSettings()
+    this.aetherOne.systemInfo().subscribe( i => console.log(i))
   }
 
   loadSettings() {
@@ -45,6 +53,13 @@ export class SettingsComponent implements OnInit {
       this.openAiSystemContent.setValue(s['openAiSystemContent'])
       this.openAiUserContent.setValue(s['openAiUserContent'])
       this.openAiKey.setValue(s['openAiKey'])
+      this.gpioRED.setValue(s['gpioRED'])
+      this.gpioBLUE.setValue(s['gpioBLUE'])
+      this.gpioGREEN.setValue(s['gpioGREEN'])
+      this.gpioLASER.setValue(s['gpioLASER'])
+      this.gpioUV.setValue(s['gpioUV'])
+      this.gpioWHITE.setValue(s['gpioWHITE'])
+      this.useGPIOforBroadcasting.setValue(s['useGPIOforBroadcasting'])
     })
   }
 
@@ -60,6 +75,13 @@ export class SettingsComponent implements OnInit {
     this.settings['openAiSystemContent'] = this.openAiSystemContent.getRawValue()
     this.settings['openAiUserContent'] = this.openAiUserContent.getRawValue()
     this.settings['openAiKey'] = this.openAiKey.getRawValue()
+    this.settings['gpioRED'] = this.gpioRED.getRawValue()
+    this.settings['gpioBLUE'] = this.gpioBLUE.getRawValue()
+    this.settings['gpioGREEN'] = this.gpioGREEN.getRawValue()
+    this.settings['gpioLASER'] = this.gpioLASER.getRawValue()
+    this.settings['gpioUV'] = this.gpioUV.getRawValue()
+    this.settings['gpioWHITE'] = this.gpioWHITE.getRawValue()
+    this.settings['useGPIOforBroadcasting'] = this.useGPIOforBroadcasting.getRawValue()
 
     this.aetherOne.saveSettings(this.settings).subscribe(()=> {
       this.savedSuccessShow = true
@@ -67,8 +89,5 @@ export class SettingsComponent implements OnInit {
     })
   }
 
-  restart() {
-    this.aetherOne.restart().subscribe()
-  }
 
 }

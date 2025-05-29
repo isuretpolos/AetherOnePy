@@ -115,14 +115,40 @@
 
 </div>
 
-<!--<div class="card text-bg-success p-3" style="margin-top: 1rem">
+<div class="card text-bg-success p-3" style="margin-top: 1rem">
   <div class="card-body">
     <h5 class="card-title">Broadcasting</h5>
     <p class="card-text">Your intention is reinforced by repetition and pattern generation.</p>
 
-...
+
+
+    <div class="form-check">
+      <input [formControl]="useGPIOforBroadcasting" class="form-check-input text-bg-success" type="checkbox" id="useGPIOforBroadcasting">
+      <label class="form-check-label" for="useGPIOforBroadcasting">
+        Use Raspberry Pi GPIO for broadcasting
+      </label>
+      <div class="form-text text-bg-success p-3">Directly transmit the broadcasting to the Raspberry Pi Hardware.</div>
+      <div *ngIf="!useGPIOforBroadcasting.getRawValue()" class="form-text text-bg-success p-3">If not available or selected, it will broadcast using advanced hashing methods, generating images and sounds as well.</div>
+    </div>
+
+    <table class="table-sm" *ngIf="useGPIOforBroadcasting.getRawValue()">
+      <tbody>
+      <tr>
+        <td>RED</td><td><input [formControl]="gpioRED" class="form-control" type="text"></td>
+        <td>LASER</td><td><input [formControl]="gpioLASER" class="form-control" type="text"></td>
+      </tr>
+      <tr>
+        <td>BLUE</td><td><input [formControl]="gpioBLUE" class="form-control" type="text"></td>
+        <td>ULTRA VIOLET</td><td><input [formControl]="gpioUV" class="form-control" type="text"></td>
+      </tr>
+      <tr>
+        <td>GREEN</td><td><input [formControl]="gpioGREEN" class="form-control" type="text"></td>
+        <td>WHITE</td><td><input [formControl]="gpioWHITE" class="form-control" type="text"></td>
+      </tr>
+      </tbody>
+    </table>
 
   </div>
-</div>-->
+</div>
 
 
