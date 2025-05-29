@@ -1,4 +1,3 @@
-from gpiozero import LED
 import time
 import sys
 import os
@@ -6,6 +5,7 @@ import os
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
 from services.databaseService import CaseDAO
+from gpiozero import LED
 
 
 class GPIOBroadcaster:
