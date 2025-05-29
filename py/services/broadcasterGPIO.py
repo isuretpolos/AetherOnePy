@@ -19,6 +19,23 @@ class GPIOBroadcaster:
             aetherOneDB.get_setting("gpioLASER"): [9, 7],
             aetherOneDB.get_setting("gpioWHITE"): [8, 5]
         }
+        self.PIN_MAPPING = {}
+        for name, numbers in {
+            "gpioRED": [2, 6],
+            "gpioBLUE": [0, 3],
+            "gpioGREEN": [1, 4],
+            "gpioLASER": [9, 7],
+            "gpioWHITE": [8, 5]
+        }.items():
+            pin_str = aetherOneDB.get_setting(name)
+            if pin_str is None:
+                print(f"[ERROR] Setting '{name}' is missing!")
+                continue
+            try:
+                pin = int(pin_str)
+                self.PIN_MAPPING[pin] = numbers
+            except ValueError:
+                print(f"[ERROR] Setting '{name}' is not a valid GPIO number: {pin_str}")
         for pin in self.PIN_MAPPING:
             GPIO.setup(pin, GPIO.OUT)
         print("GPIO setup complete.")
