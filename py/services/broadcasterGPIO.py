@@ -12,13 +12,6 @@ class GPIOBroadcaster:
 
     def __init__(self, aetherOneDB: CaseDAO):
         GPIO.setmode(GPIO.BCM)
-        self.PIN_MAPPING = {
-            aetherOneDB.get_setting("gpioRED"): [2, 6],
-            aetherOneDB.get_setting("gpioBLUE"): [0, 3],
-            aetherOneDB.get_setting("gpioGREEN"): [1, 4],
-            aetherOneDB.get_setting("gpioLASER"): [9, 7],
-            aetherOneDB.get_setting("gpioWHITE"): [8, 5]
-        }
         self.PIN_MAPPING = {}
         for name, numbers in {
             "gpioRED": [2, 6],
@@ -36,6 +29,7 @@ class GPIOBroadcaster:
                 self.PIN_MAPPING[pin] = numbers
             except ValueError:
                 print(f"[ERROR] Setting '{name}' is not a valid GPIO number: {pin_str}")
+        print(f"GPIO pins mapped: {self.PIN_MAPPING}")
         for pin in self.PIN_MAPPING:
             GPIO.setup(pin, GPIO.OUT)
         print("GPIO setup complete.")
