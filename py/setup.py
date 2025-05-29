@@ -54,11 +54,11 @@ def check_and_install_packages():
     # Conditionally install GPIO support if on Raspberry Pi
     if is_raspberry_pi():
         try:
-            print("We are on a Raspberry Pi, importing RPi.GPIO...")
-            import RPi.GPIO
+            print("We are on a Raspberry Pi, importing gpiozero...")
+            from gpiozero import LED
         except ImportError:
-            print("Installing RPi.GPIO (Raspberry Pi detected)...")
-            install_package('RPi.GPIO')
+            print("Installing gpiozero (Raspberry Pi detected)...")
+            install_package('gpiozero')
 
 
 if __name__ == '__main__':
