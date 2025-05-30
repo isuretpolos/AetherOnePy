@@ -131,22 +131,35 @@
       <div *ngIf="!useGPIOforBroadcasting.getRawValue()" class="form-text text-bg-success p-3">If not available or selected, it will broadcast using advanced hashing methods, generating images and sounds as well.</div>
     </div>
 
-    <table class="table-sm" *ngIf="useGPIOforBroadcasting.getRawValue()">
-      <tbody>
-      <tr>
-        <td>RED</td><td><input [formControl]="gpioRED" class="form-control" type="text"></td>
-        <td>LASER</td><td><input [formControl]="gpioLASER" class="form-control" type="text"></td>
-      </tr>
-      <tr>
-        <td>BLUE</td><td><input [formControl]="gpioBLUE" class="form-control" type="text"></td>
-        <td>ULTRA VIOLET</td><td><input [formControl]="gpioUV" class="form-control" type="text"></td>
-      </tr>
-      <tr>
-        <td>GREEN</td><td><input [formControl]="gpioGREEN" class="form-control" type="text"></td>
-        <td>WHITE</td><td><input [formControl]="gpioWHITE" class="form-control" type="text"></td>
-      </tr>
-      </tbody>
-    </table>
+    <div *ngIf="useGPIOforBroadcasting.getRawValue()">
+      <p>
+        Use these GPIO pins to broadcast the rates. The Raspberry Pi will use these pins to send the broadcasting signals.<br>
+        GPIOs: 4, 5, 6, 12, 13, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27<br>
+        For more information go to the <strong><a href="https://pinout.xyz/" target="_blank" style="color: #1f1d1d">Raspberry Pi Pinout</a></strong>.
+      </p>
+      <p>
+        <a href="https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png?hash=df7d7847c57a1ca6d5b2617695de6d46" target="pinout">
+          <img src="https://www.raspberrypi.com/documentation/computers/images/GPIO-Pinout-Diagram-2.png?hash=df7d7847c57a1ca6d5b2617695de6d46" width ="40%" alt="Raspberry Pi GPIO Pinout">
+        </a>
+      </p>
+
+      <table class="table-sm">
+        <tbody>
+        <tr>
+          <td>RED</td><td><input [formControl]="gpioRED" class="form-control" type="text"></td>
+          <td>LASER</td><td><input [formControl]="gpioLASER" class="form-control" type="text"></td>
+        </tr>
+        <tr>
+          <td>BLUE</td><td><input [formControl]="gpioBLUE" class="form-control" type="text"></td>
+          <td>ULTRA VIOLET</td><td><input [formControl]="gpioUV" class="form-control" type="text"></td>
+        </tr>
+        <tr>
+          <td>GREEN</td><td><input [formControl]="gpioGREEN" class="form-control" type="text"></td>
+          <td>WHITE</td><td><input [formControl]="gpioWHITE" class="form-control" type="text"></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
 
   </div>
 </div>
