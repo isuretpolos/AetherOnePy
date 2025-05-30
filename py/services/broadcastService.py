@@ -61,6 +61,7 @@ class BroadcastService:
                 self.current_task = task
                 task.broadcastData.repeat += 1
                 if self.main.aetherOneDB.get_setting('useGPIOforBroadcasting'):
+                    print(f"Using GPIO for broadcasting signature: {task.broadcastData.signature}")
                     from services.broadcasterGPIO import GPIOBroadcaster
                     broadcaster = GPIOBroadcaster(self.main.aetherOneDB)
                     broadcaster.broadcast(task.broadcastData.signature, 10)
