@@ -46,6 +46,7 @@ class BroadcastService:
         self.worker_thread = threading.Thread(target=self._process_queue)
         self.worker_thread.start()
         self.current_task = None
+        self.stop_requested = False
 
     def add_task(self, task: BroadcastTask):
         self.task_queue.put(task)
@@ -53,6 +54,9 @@ class BroadcastService:
 
     def _process_queue(self):
         while True:
+
+            self.stop_requested = False
+
             try:
                 if self.task_queue.empty():
                     time.sleep(2)
@@ -65,9 +69,13 @@ class BroadcastService:
                     from services.broadcasterGPIO import GPIOBroadcaster
                     broadcaster = GPIOBroadcaster(self.main.aetherOneDB)
                     broadcaster.broadcast(task.broadcastData.signature, 10)
+
                 else:
                     broadcaster = DigitalBroadcaster(task.broadcastData.signature, self.PROJECT_ROOT, duration=10)
                     broadcaster.start_broadcasting()
+                    if self.stop_requested:
+                        print("Broadcasting stopped by user.")
+                        return
                 if task.is_valid(self.hotbits_service):
                     self.task_queue.task_done()
                     self.main.emitMessage("broadcast_info",task.broadcastData.signature)
@@ -83,6 +91,7 @@ class BroadcastService:
         print("Stopping broadcasts")
         self.task_queue.queue.clear()
         self.current_task = None
+        self.stop_requested = True
 
     def get_tasks(self):
         tasks = []
