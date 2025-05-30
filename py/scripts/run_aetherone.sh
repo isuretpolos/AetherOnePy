@@ -48,9 +48,15 @@ done
 
 if [ -d "$REPO_DIR" ]; then
   echo "Repository found. Pulling latest updates..."
-  cd "$REPO_DIR/py"
-  git pull
-  python3 setup.py
+    cd "$REPO_DIR/py"
+    PULL_OUTPUT=$(git pull)
+    echo "$PULL_OUTPUT"
+    if [[ "$PULL_OUTPUT" != "Already up to date." ]]; then
+      echo "Changes detected. Running setup.py..."
+      python3 setup.py
+    else
+      echo "No changes detected. Skipping setup.py."
+    fi
 else
   echo "Cloning AetherOnePy repository..."
   mkdir -p "$BASE_DIR"
