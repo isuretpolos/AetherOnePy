@@ -516,8 +516,9 @@ class CaseDAO:
         self.ensure_entry(settings,'gpioGREEN', 13)
         self.ensure_entry(settings,'gpioLASER', 6)
         self.ensure_entry(settings,'gpioUV', 5)
-        self.ensure_entry(settings,'gpioWHITE', 0)
+        self.ensure_entry(settings,'gpioWHITE', 12)
         self.ensure_entry(settings,'useGPIOforBroadcasting', False)
+        self.ensure_entry(settings,'gpioSleep', 0.2)
 
     def getHotbitsSourcePriority(self):
         settings = self.loadSettings()

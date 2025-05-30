@@ -30,13 +30,13 @@ export class SettingsComponent implements OnInit {
   gpioUV = new FormControl(26);
   gpioWHITE = new FormControl(26);
   useGPIOforBroadcasting = new FormControl(false);
+  gpioSleep = new FormControl(false);
   savedSuccessShow:boolean = false
 
   constructor(private aetherOne:AetherOneService) {
   }
   ngOnInit(): void {
     this.loadSettings()
-    this.aetherOne.systemInfo().subscribe( i => console.log(i))
   }
 
   loadSettings() {
@@ -61,6 +61,7 @@ export class SettingsComponent implements OnInit {
       this.gpioUV.setValue(s['gpioUV'])
       this.gpioWHITE.setValue(s['gpioWHITE'])
       this.useGPIOforBroadcasting.setValue(s['useGPIOforBroadcasting'])
+      this.gpioSleep.setValue(s['gpioSleep'])
     })
   }
 
@@ -84,6 +85,7 @@ export class SettingsComponent implements OnInit {
     this.settings['gpioUV'] = this.gpioUV.getRawValue()
     this.settings['gpioWHITE'] = this.gpioWHITE.getRawValue()
     this.settings['useGPIOforBroadcasting'] = this.useGPIOforBroadcasting.getRawValue()
+    this.settings['gpioSleep'] = this.gpioSleep.getRawValue()
 
     this.aetherOne.saveSettings(this.settings).subscribe(()=> {
       this.savedSuccessShow = true

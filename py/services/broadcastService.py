@@ -68,7 +68,7 @@ class BroadcastService:
                     print(f"Using GPIO for broadcasting signature: {task.broadcastData.signature}")
                     from services.broadcasterGPIO import GPIOBroadcaster
                     broadcaster = GPIOBroadcaster(self.main.aetherOneDB)
-                    broadcaster.broadcast(task.broadcastData.signature, 10)
+                    broadcaster.broadcast(task.broadcastData.signature, 10, self.main.aetherOneDB.get_setting('gpioSleep'))
 
                 else:
                     broadcaster = DigitalBroadcaster(task.broadcastData.signature, self.PROJECT_ROOT, duration=10)

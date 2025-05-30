@@ -38,6 +38,7 @@
         <input #weaverText [formControl]="searchText" (ngModelChange)="search()" type="text" class="form-control me-2" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
       </form>
+      <button class="btn btn-primary" style="margin-left: 1rem; padding: 0.1rem" title="Show System Info" data-bs-toggle="modal" data-bs-target="#systemInfo">INFO</button>
       <button *ngIf="serverOnline" class="btn btn-warning" style="margin-left: 1rem; padding: 0.1rem" title="Restart the server" (click)="restartServer()">RESTART</button>
       <button *ngIf="serverOnline" class="btn btn-danger" style="margin-left: 1rem; padding: 0.1rem" title="Shut down the server" (click)="shutDown()">OFF</button>
 
@@ -86,6 +87,21 @@
       <div class="modal-footer">
         <button class="btn btn-danger" style="margin-right: 1rem" (click)="stopAllBroadcasting()">Stop all</button> <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
+    </div>
+  </div>
+</div>
+
+<div class="modal fade " id="systemInfo" tabindex="-1" aria-labelledby="systemInfoLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="systemInfoLabel">System Info</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <pre>{{ systemInfo | json }}</pre>
+
     </div>
   </div>
 </div>

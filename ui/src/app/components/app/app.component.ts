@@ -31,6 +31,7 @@ export class AppComponent implements OnInit, OnDestroy  {
   broadcastingData:any
   intervalBroadcastingId: any;
   intervalPing: any;
+  systemInfo: any;
 
   private renderer!: THREE.WebGLRenderer;
   private scene!: THREE.Scene;
@@ -189,7 +190,11 @@ export class AppComponent implements OnInit, OnDestroy  {
 
   private ping() {
     this.aetherOne.ping().subscribe({
-      next: () => {this.serverOnline = true},
+      next: (info) => {
+        this.serverOnline = true
+        this.systemInfo = info
+        localStorage.setItem('systemInfo', JSON.stringify(info));
+      },
       error: () => {
         this.serverOnline = false;
         this.toastr.error('Server is offline!', 'AetherOnePy');

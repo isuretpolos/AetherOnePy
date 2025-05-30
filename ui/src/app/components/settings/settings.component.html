@@ -157,8 +157,12 @@
           <td>GREEN</td><td><input [formControl]="gpioGREEN" class="form-control" type="text"></td>
           <td>WHITE</td><td><input [formControl]="gpioWHITE" class="form-control" type="text"></td>
         </tr>
+        <tr>
+          <td>INTERVAL</td><td><input [formControl]="gpioSleep" class="form-control" type="text"></td>
+        </tr>
         </tbody>
       </table>
+      <div class="form-text text-bg-success p-3">0.2 seconds is the default INTERVAL. Be aware that if you use longer blinking the LED requires a higher resistor.</div>
     </div>
 
   </div>

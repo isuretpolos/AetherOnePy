@@ -38,7 +38,7 @@ class GPIOBroadcaster:
 
         print(f"GPIOZero LEDs mapped: {list(self.led_map.keys())}")
 
-    def broadcast(self, signature: str, duration: float):
+    def broadcast(self, signature: str, duration: float, interval: float = 0.2):
         end_time = time.time() + duration
         print(f"Broadcasting '{signature}' for {duration} seconds...")
 
@@ -52,7 +52,7 @@ class GPIOBroadcaster:
                             obj["led"].on()
                         else:
                             obj["led"].off()
-                    time.sleep(0.2)
+                    time.sleep(interval)
 
         self.cleanup()
 

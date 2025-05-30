@@ -4,13 +4,14 @@
 import io, os, sys, multiprocessing, subprocess
 import asyncio
 import argparse
-
+import platform as sys_platform
 import qrcode
 import socket
 import re
 import json
 import logging
 import urllib.request
+import psutil
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
@@ -46,9 +47,12 @@ def start_hotbits_service():
 class AetherOnePy:
     def __init__(self):
         self.PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+        self.raspberryPi = self.is_raspberry_pi()
+        if self.raspberryPi:
+            print("This system is a Raspberry Pi.")
         self.setup_directories()
         self.aetherOneDB = get_case_dao(os.path.join(self.PROJECT_ROOT, 'data/aetherone.db'))
-        self.hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(self.PROJECT_ROOT, "hotbits"), self.aetherOneDB, self)
+        self.hotbits = HotbitsService(HotbitsSource.WEBCAM, os.path.join(self.PROJECT_ROOT, "hotbits"), self.aetherOneDB, self, self.raspberryPi)
         process = multiprocessing.Process(target=start_hotbits_service) # Start the hotbits service in a separate process
         process.daemon = True
         process.start()
@@ -61,6 +65,34 @@ class AetherOnePy:
         self.setup_routes()
         self.cleanup_broadcast_folder()
         self.planetaryInfoApi = PlanetaryRulershipCalendarAPI()
+
+
+    def is_raspberry_pi(self):
+        """Check if the computer is a Raspberry Pi."""
+        try:
+            # Check the platform
+            if sys_platform.system() != "Linux":
+                return False
+
+            # Check for the presence of Raspberry Pi-specific files
+            if os.path.exists('/sys/firmware/devicetree/base/model'):
+                with open('/sys/firmware/devicetree/base/model', 'r') as model_file:
+                    model_info = model_file.read().lower()
+                    print(model_info)
+                    if 'raspberry pi' in model_info:
+                        return True
+
+            # Check the CPU information for Raspberry Pi specific hardware
+            with open('/proc/cpuinfo', 'r') as cpuinfo:
+                for line in cpuinfo:
+                    print(line)
+                    if 'Hardware' in line and 'BCM' in line:
+                        return True
+                    if 'Model' in line and 'Raspberry Pi' in line:
+                        return True
+        except Exception as e:
+            print(f"Error while checking Raspberry Pi: {e}")
+        return False
 
     def cleanup_broadcast_folder(self):
         broadcast_folder = os.path.join(self.PROJECT_ROOT, "broadcasts")
@@ -120,19 +152,22 @@ class AetherOnePy:
         def index():
             return send_from_directory('../ui/dist/ui/browser/', 'index.html')
 
-        @self.app.route('/systemInfo')
-        def system_info():
-            import platform
-            import psutil
+        # Health check, you make a ping and get a pong
+        @self.app.route('/ping', methods=['GET'])
+        def ping():
+
             system_info = {
-                'system': platform.system(),
-                'release': platform.release(),
-                'version': platform.version(),
-                'architecture': platform.architecture(),
-                'processor': platform.processor(),
+                'system': sys_platform.system(),
+                'release': sys_platform.release(),
+                'version': sys_platform.version(),
+                'architecture': sys_platform.architecture(),
+                'processor': sys_platform.processor(),
                 'cpu_count': psutil.cpu_count(logical=True),
                 'memory': psutil.virtual_memory().total,
                 'disk': psutil.disk_usage('/').total,
+                'raspberryPi': self.raspberryPi,
+                'esp32available': False,
+                'arduinoavailable': False,
             }
             return jsonify(system_info)
 
@@ -172,11 +207,6 @@ class AetherOnePy:
 
 
             return jsonify({'message': 'Shutting down server ...'}), 200
-
-        # Health check, you make a ping and get a pong
-        @self.app.route('/ping', methods=['GET'])
-        def ping():
-            return "pong"
 
         # CPU count, in order to know how many CPUs are available and how good is the performance
         @self.app.route('/cpuCount', methods=['GET'])

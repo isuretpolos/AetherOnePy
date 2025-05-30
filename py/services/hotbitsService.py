@@ -53,7 +53,7 @@ def generate_random_integer(bit_count: int = 32, maxCount: int = 50):
 
 class HotbitsService:
 
-    def __init__(self, hotbitsSource: HotbitsSource, folder_path: str, aetherOneDB: CaseDAO, main):
+    def __init__(self, hotbitsSource: HotbitsSource, folder_path: str, aetherOneDB: CaseDAO, main, raspberryPi: bool = False, useArduino: bool = False, useESP: bool = False):
         self.source = hotbitsSource
         self.main = main
         self.running = False
@@ -61,8 +61,7 @@ class HotbitsService:
         self.hotbits: [int] = []
         self.folder_path = folder_path
         self.webCamCollector = WebCamCollector(main, self.countHotbits)
-        if self.is_raspberry_pi():
-            print("This system is a Raspberry Pi.")
+        if raspberryPi:
             self.source = HotbitsSource.RASPBERRY_PI
         # always start collecting some hotbits
         #thread = threading.Thread(target=self.initHotbits)
@@ -126,33 +125,6 @@ class HotbitsService:
         else:
             print("Unknown Hotbits source selected. No changes made.")
         self.running = False
-
-    def is_raspberry_pi(self):
-        """Check if the computer is a Raspberry Pi."""
-        try:
-            # Check the platform
-            if sys_platform.system() != "Linux":
-                return False
-
-            # Check for the presence of Raspberry Pi-specific files
-            if os.path.exists('/sys/firmware/devicetree/base/model'):
-                with open('/sys/firmware/devicetree/base/model', 'r') as model_file:
-                    model_info = model_file.read().lower()
-                    print(model_info)
-                    if 'raspberry pi' in model_info:
-                        return True
-
-            # Check the CPU information for Raspberry Pi specific hardware
-            with open('/proc/cpuinfo', 'r') as cpuinfo:
-                for line in cpuinfo:
-                    print(line)
-                    if 'Hardware' in line and 'BCM' in line:
-                        return True
-                    if 'Model' in line and 'Raspberry Pi' in line:
-                        return True
-        except Exception as e:
-            print(f"Error while checking Raspberry Pi: {e}")
-        return False
 
     def getHotbits(self):
         if self.source == HotbitsSource.RASPBERRY_PI:
