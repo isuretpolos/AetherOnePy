@@ -41,7 +41,7 @@ def is_raspberry_pi():
 
 
 def install_package(package):
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--break-system-packages', package])
 
 
 def check_and_install_packages():
