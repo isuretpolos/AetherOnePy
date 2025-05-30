@@ -72,6 +72,8 @@ class HotbitsService:
 
     def initHotbits(self):
         count = self.countHotbits()
+        if self.source == HotbitsSource.RASPBERRY_PI:
+            return  # Raspberry Pi will generate its own hotbits
         amount = 1000 - count
         for _ in range(amount):
             if count > 500:
