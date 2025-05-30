@@ -52,7 +52,7 @@ class GPIOBroadcaster:
                             obj["led"].on()
                         else:
                             obj["led"].off()
-                    time.sleep(interval)
+                    time.sleep(float(interval))
 
         self.cleanup()
 
