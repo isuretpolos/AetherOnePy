@@ -40,8 +40,9 @@ pip_packages=(flask flask_socketio flask-cors requests qrcode[pil] pygame pyperc
 
 echo "Installing/updating Python packages via pip..."
 for pip_pkg in "${pip_packages[@]}"; do
-  pip3 install --upgrade "$pip_pkg"
+  pip3 install --break-system-packages --upgrade "$pip_pkg"
 done
+
 
 # --- AetherOnePy Repo Handling ---
 
