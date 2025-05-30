@@ -10,14 +10,13 @@ AetherOnePy is a Web-based Desktop Application, which means the application runs
 - Git
 
 ## Install
-### Linux
-For Linux I wrote a [script](https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/scripts/run_aetherone.sh) which does the following:
-1) Create and activate the virtual python environment if it doesn't already exist
-2) Check if the git repository exists
-3) If the repository exists, navigate to it and pull the latest changes
-4) else it clones the repository
-5) It runs the setup.py for downloading the python dependencies
-6) Finally it runs main.py
+### Raspberry Pi
+A dedicated script only for Raspberry Pi. The [script](https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/scripts/run_aetherone.sh) does the following:
+1) Check if the git repository exists
+2) If the repository exists, navigate to it and pull the latest changes
+3) else it clones the repository
+4) It runs the setup.py for downloading the python dependencies
+5) Finally it runs main.py
 
 So you have an automatic update every time you start the application. If you don't wish to 
 automatically update it, just run the main.py by yourself.
@@ -31,8 +30,8 @@ chmod +x run_aetherone.sh
 ./run_aetherone.sh
 ```
 
-### Windows & Linux
-This is a python version of the linux script, which runs on both operating systems.
+### Windows & Linux & Mac (and every other OS with Python)
+This is a python version of the script, which runs on every operating systems with python 3 installed.
 
 1) Install Python, from https://python.org/downloads/, Version 3.12.x
 2) Install Git, from https://git-scm.com, latest version is fine
