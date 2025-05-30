@@ -59,4 +59,6 @@ class GPIOBroadcaster:
     def cleanup(self):
         for obj in self.led_map.values():
             obj["led"].off()
-        print("GPIOZero LEDs turned off.")
+            obj["led"].close()  # <-- releases the pin
+        print("GPIOZero LEDs turned off and released.")
+
