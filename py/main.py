@@ -568,6 +568,7 @@ class AetherOnePy:
                 return jsonify(tasks), 200
             if request.method == 'POST':
                 broadcast_data = request.json
+                print(broadcast_data)
                 analysis = self.aetherOneDB.get_analysis(int(broadcast_data['analysis_id']))
                 rateObject = self.aetherOneDB.get_rate(int(broadcast_data['rate_id']))
                 broadcastData = BroadCastData(False,None, rateObject.signature, 0, 0, broadcast_data['analysis_id'], None,None,broadcast_data['sessionID'],None)
