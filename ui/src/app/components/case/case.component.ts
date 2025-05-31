@@ -36,6 +36,7 @@ export class CaseComponent implements OnInit {
   broadcastResult:SqlSelect|undefined
   averageRates:SqlSelect|undefined
   waitingForOpenAiInterpretation:boolean = false
+  importingFile: boolean = false;
 
   constructor(
     private aetherOne:AetherOneService,
@@ -82,7 +83,10 @@ export class CaseComponent implements OnInit {
   }
 
   loadRateCatalogs() {
-    this.aetherOne.loadAllCatalogs().subscribe( c => this.catalogs = c)
+    this.aetherOne.loadAllCatalogs().subscribe( c => {
+      this.catalogs = c
+      this.importingFile = false
+    })
   }
 
   loadFilesToImport() {
@@ -90,6 +94,7 @@ export class CaseComponent implements OnInit {
   }
 
   importFile(file: string) {
+    this.importingFile = true;
     this.aetherOne.importFileFromGithub(file).subscribe(f => {
       this.folderStructure = f
       this.loadRateCatalogs()

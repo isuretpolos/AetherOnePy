@@ -6,13 +6,11 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from domains.aetherOneDomains import Catalog, Rate
 from services.databaseService import get_case_dao, CaseDAO
 
-#aetherOneDB = get_case_dao('../../data/aetherone.db')
-
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '../..'))
 
 class RateImporter:
     def __init__(self,aetherOneDB:CaseDAO):
-        self.aetherOneDB = aetherOneDB #shared database
+        self.aetherOneDB = aetherOneDB
 
     def generate_folder_file_json(self, rootFolder):
         result = {"folders": {}}
@@ -50,8 +48,10 @@ class RateImporter:
                 self.aetherOneDB.insert_catalog(Catalog(catalog_name, 'radionics-rates', '-'))
                 catalog = self.aetherOneDB.get_catalog_by_name(catalog_name)
             else:
-                print(f"Warning: catalog '{catalog_name}' already exists.")
-                return
+                print(f"Warning: catalog '{catalog_name}' already exists. Re-importing rates.")
+                self.aetherOneDB.delete_catalog(catalog.id)  # Remove existing catalog before re-inserting
+                self.aetherOneDB.insert_catalog(Catalog(catalog_name, 'radionics-rates', '-'))
+                catalog = self.aetherOneDB.get_catalog_by_name(catalog_name)
 
             if not catalog:
                 print(f"Error: Unable to retrieve catalog '{catalog_name}' after insertion.")
