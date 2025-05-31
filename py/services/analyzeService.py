@@ -21,13 +21,15 @@ def analyze(analysis_id: int, rates: list, hotbits_service: HotbitsService, auto
         return []
 
     enhanced_rates = []
+    random.shuffle(rates)
+    random.shuffle(rates)
+    random.shuffle(rates)
 
     # PRE-SELECTION
     # FIRST ITERATION
     if not enhancedAnalysis:
         # DEFAULT PRE-SELECTION
         countSelected = 0
-        random.shuffle(rates)
         while countSelected < 24 and len(rates) > 0:
             countSelected += 1
             #if len(rates) == 0:
