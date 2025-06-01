@@ -10,6 +10,7 @@ AetherOnePy is a Web-based Desktop Application, which means the application runs
 - Git
 
 ## Install
+Whatch the [video](https://www.youtube.com/watch?v=8IvxJkFG_-4) for a quick overview of the installation process.
 ### Raspberry Pi
 A dedicated script only for Raspberry Pi. The [script](https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/scripts/run_aetherone.sh) does the following:
 1) Check if the git repository exists
