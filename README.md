@@ -1,7 +1,7 @@
 # AetherOnePy
 ![RadionicsBox AetherOnyPy](https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/docs/aetherOnePyBox.jpg)
 
-AetherOnePy is a Web-based Desktop Application, which means the application runs on your computer but uses a web browser as its interface. You can run it on a Raspberry Pi or a PC (Windows, Linux or Mac).
+[AetherOnePy](https://www.patreon.com/posts/aetheronepy-113687138?utm_medium=clipboard_copy&utm_source=copyLink&utm_campaign=postshare_creator&utm_content=join_link) is a Web-based Desktop Application, which means the application runs on your computer but uses a web browser as its interface. You can run it on a Raspberry Pi or a PC (Windows, Linux or Mac).
 
 **Digital radionics** is based on [The RetroPsychoKinesis Project](https://www.fourmilab.ch/rpkp/) which used radioactive decay (Americanum, from smoke detectors) as a source for true random numbers (TRNG). Therefore the name "**hotbits**" used a lot in the AetherOne series. Later the quantum tunneling effect of zener diodes substituted the dangerous radioactive method.
 
