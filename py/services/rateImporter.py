@@ -30,6 +30,16 @@ class RateImporter:
                 return os.path.join(dirpath, file_name)
         return None
 
+    def read_file_with_fallback(self, file_path):
+        encodings = ['utf-8', 'windows-1252', 'iso-8859-1']
+        for enc in encodings:
+            try:
+                with open(file_path, 'r', encoding=enc) as file:
+                    return file.readlines()
+            except UnicodeDecodeError:
+                continue
+        raise UnicodeDecodeError(f"Unable to decode {file_path} with tried encodings.")
+
     def import_file(self, root_folder, file_name):
         file_path = self.find_file_path(root_folder, file_name)
         if not file_path:
@@ -37,8 +47,7 @@ class RateImporter:
             return
 
         # Read and process the file
-        with open(file_path, 'r', encoding='utf-8') as file:
-            lines = file.readlines()
+        lines = self.read_file_with_fallback(file_path)
 
         catalog_name = os.path.splitext(file_name)[0]
         try:
