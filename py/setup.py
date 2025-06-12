@@ -7,6 +7,8 @@ The requirements.txt alone is not able to identify the system type.
 import subprocess
 import sys
 import platform
+import os
+from setuptools import setup, find_packages
 
 required_packages = [
     'requests',
@@ -41,7 +43,7 @@ def is_raspberry_pi():
 
 
 def install_package(package):
-    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '--break-system-packages', package])
+    subprocess.check_call([sys.executable, '-m', 'pip', 'install', package])
 
 
 def check_and_install_packages():
@@ -61,8 +63,28 @@ def check_and_install_packages():
             install_package('gpiozero')
 
 
+def install_plugin_requirements():
+    plugins_dir = os.path.join(os.path.dirname(__file__), 'plugins')
+    if not os.path.isdir(plugins_dir):
+        print(f"[PLUGIN-SETUP] No plugins directory found at {plugins_dir}")
+        return
+    for plugin_name in os.listdir(plugins_dir):
+        plugin_path = os.path.join(plugins_dir, plugin_name)
+        if os.path.isdir(plugin_path):
+            req_path = os.path.join(plugin_path, 'requirements.txt')
+            if os.path.exists(req_path):
+                print(f"[PLUGIN-SETUP] Installing requirements for plugin: {plugin_name}")
+                try:
+                    subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', req_path])
+                except Exception as e:
+                    print(f"[PLUGIN-SETUP] Failed to install requirements for {plugin_name}: {e}")
+            else:
+                print(f"[PLUGIN-SETUP] No requirements.txt for plugin: {plugin_name}")
+
+
 if __name__ == '__main__':
     """
     Installs automatically the required dependencies
     """
     check_and_install_packages()
+    install_plugin_requirements()

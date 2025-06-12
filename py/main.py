@@ -12,6 +12,7 @@ import json
 import logging
 import urllib.request
 import psutil
+from flasgger import Swagger
 
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
@@ -57,6 +58,7 @@ class AetherOnePy:
         process.daemon = True
         process.start()
         self.app = Flask(__name__)
+        Swagger(self.app)
         self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=10, ping_timeout=300, debug=False)
         self.port = 80
         CORS(self.app)
