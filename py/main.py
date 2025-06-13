@@ -641,6 +641,21 @@ class AetherOnePy:
             result = self.aetherOneDB.sqlSelect(sql)
             return jsonify(result), 200
 
+        @self.app.route('/plugins', methods=['GET'])
+        def list_plugins():
+            """
+            List all available plugins in the plugins directory.
+            """
+            plugins_dir = os.path.join(os.path.dirname(__file__), 'plugins')
+            try:
+                plugins = [
+                    name for name in os.listdir(plugins_dir)
+                    if os.path.isdir(os.path.join(plugins_dir, name)) and not name.startswith('__')
+                ]
+                return jsonify({"status": "success", "plugins": plugins})
+            except Exception as e:
+                return jsonify({"status": "error", "message": str(e)}), 500
+
 
     def sanitize_filename(self, filename: str) -> str:
         safe_characters = re.compile(r'[^a-zA-Z0-9_\-\.]')
