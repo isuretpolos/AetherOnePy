@@ -18,6 +18,7 @@ import { HotbitsComponent } from './components/hotbits/hotbits.component';
 import { RadionicsDeviceBase44Component } from './components/radionics-device-base44/radionics-device-base44.component';
 import { AppsComponent } from './components/apps/apps.component';
 import { VersionComponent } from './components/version/version.component';
+import {BroadcastComponent} from "./components/broadcast/broadcast.component";
 
 const config: SocketIoConfig = {
   url: 'http://localhost:80',
@@ -41,7 +42,8 @@ const config: SocketIoConfig = {
     HotbitsComponent,
     RadionicsDeviceBase44Component,
     AppsComponent,
-    VersionComponent
+    VersionComponent,
+    BroadcastComponent,
   ],
   imports: [
     BrowserModule,

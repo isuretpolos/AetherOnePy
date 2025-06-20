@@ -1,0 +1,33 @@
+<div class="container text-center" style="margin-top: 1rem">
+  <div class="row">
+    <div class="col">
+      <h4>Broadcast Task</h4>
+      <div class="form-floating">
+        <input type="text" class="form-control" id="target" [formControl]="target">
+        <label for="target">Target</label>
+      </div>
+      <div class="form-floating" style="margin-top: 0.2rem">
+        <textarea class="form-control" id="signature" [formControl]="signature"></textarea>
+        <label for="signature">Signature or Rate to broadcast directly</label>
+      </div>
+      <div class="form-floating" style="margin-top: 0.2rem">
+        <input type="text" class="form-control" id="potency" [formControl]="potency">
+        <label for="potency">Potency</label>
+      </div>
+      <div class="form-floating" style="margin-top: 0.2rem">
+        <input type="text" class="form-control" id="level" [formControl]="level">
+        <label for="level">Level (1 to 12)</label>
+      </div>
+      <div style="margin-top: 1rem">
+        <button type="button" class="btn btn-primary" (click)="broadcast()" [disabled]="!target.value || !signature.value">Broadcast now</button>
+      </div>
+    </div>
+    <div class="col">
+      <h4>Queue</h4>
+    </div>
+    <div class="col">
+      <h4>Resonance List</h4>
+    </div>
+  </div>
+</div>
+

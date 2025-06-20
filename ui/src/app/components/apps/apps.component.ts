@@ -13,6 +13,9 @@ export class AppsComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.apps.push({name: 'Radionics Device Base 44', route: 'RADIONICS_DEVICE_BASE44', image: 'assets/images/radionicsDeviceBased44.jpg', description: 'Base 44 Radionics Device based on Benjamin Ludwig\'s design'});
+    this.apps.push(
+      {name: 'Radionics Device Base 44', route: 'RADIONICS_DEVICE_BASE44', image: 'assets/images/radionicsDeviceBased44.jpg', description: 'Base 44 Radionics Device based on Benjamin Ludwig\'s design'},
+      {name: 'Radionics Cards', route: 'CARDS', image: 'assets/images/radionicsCards.png', description: 'Make radionics cards'},
+    );
   }
 }

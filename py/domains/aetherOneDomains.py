@@ -112,9 +112,9 @@ class Rate:
 
 
 class BroadCastData:
-    def __init__(self, clear: bool, intention: str, signature: str, delay: int, repeat: int, analysis_id: int,
-                 entering_with_general_vitality: int, leaving_with_general_vitality: int, sessionID: int,
-                 created: datetime):
+    def __init__(self, clear: bool, intention: str, signature: str, delay: int, repeat: int, analysis_id: int | None = None,
+                 entering_with_general_vitality: int | None = None, leaving_with_general_vitality: int | None = None, sessionID: int | None = None,
+                 created: datetime = datetime.now()):
         self.id = 0
         self.clear = clear
         self.intention = intention

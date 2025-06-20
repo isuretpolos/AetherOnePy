@@ -1,3 +1,4 @@
+import math
 import multiprocessing
 import time
 import os,sys
@@ -90,35 +91,54 @@ class DigitalBroadcaster:
         final_state = hashlib.sha256((self.signature + str(random.randint(0, 1000000))).encode()).hexdigest()
 
         print(f"Finalized Quantum-Coagulated Intent: {final_state[:16]}")
-        self._create_sigil_image(final_state[:16], random.randint(0, 1000000))
+        self._create_sigil_image(self.signature, random.randint(0, 1000000))
         self._create_coagulation_tone(final_state[:16], random.randint(0, 1000000))
 
     def _create_sigil_image(self, text, quantum_value):
-        """ Creates a symbolic sigil image from the final intent hash & QRNG. """
-        img = Image.new("RGB", (400, 400), "white")
+        """Creates a symbolic sigil image from each line of the final intent."""
+        def text_to_points(line, radius=120, center=(200, 200)):
+            line = line.upper().replace(" ", "")
+            cleaned = ''.join([c for c in line if c not in 'AEIOU'])
+            unique = []
+            for c in cleaned:
+                if c not in unique:
+                    unique.append(c)
+            cleaned = ''.join(unique)
+
+            if not cleaned:
+                return []
+
+            hash_base = hashlib.md5(cleaned.encode()).hexdigest()
+            usable_length = min(len(cleaned), 16)  # MD5 provides only 32 hex digits (16 bytes)
+            angles = [int(hash_base[i*2:i*2+2], 16) / 255.0 * 2 * math.pi for i in range(usable_length)]
+            return [(center[0] + radius * math.cos(a), center[1] + radius * math.sin(a)) for a in angles[:len(cleaned)]]
+
+        def draw_sigil(draw, points, color, thickness):
+            if len(points) < 2:
+                return
+            for i in range(len(points) - 1):
+                draw.line([points[i], points[i + 1]], fill=color, width=thickness)
+        # Image setup
+        img = Image.new("RGBA", (400, 400), (255, 255, 255, 0))
         draw = ImageDraw.Draw(img)
-        draw.text((150, 20), text, fill="black")
 
-        # Determine number of shapes based on QRNG
-        num_shapes = 3 + (quantum_value % 4)  # Between 3 and 6 shapes
+        # Configurable params
+        color = "#000000"
+        thickness = 2
 
-        for i in range(num_shapes):
-            shape_type = (quantum_value + i) % 3  # 0 = rectangle, 1 = circle, 2 = triangle
-            random.seed(generate_random_integer(32,1))
-            x1, y1 = random.randint(50, 350), random.randint(50, 350)
-            x2, y2 = x1 + random.randint(10, 100), y1 + random.randint(10, 100)
+        # Use the signature as multiline input
+        lines = self.signature.strip().split("\n")
 
-            if shape_type == 0:
-                draw.rectangle([x1, y1, x2, y2], outline="black", width=2)
-            elif shape_type == 1:
-                draw.ellipse([x1, y1, x2, y2], outline="black", width=2)
-            elif shape_type == 2:
-                draw.polygon([ (x1, y1), (x2, y2), (x1, y2) ], outline="black", width=2)
+        # Draw sigil for each line
+        for line in lines:
+            points = text_to_points(line)
+            draw_sigil(draw, points, color, thickness)
 
+        # Save image
         file_name = f"sigil_{time.strftime('%Y%m%d_%H%M%S')}.png"
         output_file = os.path.join(self.output_path, file_name)
         img.save(output_file)
-        print(f"Sigil saved as {file_name} with {num_shapes} symbols.")
+        print(f"Multiline sigil saved as {file_name} for {len(lines)} lines.")
 
     def _create_coagulation_tone(self, intent, quantum_value):
         """ Generates a dynamic frequency tone based on intent & QRNG entropy. """

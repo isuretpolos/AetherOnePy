@@ -15,11 +15,13 @@ from services.broadcaster import DigitalBroadcaster
 
 
 class BroadcastTask:
-    def __init__(self, broadcastData: BroadCastData, analysis: Analysis):
+    def __init__(self, broadcastData: BroadCastData, analysis: Analysis | None = None):
         self.broadcastData = broadcastData
         self.analysis = analysis
 
     def to_dict(self):
+        if (self.analysis is None):
+            return {'broadcastData': self.broadcastData.to_dict()}
         return {
             'analysis': self.analysis.to_dict(),
             'broadcastData': self.broadcastData.to_dict()
@@ -31,7 +33,11 @@ class BroadcastTask:
         if self.broadcastData.entering_with_general_vitality is None:
             self.broadcastData.entering_with_general_vitality = gv
         self.broadcastData.leaving_with_general_vitality = gv
-        print(f"Signature: ${self.broadcastData.signature} Target GV: ${self.analysis.target_gv}, Current GV: ${gv}")
+        if self.analysis is not None:
+            print(f"Signature: ${self.broadcastData.signature} Target GV: ${self.analysis.target_gv}, Current GV: ${gv}")
+        else:
+            print(f"Signature: ${self.broadcastData.signature} Current GV: ${gv}")
+            return gv < checkGeneralVitality(hotbits_service)
         if gv < self.analysis.target_gv:
             return False
         return True

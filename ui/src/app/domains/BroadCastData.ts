@@ -13,13 +13,22 @@ export class BroadCastData {
   leaving_with_general_vitality: number = 0;
   sessionID: number = 0;
   created: Date = new Date();
+  target: string|undefined;
+  level: string|undefined;
+  potency: string|undefined;
 
-  constructor(rate: RateObject, analysis: Analysis) {
-    this.rate_id = rate.id
-    this.signature = rate.signature;
-    this.analysis_id = analysis.id;
+
+  constructor(private rate: RateObject|undefined = undefined, analysis: Analysis|undefined = undefined) {
+    if (rate) {
+      this.rate_id = rate.id
+      this.signature = rate.signature;
+    }
+    if (analysis) {
+      this.analysis_id = analysis.id;
+      this.sessionID = analysis.sessionID;
+    }
+
     this.entering_with_general_vitality = 0;
     this.leaving_with_general_vitality = 0;
-    this.sessionID = analysis.sessionID;
   }
 }

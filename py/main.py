@@ -599,10 +599,14 @@ class AetherOnePy:
             if request.method == 'POST':
                 broadcast_data = request.json
                 print(broadcast_data)
-                analysis = self.aetherOneDB.get_analysis(int(broadcast_data['analysis_id']))
-                rateObject = self.aetherOneDB.get_rate(int(broadcast_data['rate_id']))
-                broadcastData = BroadCastData(False,None, rateObject.signature, 0, 0, broadcast_data['analysis_id'], None,None,broadcast_data['sessionID'],None)
-                broadcastTask = BroadcastTask(broadcastData, analysis)
+                if (broadcast_data['analysis_id']):
+                    analysis = self.aetherOneDB.get_analysis(int(broadcast_data['analysis_id']))
+                    rateObject = self.aetherOneDB.get_rate(int(broadcast_data['rate_id']))
+                    broadcastData = BroadCastData(False, '', rateObject.signature, 0, 0, broadcast_data['analysis_id'], None,None,broadcast_data['sessionID'],None)
+                    broadcastTask = BroadcastTask(broadcastData, analysis)
+                else:
+                    broadcastData = BroadCastData(False, broadcast_data['intention'], broadcast_data['signature'], 0, 0)
+                    broadcastTask = BroadcastTask(broadcastData)
                 self.broadcastService.add_task(broadcastTask)
                 return jsonify({'message': 'in queue'}), 200
             if request.method == 'DELETE':

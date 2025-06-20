@@ -11,10 +11,12 @@ import {HotbitsComponent} from "./components/hotbits/hotbits.component";
 import {AppsComponent} from "./components/apps/apps.component";
 import {RadionicsDeviceBase44Component} from "./components/radionics-device-base44/radionics-device-base44.component";
 import { VersionComponent } from './components/version/version.component';
+import {BroadcastComponent} from "./components/broadcast/broadcast.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'HOME', pathMatch: 'full'},
   {path: 'HOME', component: HomeComponent},
+  {path: 'BROADCAST', component: BroadcastComponent},
   {path: 'CARDS', component: RateCardsComponent},
   {path: 'MANUAL', component: DocumentationComponent},
   {path: 'SETTINGS', component: SettingsComponent},

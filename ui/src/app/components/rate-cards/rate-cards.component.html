@@ -12,6 +12,7 @@
       <div class="input-group mb-3">
         <input class="form-control" type="text" placeholder="Rates" [formControl]="rates">
       </div>
+      <button *ngIf="rates.value" class="btn btn-primary btn-sm" (click)="generateRate()">Generate Rate</button>
       <div class="form-floating mb-2">
         <select id="rateBase" [formControl]="base" title="base">
           <option *ngFor="let base of bases" value="{{base}}">{{base}}</option>
