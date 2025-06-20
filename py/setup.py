@@ -29,7 +29,8 @@ required_packages = [
     'sphinx',
     'sphinx_rtd_theme',
     'openai',
-    'psutil'
+    'psutil',
+    'flasgger'
 ]
 
 
