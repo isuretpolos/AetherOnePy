@@ -6,9 +6,7 @@ The requirements.txt alone is not able to identify the system type.
 
 import subprocess
 import sys
-#import platform
 import os
-#from setuptools import setup, find_packages
 
 required_packages = [
     'requests',
