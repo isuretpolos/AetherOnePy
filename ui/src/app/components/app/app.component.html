@@ -34,6 +34,8 @@
         </li>
       </ul>
 
+
+
       <form class="d-flex" role="search" *ngIf="serverOnline" style="margin-left: 1rem;margin-right: 1rem">
         <input #weaverText [formControl]="searchText" (ngModelChange)="search()" type="text" class="form-control me-2" placeholder="Search" aria-label="Search">
         <button class="btn btn-outline-success" type="submit">Search</button>
@@ -51,6 +53,10 @@
 <div class="container-fluid" *ngIf="!serverOnline">
   <h1 class="serverOffline" style="color:red">OFFLINE</h1>
   <p>This means the AetherOne application is not started. Just restart if you wish to use the application.</p>
+</div>
+
+<div *ngIf="loading$ | async" class="spinner-border text-primary" role="status" style="position: fixed; left:5px; top:4rem">
+  <span class="visually-hidden">Loading...</span>
 </div>
 
 <!-- Modal BROADCASTING -->

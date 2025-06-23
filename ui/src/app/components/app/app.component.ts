@@ -8,6 +8,7 @@ import {FormControl} from "@angular/forms";
 import {SocketService} from "../../services/socket.service";
 import {ToastrService} from "ngx-toastr";
 import * as THREE from 'three'
+import {LoadingService} from "../../services/loading.service";
 
 @Component({
     selector: 'app-root',
@@ -17,6 +18,7 @@ import * as THREE from 'three'
 })
 export class AppComponent implements OnInit, OnDestroy  {
 
+  loading$ = this.loadingService.loading$;
   serverOnline:boolean = false;
   links: Link[] = [];
   case:Case = new Case()
@@ -45,7 +47,8 @@ export class AppComponent implements OnInit, OnDestroy  {
               private aetherOne: AetherOneService,
               private socketService: SocketService,
               private toastr: ToastrService,
-              private el: ElementRef) {
+              private el: ElementRef,
+              public loadingService: LoadingService) {
   }
 
   ngOnInit() {

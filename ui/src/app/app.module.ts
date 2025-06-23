@@ -19,6 +19,8 @@ import { RadionicsDeviceBase44Component } from './components/radionics-device-ba
 import { AppsComponent } from './components/apps/apps.component';
 import { VersionComponent } from './components/version/version.component';
 import {BroadcastComponent} from "./components/broadcast/broadcast.component";
+import {LoadingInterceptor} from "./services/loadingInterceptor";
+import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 const config: SocketIoConfig = {
   url: 'http://localhost:80',
@@ -53,7 +55,10 @@ const config: SocketIoConfig = {
     SocketIoModule.forRoot(config),
     ToastrModule.forRoot()
   ],
-  providers: [{provide: LocationStrategy, useClass: HashLocationStrategy}],
+  providers: [
+    {provide: LocationStrategy, useClass: HashLocationStrategy},
+    {provide: HTTP_INTERCEPTORS,useClass: LoadingInterceptor,multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
