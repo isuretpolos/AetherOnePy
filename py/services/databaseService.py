@@ -583,6 +583,15 @@ class CaseDAO:
             sessions.append(session)
         return sessions
 
+    def list_all_sessions(self) -> List[Session]:
+        cursor = self.conn.execute('SELECT * FROM sessions ORDER BY created DESC')
+        sessions = []
+        for row in cursor:
+            session = Session(row[1], row[2], row[4])  # intention, description, caseID
+            session.id = row[0]
+            session.created = datetime.fromisoformat(row[3])
+            sessions.append(session)
+        return sessions
 
 # DAO Service to be imported into another class
 def get_case_dao(db_filename: str) -> CaseDAO:
