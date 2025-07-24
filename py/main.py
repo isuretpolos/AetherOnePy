@@ -58,6 +58,7 @@ class AetherOnePy:
         process.daemon = True
         process.start()
         self.app = Flask(__name__)
+        self.app.case_dao = self.aetherOneDB 
         Swagger(self.app)
         self.socketio = SocketIO(self.app, cors_allowed_origins="*", ping_interval=10, ping_timeout=300, debug=False)
         self.port = 80
@@ -453,10 +454,14 @@ class AetherOnePy:
             if request.method == 'GET':
                 if request.args.get('id') is not None:
                     analysis = self.aetherOneDB.get_analysis(int(request.args.get('id')))
+                    if analysis is None:
+                        return jsonify({"error": "Analysis not found"}), 404
                     response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
                     return Response(response_data, content_type='application/json; charset=utf-8')
                 elif request.args.get('last') is not None:
                     analysis = self.aetherOneDB.get_last_analysis(int(request.args.get('session_id')))
+                    if analysis is None:
+                        return jsonify({"error": "Analysis not found"}), 404
                     response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
                     return Response(response_data, content_type='application/json; charset=utf-8')
                 else:
@@ -481,6 +486,8 @@ class AetherOnePy:
             if request.method == 'PUT':
                 analyzeRequest = request.json
                 analysis = self.aetherOneDB.get_analysis(int(analyzeRequest['id']))
+                if analysis is None:
+                    return jsonify({"error": "Analysis not found"}), 404
                 analysis.note = analyzeRequest['note']
                 self.aetherOneDB.update_analysis(analysis)
                 response_data = json.dumps(analysis.to_dict(), ensure_ascii=False)
@@ -507,10 +514,16 @@ class AetherOnePy:
             if request.method == 'POST':
                 analyzeRequest = request.json
                 analysis = self.aetherOneDB.get_analysis(int(analyzeRequest['analysis_id']))
+                print(f"[DEBUG] analyzeRequest: {analyzeRequest}")
+                print(f"[DEBUG] analysis: {analysis}")
                 rates_list = self.aetherOneDB.list_rates_from_catalog(analyzeRequest["catalog_id"])
+                print(f"[DEBUG] rates_list: {rates_list}")
                 enhanced_rates = analyzeService(analysis.id, rates_list, self.hotbits, self.aetherOneDB.get_setting('analysisAlwaysCheckGV'), self.aetherOneDB.get_setting('analysisAdvanced'))
+                print(f"[DEBUG] enhanced_rates: {enhanced_rates}")
                 self.aetherOneDB.insert_rates_for_analysis(enhanced_rates)
+                print(f"[DEBUG] enhanced_rates: {enhanced_rates}")
                 analyzeList = transformAnalyzeListToDict(enhanced_rates)
+                print(f"[DEBUG] analyzeList: {analyzeList}")
                 return jsonify(analyzeList), 200
 
             return "NOT IMPLEMENTED"
@@ -644,6 +657,21 @@ class AetherOnePy:
             sql = request.json['sql']
             result = self.aetherOneDB.sqlSelect(sql)
             return jsonify(result), 200
+
+        @self.app.route('/plugins', methods=['GET'])
+        def list_plugins():
+            """
+            List all available plugins in the plugins directory.
+            """
+            plugins_dir = os.path.join(os.path.dirname(__file__), 'plugins')
+            try:
+                plugins = [
+                    name for name in os.listdir(plugins_dir)
+                    if os.path.isdir(os.path.join(plugins_dir, name)) and not name.startswith('__')
+                ]
+                return jsonify({"status": "success", "plugins": plugins})
+            except Exception as e:
+                return jsonify({"status": "error", "message": str(e)}), 500
 
 
     def sanitize_filename(self, filename: str) -> str:
