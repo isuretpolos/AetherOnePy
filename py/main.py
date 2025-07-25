@@ -188,7 +188,8 @@ class AetherOnePy:
             emit('broadcast_info', {'message': 'Broadcast messaging ready!'}, broadcast=True)
 
         @self.socketio.on('ping')
-        def handle_ping():
+        def handle_ping(data=None):
+            """Respond to ping events from the client."""
             logging.info('Received ping event')
             emit('pong')
 
