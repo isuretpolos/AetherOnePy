@@ -12,5 +12,15 @@
         </div>
       </div>
     </div>
+    <div class="col-md-4" *ngFor="let plugin of plugins">
+      <div class="card">
+        <img class="card-img-top" src="{{ plugin.image }}" alt="Card image cap">
+        <div class="card-body">
+          <h5 class="card-title">{{ plugin.name }}</h5>
+          <p class="card-text"><b>Author: {{ plugin.author }}</b><br>{{ plugin.description }}</p>
+          <a href="/{{plugin.ui}}" class="btn btn-primary" target="{{ plugin.ui }}">Go to app</a>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

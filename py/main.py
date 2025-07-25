@@ -686,10 +686,14 @@ class AetherOnePy:
             """
             plugins_dir = os.path.join(os.path.dirname(__file__), 'plugins')
             try:
-                plugins = [
-                    name for name in os.listdir(plugins_dir)
-                    if os.path.isdir(os.path.join(plugins_dir, name)) and not name.startswith('__')
-                ]
+                plugins = []
+                for name in os.listdir(plugins_dir):
+                    plugin_path = os.path.join(plugins_dir, name)
+                    plugin_json_path = os.path.join(plugin_path, 'plugin.json')
+                    if os.path.isdir(plugin_path) and not name.startswith('__') and os.path.isfile(plugin_json_path):
+                        with open(plugin_json_path, 'r', encoding='utf-8') as f:
+                            plugin_info = json.load(f)
+                            plugins.append(plugin_info)
                 return jsonify({"status": "success", "plugins": plugins})
             except Exception as e:
                 return jsonify({"status": "error", "message": str(e)}), 500

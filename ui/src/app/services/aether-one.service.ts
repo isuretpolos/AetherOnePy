@@ -52,6 +52,10 @@ export class AetherOneService {
     return this.http.post<any>(`${this.baseUrl}settings`,settings)
   }
 
+  loadPlugins(): Observable<any> {
+    return this.http.get<any>(`${this.baseUrl}plugins`)
+  }
+
   saveNewCase(newCase: Case): Observable<Case> {
     return this.http.post<Case>(`${this.baseUrl}case`, newCase)
   }
