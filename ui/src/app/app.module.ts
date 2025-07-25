@@ -14,6 +14,7 @@ import { CaseComponent } from './components/case/case.component';
 import { RateCardsComponent } from './components/rate-cards/rate-cards.component';
 import {SocketIoConfig, SocketIoModule} from "ngx-socket-io";
 import {ToastrModule} from "ngx-toastr";
+import {environment} from "../environments/environment";
 import { HotbitsComponent } from './components/hotbits/hotbits.component';
 import { RadionicsDeviceBase44Component } from './components/radionics-device-base44/radionics-device-base44.component';
 import { AppsComponent } from './components/apps/apps.component';
@@ -22,8 +23,10 @@ import {BroadcastComponent} from "./components/broadcast/broadcast.component";
 import {LoadingInterceptor} from "./services/loadingInterceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
+const socketHost = environment.socketHost || window.location.hostname;
+const url = `http://${socketHost}:80`;
 const config: SocketIoConfig = {
-  url: 'http://localhost:80',
+  url,
   options: {
     transports: ['websocket'],
     reconnection: true,
