@@ -81,10 +81,11 @@ class BroadcastService:
                     broadcaster.start_broadcasting()
                     if self.stop_requested:
                         print("Broadcasting stopped by user.")
+                        self.main.emitMessage("broadcast_info","broadcasting stopped by user")
                         return
                 if task.is_valid(self.hotbits_service):
-                    self.task_queue.task_done()
                     self.main.emitMessage("broadcast_info",task.broadcastData.signature)
+                    self.task_queue.task_done()
                 else:
                     time.sleep(1)
                     self.task_queue.put(task)

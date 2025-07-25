@@ -625,7 +625,20 @@ class AetherOnePy:
                 if (broadcast_data['analysis_id']):
                     analysis = self.aetherOneDB.get_analysis(int(broadcast_data['analysis_id']))
                     rateObject = self.aetherOneDB.get_rate(int(broadcast_data['rate_id']))
-                    broadcastData = BroadCastData(False, '', rateObject.signature, 0, 0, broadcast_data['analysis_id'], None,None,broadcast_data['sessionID'],None)
+                    # Use the signature provided by the UI instead of looking up the rate
+                    signature = broadcast_data.get('signature', '')
+                    broadcastData = BroadCastData(
+                        False,
+                        '',
+                        signature,
+                        0,
+                        0,
+                        broadcast_data['analysis_id'],
+                        None,
+                        None,
+                        broadcast_data['sessionID'],
+                        None
+                    )
                     broadcastTask = BroadcastTask(broadcastData, analysis)
                 else:
                     broadcastData = BroadCastData(False, broadcast_data['intention'], broadcast_data['signature'], 0, 0)
