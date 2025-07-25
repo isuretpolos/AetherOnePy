@@ -4,5 +4,6 @@
 
 export const environment = {
   production: false,
-  baseUrl: "http://localhost/"
+  baseUrl: "http://localhost/",
+  socketHost: undefined
 };
