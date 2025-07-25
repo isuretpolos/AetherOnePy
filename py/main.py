@@ -17,7 +17,7 @@ from flasgger import Swagger
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 os.environ['FLASK_ENV'] = 'development'
 
-from flask import Flask, jsonify, request, send_from_directory, send_file, Response
+from flask import Flask, jsonify, request, send_from_directory, send_file, Response, abort
 from flask_cors import CORS
 from flask_socketio import SocketIO, emit
 from PIL import ImageDraw, ImageFont
@@ -177,6 +177,8 @@ class AetherOnePy:
         # Serving static files, like images, css, js, etc.
         @self.app.route('/<path:path>')
         def static_files(path):
+            if path.startswith('socket.io'):
+                abort(404)
             return send_from_directory('../ui/dist/ui/browser/', path)
 
         # Reacting to the websockets connect event, in order to get the UI know you are connected
@@ -184,6 +186,11 @@ class AetherOnePy:
         def handle_connect():
             emit('server_update', {'message': 'Server connected to websockets!'}, broadcast=True)
             emit('broadcast_info', {'message': 'Broadcast messaging ready!'}, broadcast=True)
+
+        @self.socketio.on('ping')
+        def handle_ping():
+            logging.info('Received ping event')
+            emit('pong')
 
         # Restart application
         # First get the new code from the repository
