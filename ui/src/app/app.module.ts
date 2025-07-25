@@ -24,7 +24,8 @@ import {LoadingInterceptor} from "./services/loadingInterceptor";
 import {HTTP_INTERCEPTORS} from "@angular/common/http";
 
 const socketHost = environment.socketHost || window.location.hostname;
-const url = `http://${socketHost}:80`;
+const socketPort = environment.socketPort || window.location.port || '80';
+const url = `http://${socketHost}:${socketPort}`;
 const config: SocketIoConfig = {
   url,
   options: {

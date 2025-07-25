@@ -1,5 +1,6 @@
 export const environment = {
   production: true,
   baseUrl: "/",
-  socketHost: undefined
+  socketHost: undefined,
+  socketPort: undefined
 };
