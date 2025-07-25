@@ -185,6 +185,11 @@ class AetherOnePy:
             emit('server_update', {'message': 'Server connected to websockets!'}, broadcast=True)
             emit('broadcast_info', {'message': 'Broadcast messaging ready!'}, broadcast=True)
 
+        @self.socketio.on('ping')
+        def handle_ping():
+            logging.info('Received ping event')
+            emit('pong')
+
         # Restart application
         # First get the new code from the repository
         # Second check and install the required packages
