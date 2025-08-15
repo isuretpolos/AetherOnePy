@@ -5,6 +5,6 @@
 export const environment = {
   production: false,
   baseUrl: "http://localhost/",
-  socketHost: undefined,
-  socketPort: undefined
+  socketHost: "localhost",
+  socketPort: 80
 };

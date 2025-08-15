@@ -1,0 +1,159 @@
+
+.preview-area {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  min-width: 0;
+}
+
+.controls {
+  width: 450px;
+  margin: 0;
+  padding: 0;
+  backdrop-filter: blur(10px);
+  overflow-y: auto;
+  box-sizing: border-box;
+}
+
+.control-group {
+  margin-bottom: 25px;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+.control-group h3 {
+  margin-bottom: 15px;
+  font-size: 14px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.control-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+label {
+  min-width: 80px;
+}
+
+input[type="range"] {
+  flex: 1;
+  margin: 0 10px;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  border-radius: 2px;
+  outline: none;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #74b9ff;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+input[type="color"] {
+  width: 40px;
+  height: 30px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+input[type="number"], input[type="text"] {
+  width: 60px;
+  padding: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+}
+
+input[type="text"] {
+  flex: 1;
+  margin-left: 10px;
+}
+
+select {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.value-display {
+  min-width: 40px;
+  font-size: 11px;
+  text-align: right;
+}
+
+canvas {
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+  width: min(70vw, 70vh);
+  height: min(70vw, 70vh);
+}
+
+canvas:hover {
+  transform: scale(1.02);
+}
+
+.download-btn {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 14px;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: all 0.3s ease;
+  margin-top: 20px;
+}
+
+.download-btn:hover {
+  background: #07429a;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0, 184, 148, 0.3);
+}
+
+.title {
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 20px;
+}
+
+.title h1 {
+  font-size: 18px;
+  background: linear-gradient(135deg, #74b9ff, #0984e3);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  margin-right: 10px;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}

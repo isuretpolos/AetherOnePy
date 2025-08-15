@@ -1,0 +1,132 @@
+  <div class="preview-area">
+    <canvas #canvas width="400" height="400"></canvas>
+  </div>
+
+  <div class="controls" style="position: fixed; top: 0; right: 0.5rem; ">
+    <div class="title">
+      <h1>Potentiometer Sticker Generator</h1>
+    </div>
+
+    <form [formGroup]="configForm">
+      <!-- Output Settings -->
+      <div class="control-group">
+        <h3>Output Settings</h3>
+        <div class="control-row">
+          <label>Resolution:</label>
+          <select formControlName="resolution">
+            <option value="512">512x512</option>
+            <option value="1024">1024x1024</option>
+            <option value="2048">2048x2048</option>
+            <option value="4096">4096x4096</option>
+          </select>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" formControlName="useAlpha" id="useAlpha">
+          <label for="useAlpha">Transparent Background (Alpha)</label>
+        </div>
+      </div>
+
+      <!-- Dial Configuration -->
+      <div class="control-group">
+        <h3>Dial Configuration</h3>
+        <div class="control-row">
+          <label>Type:</label>
+          <select formControlName="dialType">
+            <option value="rotary">Rotary Knob</option>
+            <option value="linear">Linear Slider</option>
+            <option value="frequency">Frequency Dial</option>
+            <option value="volume">Volume Control</option>
+          </select>
+        </div>
+        <div class="control-row">
+          <label>Scale Start:</label>
+          <input type="number" formControlName="scaleStart" step="1">
+          <span class="value-display">{{ configForm.get('scaleStart')?.value }}</span>
+        </div>
+        <div class="control-row">
+          <label>Scale End:</label>
+          <input type="number" formControlName="scaleEnd" step="1">
+          <span class="value-display">{{ configForm.get('scaleEnd')?.value }}</span>
+        </div>
+        <div class="control-row">
+          <label>Divisions:</label>
+          <input type="range" formControlName="divisions" min="5" max="100">
+          <span class="value-display">{{ configForm.get('divisions')?.value }}</span>
+        </div>
+        <div class="control-row">
+          <label>Start Position:</label>
+          <select formControlName="startPosition">
+            <option value="bottom">Bottom</option>
+            <option value="right">Right</option>
+            <option value="top">Top</option>
+            <option value="left">Left</option>
+          </select>
+        </div>
+        <div class="control-row">
+          <label>Angle Range:</label>
+          <input type="range" formControlName="angleRange" min="180" max="360">
+          <span class="value-display">{{ configForm.get('angleRange')?.value }}°</span>
+        </div>
+      </div>
+
+      <!-- Appearance -->
+      <div class="control-group">
+        <h3>Appearance</h3>
+        <div class="control-row">
+          <label>Background:</label>
+          <input type="color" formControlName="bgColor">
+        </div>
+        <div class="control-row">
+          <label>Scale Color:</label>
+          <input type="color" formControlName="scaleColor">
+        </div>
+        <div class="control-row">
+          <label>Text Color:</label>
+          <input type="color" formControlName="textColor">
+        </div>
+        <div class="control-row">
+          <label>Accent Color:</label>
+          <input type="color" formControlName="accentColor">
+        </div>
+        <div class="control-row">
+          <label>Scale Width:</label>
+          <input type="range" formControlName="scaleWidth" min="1" max="10">
+          <span class="value-display">{{ configForm.get('scaleWidth')?.value }}</span>
+        </div>
+        <div class="control-row">
+          <label>Font Size:</label>
+          <input type="range" formControlName="fontSize" min="8" max="32">
+          <span class="value-display">{{ configForm.get('fontSize')?.value }}</span>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="control-group">
+        <h3>Features</h3>
+        <div class="checkbox-row">
+          <input type="checkbox" formControlName="showNumbers" id="showNumbers">
+          <label for="showNumbers">Show Numbers</label>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" formControlName="showMinorTicks" id="showMinorTicks">
+          <label for="showMinorTicks">Minor Tick Marks</label>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" formControlName="showCenter" id="showCenter">
+          <label for="showCenter">Center Dot</label>
+        </div>
+        <div class="checkbox-row">
+          <input type="checkbox" formControlName="showLabel" id="showLabel">
+          <label for="showLabel">Custom Label</label>
+        </div>
+        <div class="control-row" *ngIf="configForm.get('showLabel')?.value">
+          <label>Label Text:</label>
+          <input type="text" formControlName="labelText" placeholder="VOLUME">
+        </div>
+      </div>
+    </form>
+
+    <button class="download-btn" (click)="downloadHighRes()">
+      📥 Download High-Res PNG
+    </button>
+  </div>

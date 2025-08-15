@@ -12,6 +12,9 @@ import {AppsComponent} from "./components/apps/apps.component";
 import {RadionicsDeviceBase44Component} from "./components/radionics-device-base44/radionics-device-base44.component";
 import { VersionComponent } from './components/version/version.component';
 import {BroadcastComponent} from "./components/broadcast/broadcast.component";
+import {
+  PotentiometerStickerGeneratorComponent
+} from "./components/potentiometer-sticker-generator/potentiometer-sticker-generator.component";
 
 const routes: Routes = [
   {path: '', redirectTo: 'HOME', pathMatch: 'full'},
@@ -25,6 +28,7 @@ const routes: Routes = [
   {path: 'APPS', component: AppsComponent},
   {path: 'HOTBITS', component: HotbitsComponent},
   {path: 'RADIONICS_DEVICE_BASE44', component: RadionicsDeviceBase44Component},
+  {path: 'POTENTIOMETER', component: PotentiometerStickerGeneratorComponent},
   {path: 'VERSION', component: VersionComponent},
 ];
 

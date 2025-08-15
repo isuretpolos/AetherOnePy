@@ -18,9 +18,31 @@
         <div class="card-body">
           <h5 class="card-title">{{ plugin.name }}</h5>
           <p class="card-text"><b>Author: {{ plugin.author }}</b><br>{{ plugin.description }}</p>
-          <a href="/{{plugin.ui}}" class="btn btn-primary" target="{{ plugin.ui }}">Go to app</a>
+          <button *ngIf="plugin.useEmbeddeIframe" class="btn btn-primary" (click)="openPluginModal(plugin)" data-bs-toggle="modal" data-bs-target="#pluginModal">Go to app</button>
+          <a *ngIf="!plugin.useEmbeddeIframe" href="/{{plugin.ui}}" class="btn btn-primary" target="{{ plugin.ui }}">Go to app</a>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<div class="modal fade " id="pluginModal" tabindex="-1" aria-labelledby="pluginModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-fullscreen">
+    <div class="modal-content shadow-lg p-3 mb-5 bg-body-tertiary rounded">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="pluginModalLabel">{{pluginName}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <iframe *ngIf="iframeUrl" id="appIframe" src="http://localhost/aetheronepysocialplugin" width="100%" height="100%" frameborder="0"></iframe>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
