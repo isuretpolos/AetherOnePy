@@ -37,6 +37,7 @@ export class CaseComponent implements OnInit {
   averageRates:SqlSelect|undefined
   waitingForOpenAiInterpretation:boolean = false
   importingFile: boolean = false;
+  rateSequence: string | undefined
 
   constructor(
     private aetherOne:AetherOneService,
@@ -331,5 +332,52 @@ export class CaseComponent implements OnInit {
       console.error('General Vitality check failed!', error)
       this.toastr.error("General Vitality check failed. Please try again later.")
     })
+  }
+
+  generateRadionicRateSequence() {
+    if (!Array.isArray(this.analysisResult) || this.analysisResult.length === 0) {
+      this.rateSequence = "";
+      return;
+    }
+
+    const highRemedies: RateObject[] =
+      this.analysisResult.filter(r => (r?.gv ?? 0) > 1000);
+
+    if (highRemedies.length === 0) {
+      this.rateSequence = "";
+      return;
+    }
+
+    const letterSum = (s: string): number =>
+      (s ?? "")
+        .toUpperCase()
+        .replace(/[^A-Z]/g, "")
+        .split("")
+        .reduce((acc, ch) => acc + (ch.charCodeAt(0) - 64), 0);
+
+    const to100 = (n: number): number => {
+      let r = Math.abs(Math.trunc(n)) % 100;
+      return r === 0 ? 100 : r;
+    };
+
+    let totalNameSum = 0;
+    let totalGV = 0;
+    let totalLength = 0;
+    let count = highRemedies.length;
+
+    for (const remedy of highRemedies) {
+      const clean = remedy.signature?.toUpperCase().replace(/[^A-Z]/g, "") ?? "";
+      totalNameSum += letterSum(clean);
+      totalGV += remedy.gv;
+      totalLength += clean.length;
+    }
+
+    const rate1 = to100(totalNameSum);
+    const rate2 = to100(totalGV);
+    const rate3 = to100(totalNameSum * count);
+    const rate4 = to100(totalGV / count);
+    const rate5 = to100(totalNameSum + totalGV + totalLength);
+
+    this.rateSequence = `${rate1} ${rate2} ${rate3} ${rate4} ${rate5}`;
   }
 }

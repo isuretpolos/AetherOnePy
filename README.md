@@ -66,6 +66,10 @@ Some notes for users installing the application on the Raspberry Pi.
 
 
 # History
+- 2026-02-26 Rate Sequence Button, showing a rate for the current situation (kind of broadcast all in one rate)
+
+  ![RadionicsBox AetherOnyPy](https://raw.githubusercontent.com/isuretpolos/AetherOnePy/refs/heads/main/py/docs/RateSequenceButton.png)
+
 - 2025-07-25 Social Api update (thanks to [@emolionl](https://github.com/emolionl), broadcasting wrong rate fixed, websocket bugfixing wip
 - 2025-05-01 [OpenAI API](https://www.youtube.com/watch?v=OB99E7Y1cMA) + Copy Result into Clipboard for manual analysis
 - 2025-03-28 Show historical session details
